@@ -49,7 +49,6 @@ AUDIT-*.md
 TASKS.md
 point-to-quota-aware-combo.sh
 switch-to-quota-aware.sh
-AGENTS.md
 scripts/mobile-hero-audit.mjs
 
 # Generated / local test output
