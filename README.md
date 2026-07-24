@@ -1,74 +1,78 @@
-# ivo-tech Portfolio
+# ivo-tech Portfolio — Standalone
 
-**Live:** [https://ivo-tech.com](https://ivo-tech.com)
+Eigenständiges persönliches Portfolio von **Yves Simon Schenker (Ivo)** — Full-Stack Developer mit Frontend-Fokus aus Mannheim/Rhein-Neckar.
 
-Personal portfolio and project showcase for Ivo — Full-Stack Developer mit Frontend-Fokus aus Mannheim.
-Focused on production-ready web applications, interactive UI, 3D interfaces and practical developer tooling.
+## Live preview
 
----
+- Standalone-Vercel-URL: https://ivo-tech-portfolio-standalone.vercel.app
+- Die bestehende Domain https://ivo-tech.com bleibt unverändert und ist nicht mit diesem Projekt verbunden.
 
-## Featured Projects
+## Inhalt
 
-- **[GOALS Optimizer](https://goals.ivo-tech.com)** — Live Next.js optimizer with squad import, fit scores, formations and 408 tests
-- **[Event Management Hub](https://eventhub.ivo-tech.com)** — Full-Stack platform with Supabase RLS, audit trail, DSGVO export and HCP compliance
-- **[DLD 3D-Konfigurator](https://deinlieblingsdruck.de/3d-konfigurator/)** — Live WooCommerce plugin with Three.js STL viewer, pricing engine and admin panel
+Die Seite zeigt Ivo als Person und Entwickler mit:
+
+- persönlichem Hero und Portrait
+- About-Bereich mit CV-Link
+- GOALS Optimizer als primärem Software-Case
+- Event Management Hub und DLD 3D-Konfigurator als weitere belegte Cases
+- konkreten Arbeitsweise-Belegen
+- Craft-in-motion-Video mit Poster und Reduced-Motion-Fallback
+- Impressum und Datenschutzerklärung
 
 ## Stack
 
 - React 19
-- TypeScript (strict)
+- TypeScript 6 (strict)
 - Vite 8
-- Three.js
-- Motion (Framer Motion)
-- GSAP / Lenis
-- Supabase
+- Three.js 0.185 + three-stdlib
+- Motion 12
+- Lucide React
 - Playwright Component Testing
-- ESLint / Prettier
+- ESLint 10 + Prettier 3
 - Vercel
 
-## Highlights
+GSAP, Lenis und Supabase gehören nicht zur Runtime dieses Portfolios. Die Seite ist eine clientseitige Hash-SPA mit statischen Assets.
 
-- Interactive project case studies with problem/solution/impact structure
-- Three.js / motion-driven UI with custom orbit system and 3D hero
-- Responsive mobile-first layout with accessible navigation
-- Lazy-loaded heavy 3D sections via IntersectionObserver
-- Self-hosted fonts — no Google Fonts, GDPR-safe
-- Strict Content-Security-Policy configured in Vercel headers
-- 0 lint errors, 0 npm audit vulnerabilities
+## Voraussetzungen
 
-## Development
+- Node.js 22 bis 24
+- npm 10 oder neuer
+- Chromium für Playwright- und Lighthouse-Prüfungen
 
-Install dependencies:
+## Lokale Entwicklung
 
 ```bash
-npm install --include=dev
+cd /home/ivo/projects/ivo-tech-portfolio-standalone
+npm ci
+npm run dev -- --host 127.0.0.1
 ```
 
-Start local development server:
-
-```bash
-npm run dev
-```
-
-Build for production:
+Production-Build und Preview:
 
 ```bash
 npm run build
+npm run preview:qa
 ```
 
-Run linting:
+`preview:qa` verwendet absichtlich Port `4174` mit `--strictPort`. Ist dieser Port belegt, zuerst den fremden Preview-Prozess beenden oder für eine manuelle Ansicht einen anderen Port verwenden:
+
+```bash
+npm run preview -- --host 127.0.0.1 --port 4176 --strictPort
+```
+
+## QA
+
+Standard-Gate nach Änderungen:
 
 ```bash
 npm run lint
+npm test
+npm run build
+git diff --check
+npm audit --omit=dev
 ```
 
-Run component tests:
-
-```bash
-npm run test
-```
-
-Run the production accessibility and Lighthouse QA gates after building:
+Zusätzliche Gates:
 
 ```bash
 npm run qa:a11y
@@ -76,40 +80,101 @@ npm run qa:lighthouse:mobile
 npm run qa:lighthouse:desktop
 ```
 
-Or build once and run all three gates serially:
+Die Component-/UX-Suite umfasst aktuell 12 Tests. Lighthouse verwendet das installierte Playwright-Chromium über `CHROME_PATH`. Pa11y kann in restriktiven Umgebungen durch den lokalen Ausführungsschutz blockiert werden; in diesem Fall den Blocker dokumentieren und keine erfundenen Ergebnisse melden.
+
+## Codex CLI
+
+Codex ist ein lokales Werkzeug und arbeitet ausschließlich in diesem Repository. Das Repo ist absichtlich ohne Git-Remote.
+
+Direktstart (empfohlen):
 
 ```bash
-npm run qa:quality
+codex-portfolio
 ```
 
-Pa11y requires zero WCAG2AA issues. Both Lighthouse modes require Performance >= 90 and Accessibility, Best Practices and SEO scores of 100. Reports stay local in `.lighthouseci/`. The QA commands reserve `127.0.0.1:4174` and fail before testing if that port is already occupied.
+Der Starter wechselt automatisch nach `/home/ivo/projects/ivo-tech-portfolio-standalone` und verwendet `workspace-write` mit Freigaben `on-request`.
 
-## Deployment
-
-Production runs on Vercel. Releases are deployed manually after linting, component tests and the production build pass:
+Alternativ manuell:
 
 ```bash
-npm run lint
-npm test
-npm run build
-npx vercel --prod --yes
+cd /home/ivo/projects/ivo-tech-portfolio-standalone
+codex --sandbox workspace-write --ask-for-approval on-request
 ```
 
-## Project Structure
+Einmalig prüfen:
+
+```bash
+codex --cd /home/ivo/projects/ivo-tech-portfolio-standalone \
+  --sandbox workspace-write \
+  --ask-for-approval on-request \
+  "Lies AGENTS.md und fasse die aktiven Projektregeln zusammen. Ändere nichts."
+```
+
+Vor jeder Aufgabe:
+
+```bash
+pwd
+git status --short --branch
+git remote -v
+```
+
+Codex soll vor Änderungen die relevanten Dateien lesen, keine neuen Production-Dependencies ohne Rückfrage hinzufügen und nicht committen oder deployen, solange dies nicht ausdrücklich beauftragt wurde.
+
+## Git
+
+Der Standalone-Verlauf beginnt mit einem unabhängigen Root-Commit und enthält keine Historie der früheren Portfolio-Repositories. Den aktuellen Stand zeigt:
+
+```bash
+git log -1 --oneline
+```
+
+Für größere Änderungen:
+
+```bash
+git switch -c feat/kurze-beschreibung
+```
+
+Nach der Prüfung den Diff kontrollieren:
+
+```bash
+git diff --check
+git status
+git diff --staged
+```
+
+## Vercel
+
+Die lokale `.vercel/`-Verknüpfung gehört zum separaten Projekt `ivo-tech-portfolio-standalone` und wird nicht committed.
+
+Preview:
+
+```bash
+vercel deploy
+```
+
+Production nur nach ausdrücklicher Freigabe:
+
+```bash
+vercel deploy --prod
+```
+
+Die Domain `ivo-tech.com` darf dabei nicht automatisch umgestellt werden.
+
+## Struktur
 
 ```text
 src/
-  components/      UI sections, reusable components, legal pages
-  data/            project and home data
-  hooks/           animation and interaction hooks
-  lib/             integration helpers
+  components/   UI, Legal, Relaunch und Showcase
+  data/         Home- und Projektdaten
 public/
-  brand/           logo, 3D and project assets
-  fonts/           self-hosted fonts
+  brand/        Logos, 3D- und Projekt-Assets
+  images/       Portrait und weitere lokale Bilder
+  media/        Video und Poster
+  yves-simon-schenker-cv.pdf
 ```
 
-## Links
+## Kontakt und Links
 
-- Website: https://ivo-tech.com
-- GitHub profile: https://github.com/trixr1907
-- Contact: contact@ivo-tech.com
+- Portfolio: https://ivo-tech-portfolio-standalone.vercel.app
+- GitHub-Profil: https://github.com/trixr1907
+- Kontakt: contact@ivo-tech.com

@@ -1,7 +1,7 @@
 {
-  "name": "webseite",
+  "name": "ivo-tech-portfolio-standalone",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -53,5 +53,9 @@
     "esbuild": ">=0.28.1",
     "tmp": "^0.2.6",
     "uuid": "^11.1.1"
+  },
+  "engines": {
+    "node": ">=22 <25",
+    "npm": ">=10"
   }
 }
