@@ -49,6 +49,12 @@ function App() {
     const onScroll = () => setScrolled(window.scrollY > 48)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
+    const initialHash = window.location.hash
+    if (initialHash) {
+      window.setTimeout(() => {
+        document.getElementById(initialHash.slice(1))?.scrollIntoView({ behavior: 'auto', block: 'start' })
+      }, 0)
+    }
     return () => window.removeEventListener('scroll', onScroll)
   }, [loaded])
 
@@ -130,7 +136,7 @@ function App() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             aria-label="Navigation"
           >
-            <a className="h-brand" href="#top" aria-label="ivo-tech" onClick={(event) => handleNavClick(event, '#top')}>
+            <a className="h-brand" href="#top" aria-label="ivo-tech Portfolio von Yves Simon Schenker" onClick={(event) => handleNavClick(event, '#top')}>
               <img src="/brand/logos/ivo-tech-logo-master.svg" alt="ivo-tech" width={140} height={31} fetchPriority="high" />
             </a>
             <nav className="h-nav" aria-label="Hauptnavigation">
@@ -165,8 +171,9 @@ function App() {
                 exit={{ opacity: 0, y: -16 }}
                 role="dialog"
                 aria-modal="true"
-                aria-label="Mobile Navigation"
+                aria-labelledby="mobile-menu-title"
               >
+                <h2 id="mobile-menu-title" className="sr-only">Mobile Navigation</h2>
                 <nav>
                   {navItems.map(({ label, href }) => (
                     <a key={href} href={href} className="mobile-menu-link" onClick={(event) => handleNavClick(event, href)}>{label}</a>
@@ -181,7 +188,13 @@ function App() {
             <section className="hero relaunch-hero" id="top" aria-labelledby="hero-h">
               <div className="relaunch-shell hero-grid">
                 <motion.div className="hero-copy" initial={compactHero ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.15 }}>
-                  <div className="hero-eyebrow"><span>Ivo · Full-Stack Development / Frontend Craft</span><span className="hero-eyebrow-location">Mannheim · Remote</span></div>
+                  <div className="hero-eyebrow">
+                    <span>
+                      Yves Simon Schenker (Ivo) · Full-Stack Developer mit Frontend-Fokus
+                      <span className="sr-only">Full-Stack Development / Frontend Craft</span>
+                    </span>
+                    <span className="hero-eyebrow-location">Mannheim/Rhein-Neckar · Remote &amp; Hybrid</span>
+                  </div>
                   <SplitTitle lines={['Ich baue,', 'was bleibt.']} immediate={compactHero} />
                   <p className="hero-sub">Ich entwickle produktionsreife Webapplikationen — vom belastbaren System bis zum präzisen Interface und stabilen Live-Betrieb.</p>
                   <div className="hero-ctas">

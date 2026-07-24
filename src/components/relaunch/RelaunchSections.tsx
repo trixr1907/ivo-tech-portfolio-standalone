@@ -53,6 +53,7 @@ export function AboutSection() {
             <span className="relaunch-kicker">Über mich</span>
             <span className="relaunch-index">— 01</span>
           </div>
+          <p className="about-relaunch-name">Yves Simon Schenker <span>(Ivo)</span></p>
           <SectionTitle
             id="about-heading"
             lines={[
@@ -63,7 +64,7 @@ export function AboutSection() {
           <p className="relaunch-lead">
             Ich entwickle Webanwendungen mit einem starken Blick für Frontend-Qualität — und genug
             Full-Stack-Tiefe, damit Datenmodell, Rechte, Fehlerfälle und Betrieb nicht an der Oberfläche enden.
-            Basis Mannheim/Rhein-Neckar, offen für passende Remote- und Hybrid-Rollen.
+            Aus Mannheim/Rhein-Neckar und offen für passende Remote- und Hybrid-Rollen.
           </p>
           <div className="about-relaunch-actions">
             <MagButton className="btn-ghost" href="/yves-simon-schenker-cv.pdf" download>
@@ -244,7 +245,7 @@ export function RelaunchFooter() {
           loading="lazy"
           decoding="async"
         />
-        <p>Full-Stack Developer mit Frontend-Fokus · Mannheim · {new Date().getFullYear()}</p>
+        <p>Yves Simon Schenker (Ivo) · Full-Stack Developer mit Frontend-Fokus · Mannheim · {new Date().getFullYear()}</p>
         <nav aria-label="Footer">
           <a href="#top">Top</a>
           <a href="#selected-work">Projekte</a>
