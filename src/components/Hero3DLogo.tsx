@@ -6,6 +6,8 @@ import {
   Box3,
   Color,
   DirectionalLight,
+  DoubleSide,
+  ExtrudeGeometry,
   Group,
   HemisphereLight,
   MathUtils,
@@ -24,7 +26,7 @@ import {
 } from 'three'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js'
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { SVGLoader } from 'three/addons/loaders/SVGLoader.js'
 
 type Hero3DLogoProps = {
   fallbackSrc?: string
@@ -43,7 +45,7 @@ type FacetState = {
   delay: number
 }
 
-const LOGO_GLB_URL = '/brand/3d/ivo-tech-logo-icon-3d-emblem.glb'
+const LOGO_SVG_URL = '/brand/logos/ivo-tech-logo-icon.svg'
 const ASSEMBLY_OFFSETS = [
   [-24, 14, -26],
   [-16, -18, -18],
@@ -92,8 +94,23 @@ function smoothPulse(value: number) {
 
 function styleMaterial(material: MeshStandardMaterial) {
   const name = material.name.toLowerCase()
+  const vectorColor =
+    typeof material.userData.vectorColorHex === 'number'
+      ? new Color(material.userData.vectorColorHex)
+      : material.userData.vectorColor instanceof Color
+        ? material.userData.vectorColor
+        : null
 
-  if (name.includes('ice')) {
+  if (vectorColor) {
+    material.color.copy(vectorColor)
+    material.metalness = 0.72
+    material.roughness = 0.28
+    material.envMapIntensity = 0.72
+    if (vectorColor.b > 0.55 && vectorColor.g > 0.35) {
+      material.emissive.copy(vectorColor)
+      material.emissiveIntensity = 0.18
+    }
+  } else if (name.includes('ice')) {
     material.color.set(0x7be7ff)
     material.emissive = new Color(0x46cdea)
     material.emissiveIntensity = 0.42
@@ -182,6 +199,43 @@ function prepareFacets(root: Group) {
   return facets
 }
 
+function buildVectorLogo(svgText: string) {
+  const parsed = new SVGLoader().parse(svgText)
+  const root = new Group()
+  root.scale.y = -1
+  const svgColors = [...svgText.matchAll(/\bfill="([^"]+)"/g)].map((match) => match[1])
+
+  for (const [pathIndex, path] of parsed.paths.entries()) {
+    const style = path.userData.style as { fill?: string } | undefined
+    const fill = svgColors[pathIndex] ?? style?.fill
+    const color = fill && fill !== 'none' ? new Color(fill) : path.color?.clone() ?? new Color(0xdce6f2)
+    for (const shape of path.toShapes()) {
+      const geometry = new ExtrudeGeometry(shape, {
+        bevelEnabled: true,
+        bevelSegments: 2,
+        bevelSize: 0.9,
+        bevelThickness: 0.9,
+        curveSegments: 2,
+        depth: 5.5,
+      })
+      const material = new MeshStandardMaterial({
+        color,
+        metalness: 0.72,
+        roughness: 0.28,
+        envMapIntensity: 0.72,
+        side: DoubleSide,
+        transparent: true,
+        opacity: 0,
+      })
+      material.name = 'vector-facet'
+      material.userData.vectorColorHex = color.getHex()
+      root.add(new Mesh(geometry, material))
+    }
+  }
+
+  return root
+}
+
 export default function Hero3DLogo({ fallbackSrc, alt = 'ivo-tech 3D Logo' }: Hero3DLogoProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -232,7 +286,7 @@ export default function Hero3DLogo({ fallbackSrc, alt = 'ivo-tech 3D Logo' }: He
     camera.position.set(0, 0, 9.6)
 
     const root = new Group()
-    root.rotation.set(MathUtils.degToRad(-8), MathUtils.degToRad(-20), MathUtils.degToRad(1.5))
+    root.rotation.set(MathUtils.degToRad(-4), MathUtils.degToRad(-12), MathUtils.degToRad(1))
     scene.add(root)
 
     const logoGroup = new Group()
@@ -267,11 +321,14 @@ export default function Hero3DLogo({ fallbackSrc, alt = 'ivo-tech 3D Logo' }: He
     lightSweep.lookAt(0, 0, 0)
     scene.add(lightSweep)
 
-    new GLTFLoader().load(
-      LOGO_GLB_URL,
-      (gltf) => {
+    fetch(LOGO_SVG_URL)
+      .then((response) => {
+        if (!response.ok) throw new Error(`Logo SVG request failed with ${response.status}`)
+        return response.text()
+      })
+      .then((svgText) => {
         if (disposed) return
-        const model = gltf.scene
+        const model = buildVectorLogo(svgText)
         facets = prepareFacets(model)
 
         const box = new Box3().setFromObject(model)
@@ -294,14 +351,12 @@ export default function Hero3DLogo({ fallbackSrc, alt = 'ivo-tech 3D Logo' }: He
 
         modelReadyAt = performance.now()
         wrapper.dataset.ready = 'true'
-        wrapper.dataset.asset = 'emblem-9-facet'
+        wrapper.dataset.asset = 'svg-vector-9-facet'
         setLoading(false)
-      },
-      undefined,
-      () => {
+      })
+      .catch(() => {
         if (!disposed) setWebglFailed(true)
-      },
-    )
+      })
 
     const hero = wrapper.closest<HTMLElement>('.hero')
     const onSequenceProgress = (event: Event) => {
@@ -396,10 +451,10 @@ export default function Hero3DLogo({ fallbackSrc, alt = 'ivo-tech 3D Logo' }: He
       }
 
       const settled = MathUtils.clamp((assemblyTime - 1.15) / 0.8, 0, 1)
-      root.rotation.x = MathUtils.degToRad(-8) - pointerCurrent.y * 0.052 + scrollProgress * 0.08
+      root.rotation.x = MathUtils.degToRad(-4) - pointerCurrent.y * 0.052 + scrollProgress * 0.08
       root.rotation.y =
-        MathUtils.degToRad(-20) + pointerCurrent.x * 0.087 + Math.sin(time * 0.33) * 0.025 + scrollProgress * 0.38
-      root.rotation.z = MathUtils.degToRad(1.5) + Math.sin(time * 0.27) * 0.012 - scrollProgress * 0.06
+        MathUtils.degToRad(-12) + pointerCurrent.x * 0.087 + Math.sin(time * 0.33) * 0.025 + scrollProgress * 0.22
+      root.rotation.z = MathUtils.degToRad(1) + Math.sin(time * 0.27) * 0.012 - scrollProgress * 0.04
       root.position.y = Math.sin(time * 0.52) * 0.045 * settled - scrollProgress * 0.18
       root.position.x = Math.sin(scrollProgress * Math.PI) * 0.12
       root.scale.setScalar(0.965 + settled * 0.035 - scrollProgress * 0.025)
@@ -455,7 +510,7 @@ export default function Hero3DLogo({ fallbackSrc, alt = 'ivo-tech 3D Logo' }: He
       role="img"
       aria-label={alt}
       data-ready="false"
-      data-asset="emblem-9-facet"
+      data-asset="svg-vector-9-facet"
       data-mode="webgl"
     >
       {loading ? (

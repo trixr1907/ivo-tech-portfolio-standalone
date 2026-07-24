@@ -6,21 +6,24 @@
     <meta name="theme-color" content="#05070B" />
     <meta
       name="description"
-      content="Ivo — Full-Stack Developer mit Frontend-Fokus aus Mannheim. React, TypeScript, Supabase, Three.js. Produktionsreife Webapplikationen von der Architektur bis zum Deploy."
+      content="Yves Simon Schenker (Ivo) ist Full-Stack Developer mit Frontend-Fokus aus Mannheim/Rhein-Neckar. Er baut produktionsreife Webapplikationen und ist offen für passende Remote- und Hybrid-Rollen."
     />
-    <meta property="og:title" content="ivo-tech — Full-Stack Developer mit Frontend-Fokus, Mannheim" />
+    <meta property="og:title" content="Yves Simon Schenker (Ivo) — Full-Stack Developer mit Frontend-Fokus" />
     <meta
       property="og:description"
-      content="Full-Stack Developer mit Frontend-Fokus aus Mannheim. Ich entwickle produktionsreife Webapplikationen — von der Architektur bis zum Live-Deploy. React, TypeScript, Supabase, Three.js."
+      content="Yves Simon Schenker (Ivo) aus Mannheim/Rhein-Neckar entwickelt produktionsreife Webapplikationen mit Frontend-Fokus — von der Architektur bis zum Live-Betrieb."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://ivo-tech.com/brand/social/ivo-tech-og-image.png" />
-    <meta property="og:url" content="https://ivo-tech.com/" />
+    <meta property="og:site_name" content="ivo-tech · Yves Simon Schenker" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:image" content="https://ivo-tech-portfolio-standalone.vercel.app/brand/social/ivo-tech-og-image.png" />
+    <meta property="og:image:alt" content="ivo-tech Portfolio von Yves Simon Schenker (Ivo)" />
+    <meta property="og:url" content="https://ivo-tech-portfolio-standalone.vercel.app/" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ivo-tech — Full-Stack Developer mit Frontend-Fokus, Mannheim" />
-    <meta name="twitter:description" content="Full-Stack Developer mit Frontend-Fokus aus Mannheim. Produktionsreife Webapplikationen — React, TypeScript, Supabase, Three.js." />
-    <meta name="twitter:image" content="https://ivo-tech.com/brand/social/ivo-tech-og-image.png" />
-    <link rel="canonical" href="https://ivo-tech.com/" />
+    <meta name="twitter:title" content="Yves Simon Schenker (Ivo) — Full-Stack Developer mit Frontend-Fokus" />
+    <meta name="twitter:description" content="Portfolio von Yves Simon Schenker (Ivo) aus Mannheim/Rhein-Neckar: GOALS Optimizer, Event Management Hub und DLD 3D-Konfigurator." />
+    <meta name="twitter:image" content="https://ivo-tech-portfolio-standalone.vercel.app/brand/social/ivo-tech-og-image.png" />
+    <link rel="canonical" href="https://ivo-tech-portfolio-standalone.vercel.app/" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -32,22 +35,38 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "ivo-tech",
-        "url": "https://ivo-tech.com/",
-        "description": "Yves Simon Schenker ist Full-Stack Developer mit Frontend-Fokus aus Mannheim und entwickelt produktionsreife Webapplikationen mit React, TypeScript, Supabase und Three.js.",
-        "author": {
-          "@type": "Person",
-          "name": "Ivo",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Mannheim",
-            "addressCountry": "DE"
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://ivo-tech-portfolio-standalone.vercel.app/#person",
+            "name": "Yves Simon Schenker",
+            "alternateName": "Ivo",
+            "url": "https://ivo-tech-portfolio-standalone.vercel.app/",
+            "jobTitle": "Full-Stack Developer mit Frontend-Fokus",
+            "email": "mailto:contact@ivo-tech.com",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Mannheim",
+              "addressRegion": "Rhein-Neckar",
+              "addressCountry": "DE"
+            },
+            "sameAs": ["https://github.com/trixr1907"]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://ivo-tech-portfolio-standalone.vercel.app/#website",
+            "name": "ivo-tech · Yves Simon Schenker",
+            "url": "https://ivo-tech-portfolio-standalone.vercel.app/",
+            "description": "Portfolio von Yves Simon Schenker (Ivo), Full-Stack Developer mit Frontend-Fokus aus Mannheim/Rhein-Neckar.",
+            "inLanguage": "de-DE",
+            "author": {
+              "@id": "https://ivo-tech-portfolio-standalone.vercel.app/#person"
+            }
           }
-        }
+        ]
       }
     </script>
-    <title>ivo-tech — Full-Stack Developer mit Frontend-Fokus, Mannheim</title>
+    <title>Yves Simon Schenker (Ivo) — Full-Stack Developer mit Frontend-Fokus</title>
     <style>
       /* Block flash while fonts load */
       html { background: #05070b; }
@@ -64,6 +83,14 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <main style="max-width: 60rem; margin: 0 auto; padding: 3rem 1.25rem; color: #f3f0e8; background: #0b0e12; font: 1rem/1.6 system-ui, sans-serif;">
+        <p>ivo-tech · Portfolio</p>
+        <h1>Yves Simon Schenker (Ivo)</h1>
+        <p>Full-Stack Developer mit Frontend-Fokus aus Mannheim/Rhein-Neckar. Offen für passende Remote- und Hybrid-Rollen.</p>
+        <p><a href="/yves-simon-schenker-cv.pdf">Lebenslauf herunterladen</a> · <a href="mailto:contact@ivo-tech.com">contact@ivo-tech.com</a></p>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

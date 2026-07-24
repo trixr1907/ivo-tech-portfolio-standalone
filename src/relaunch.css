@@ -128,6 +128,8 @@
 .about-relaunch-portrait { position: relative; }
 .about-relaunch-portrait img { display: block; width: 100%; height: auto; aspect-ratio: 1; border-radius: 28px; object-fit: cover; border: 1px solid rgba(90,183,232,.24); box-shadow: 0 30px 90px rgba(0,0,0,.35); }
 .about-relaunch-copy .relaunch-lead { max-width: 640px; }
+.about-relaunch-name { margin: 1.2rem 0 .9rem; color: var(--white); font: 800 .78rem/1.4 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+.about-relaunch-name span { color: var(--cyan); }
 .about-relaunch-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
 
 .relaunch-showcase { overflow: hidden; }

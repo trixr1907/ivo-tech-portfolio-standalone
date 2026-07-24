@@ -77,6 +77,7 @@ em { color: var(--cyan); font-style: normal; }
 .c-ring { border: 1px solid rgba(220,230,242,.45); transition: width .2s ease,height .2s ease,border-color .2s ease; }
 
 .hero-eyebrow { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 1.2rem; color: var(--cyan); font: 800 .68rem/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; }
+.hero-eyebrow > span { min-width: 0; }
 .hero-eyebrow-location { color: rgba(191,201,210,.58); }
 .hero-title { color: var(--white); font-family: var(--font-display); font-weight: 700; line-height: .88; letter-spacing: -.075em; }
 .title-line { display: block; overflow: hidden; padding-right: .09em; line-height: .96; }

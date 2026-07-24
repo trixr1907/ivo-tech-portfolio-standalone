@@ -16,7 +16,7 @@ export function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
       id={`project-${project.id}`}
       className={`project-card relaunch-project-card${isPrimary ? ' relaunch-project-card--primary' : ''}`}
     >
-      <button type="button" className="project-card__button" onClick={() => onOpen(project)}>
+      <button type="button" className="project-card__button" onClick={() => onOpen(project)} aria-label={`${project.title} Case Study öffnen`}>
         <span className="project-card__media">
           <img
             src={project.cover}
@@ -24,7 +24,7 @@ export function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
             width={1440}
             height={project.id === 'dld-3d-configurator' ? 2337 : project.id === 'event-hub' ? 577 : 900}
             sizes="(max-width: 760px) 100vw, 50vw"
-            loading="eager"
+            loading={index === 1 ? 'eager' : 'lazy'}
             fetchPriority={index === 1 ? 'high' : 'auto'}
             decoding="async"
           />
