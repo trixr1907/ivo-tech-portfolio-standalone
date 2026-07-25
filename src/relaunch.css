@@ -34,6 +34,7 @@
 
 .hero-copy { max-width: 720px; }
 .hero-copy .hero-title { font-size: clamp(4rem, 8.6vw, 8.75rem); }
+.hero-copy .hero-title .title-line:last-child > span { color: var(--cyan); }
 .hero-copy .hero-sub { max-width: 650px; margin-top: 1.8rem; font-size: clamp(1.05rem, 1.4vw, 1.25rem); line-height: 1.7; }
 .hero-copy .hero-ctas { margin-top: 2rem; }
 .hero-meta {
@@ -113,6 +114,19 @@
   padding: clamp(6rem, 11vw, 10rem) 0;
   scroll-margin-top: 6rem;
 }
+
+/* editorial rhythm: hairline dividers between major sections */
+.relaunch-section::before, .relaunch-showcase::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(1240px, calc(100% - clamp(2rem, 6vw, 7rem)));
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(243, 240, 232, 0.11) 18%, rgba(243, 240, 232, 0.11) 82%, transparent);
+  pointer-events: none;
+}
 .relaunch-section-head { display: grid; grid-template-columns: minmax(200px,.5fr) minmax(0,1.4fr); gap: 1.5rem clamp(2rem,6vw,6rem); align-items: start; margin-bottom: clamp(2.8rem,6vw,5rem); }
 .relaunch-section-head > h2, .showcase-head > h2 { grid-column: 2; font-family: var(--font-display); font-size: clamp(3rem,6vw,6.4rem); line-height: .92; letter-spacing: -.065em; color: var(--white); }
 .relaunch-section-head .relaunch-lead, .showcase-head .relaunch-lead { grid-column: 2; max-width: 760px; color: var(--muted); font-size: clamp(1rem,1.3vw,1.18rem); line-height: 1.75; }
@@ -136,7 +150,7 @@
 .about-relaunch-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
 
 .relaunch-showcase { overflow: hidden; }
-.relaunch-showcase::before { content: ''; position: absolute; inset: 10% auto auto -16%; width: 44vw; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(90,183,232,.09), transparent 65%); pointer-events: none; }
+.relaunch-showcase::after { content: ''; position: absolute; inset: 10% auto auto -16%; width: 44vw; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(90,183,232,.09), transparent 65%); pointer-events: none; }
 .relaunch-showcase .showcase-head { display: grid; grid-template-columns: minmax(200px,.5fr) minmax(0,1.4fr); gap: 1.5rem clamp(2rem,6vw,6rem); align-items: start; margin-bottom: clamp(2.8rem,6vw,5rem); }
 .relaunch-showcase .showcase-head .relaunch-kicker-row { grid-row: 1 / span 3; }
 .relaunch-showcase .showcase-grid { grid-template-columns: 1fr; gap: 1px; border-radius: 36px; }
