@@ -55,8 +55,10 @@ em { color: var(--cyan); font-style: normal; }
 .h-brand { display: inline-flex; align-items: center; min-height: 44px; }
 .h-brand img { width: 140px; }
 .h-nav { display: flex; justify-content: center; gap: clamp(.25rem,1vw,1rem); }
-.h-link { display: inline-flex; min-height: 44px; align-items: center; padding: 0 .75rem; color: var(--muted); font: 700 .7rem/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; transition: color .2s ease; }
+.h-link { position: relative; display: inline-flex; min-height: 44px; align-items: center; padding: 0 .75rem; color: var(--muted); font: 700 .7rem/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; transition: color .2s ease; }
 .h-link:hover { color: var(--white); }
+.h-link.is-active { color: var(--white); }
+.h-link.is-active::after { content: ''; position: absolute; left: .75rem; right: .75rem; bottom: .55rem; height: 1px; background: var(--cyan); }
 .h-right { display: flex; align-items: center; gap: .7rem; }
 .h-status { display: inline-flex; align-items: center; gap: .45rem; color: var(--muted); font: 700 .65rem/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
 .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: #59d499; box-shadow: 0 0 12px rgba(89,212,153,.6); }

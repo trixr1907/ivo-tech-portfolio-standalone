@@ -19,6 +19,7 @@ export function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
       <button type="button" className="project-card__button" onClick={() => onOpen(project)} aria-label={`${project.title} Case Study öffnen`}>
         <span className="project-card__media">
           <img
+            className={project.id === 'dld-3d-configurator' ? 'project-card__media--portrait' : undefined}
             src={project.cover}
             alt={`${project.title} — Produktansicht`}
             width={1440}

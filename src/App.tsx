@@ -30,6 +30,7 @@ function App() {
   const [compactHero, setCompactHero] = useState(() => window.matchMedia(COMPACT_HERO_QUERY).matches)
   const [loaded, setLoaded] = useState(compactHero)
   const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState<string>('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [canvasReady, setCanvasReady] = useState(false)
   const heroStageRef = useRef<HTMLDivElement>(null)
@@ -56,6 +57,24 @@ function App() {
       }, 0)
     }
     return () => window.removeEventListener('scroll', onScroll)
+  }, [loaded])
+
+  useEffect(() => {
+    if (!loaded) return
+    const ids = ['about', 'selected-work', 'craft', 'lab', 'kontakt']
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection('#' + entry.target.id)
+        }
+      },
+      { rootMargin: '-38% 0px -55% 0px' }
+    )
+    ids.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+    return () => observer.disconnect()
   }, [loaded])
 
   useEffect(() => {
@@ -141,7 +160,7 @@ function App() {
             </a>
             <nav className="h-nav" aria-label="Hauptnavigation">
               {navItems.map(({ label, href }) => (
-                <a key={href} href={href} className="h-link" onClick={(event) => handleNavClick(event, href)}>{label}</a>
+                <a key={href} href={href} className={`h-link${activeSection === href ? ' is-active' : ''}`} aria-current={activeSection === href ? 'true' : undefined} onClick={(event) => handleNavClick(event, href)}>{label}</a>
               ))}
             </nav>
             <div className="h-right">
@@ -206,6 +225,11 @@ function App() {
                 </motion.div>
 
                 <motion.div className="hero-visual" initial={compactHero ? false : { opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} aria-label="ivo-tech 9-Facet-Emblem">
+                  <div className="hero-visual-grid" aria-hidden="true" />
+                  <div className="hero-visual-beam" aria-hidden="true" />
+                  <div className="hero-visual-readout hero-visual-readout--top" aria-hidden="true">
+                    <span>Neun Teile</span><b>Ein System</b>
+                  </div>
                   <div className="hv-webgl-stage" ref={heroStageRef}>
                     <ErrorBoundary fallback={<img className="hv-fallback" src={HERO_3D_FALLBACK_SRC} alt="ivo-tech Logo" width={246} height={149} />}>
                       {enableHero3D ? (
@@ -219,13 +243,15 @@ function App() {
                       )}
                     </ErrorBoundary>
                   </div>
-                  <div className="hero-object-caption"><span>09 Facetten</span><span>Ein System</span></div>
+                  <div className="hero-object-caption"><span>Das ivo-tech Emblem</span><span>Folgt dem Zeiger</span></div>
                 </motion.div>
               </div>
             </section>
 
-            <div className="relaunch-signal-band" aria-label="Kompetenzen">
-              <span>React</span><span>TypeScript</span><span>Supabase</span><span>Three.js</span><span>Testing</span><span>Live Production</span>
+            <div className="relaunch-signal-band" aria-label="Kern-Technologien">
+              <div className="signal-band-track">
+                <span>React</span><span>TypeScript</span><span>Next.js</span><span>Supabase</span><span>Three.js</span><span>Vitest &amp; Playwright</span>
+              </div>
             </div>
 
             <AboutSection />

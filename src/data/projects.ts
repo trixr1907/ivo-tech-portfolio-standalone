@@ -144,7 +144,7 @@ export const projects: Project[] = [
     tagline:
       'Live bei deinlieblingsdruck.de: ein WooCommerce-Konfigurator für 3D-Druck mit Datei-Upload, 3D-Vorschau, Material- und Farbauswahl, Preisberechnung, Warenkorb-Anbindung und eigenem WordPress-Adminbereich.',
     problem:
-      '3D-Druck lässt sich online nur schwer sauber verkaufen: Dateien müssen geprüft, Maße erkannt, Material und Farbe gewählt, Preise nachvollziehbar berechnet und Sonderanfertigungen rechtlich abgesichert werden. Zusätzlich braucht der Betreiber ein Admin-Panel, um Preise, Druckerprofile, Farben und Engine-Verbindungen ohne Code-Änderung zu steuern.',
+      '3D-Druck online verkaufen heißt: Dateien prüfen, Preise nachvollziehbar berechnen, rechtlich absichern — und den Betrieb im Admin steuerbar halten.',
     facts: [
       { label: 'Problem', value: '3D-Dateien, Preise und Checkout müssen verständlich zusammenlaufen' },
       { label: 'Lösung', value: 'WooCommerce-Plugin mit Upload, Three.js-Vorschau, Admin und Preislogik' },
