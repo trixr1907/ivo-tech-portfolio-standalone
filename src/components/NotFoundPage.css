@@ -49,7 +49,7 @@
 
 .not-found-code {
   margin: 0 0 1rem;
-  color: var(--cyan);
+  color: var(--accent);
   font-size: 0.75rem;
   font-weight: 750;
   letter-spacing: 0.16em;
@@ -99,13 +99,13 @@
 }
 
 .not-found-actions .not-found-primary {
-  border-color: var(--cyan);
-  color: var(--black);
-  background: var(--cyan);
+  border-color: var(--accent);
+  color: var(--primary);
+  background: var(--accent);
 }
 
 .not-found-actions .not-found-primary:hover,
 .not-found-actions .not-found-primary:focus-visible {
-  color: var(--black);
-  background: var(--cyan-light);
+  color: var(--primary);
+  background: var(--accent);
 }

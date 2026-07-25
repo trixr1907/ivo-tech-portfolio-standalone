@@ -14,7 +14,7 @@
 
 .legal-back {
   display: inline-block;
-  color: var(--cyan, #00b7ff);
+  color: var(--accent, #C8FF00);
   text-decoration: none;
   font-size: 0.85rem;
   font-weight: 600;
@@ -60,7 +60,7 @@
 }
 
 .legal-page a {
-  color: var(--cyan, #00b7ff);
+  color: var(--accent, #C8FF00);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
