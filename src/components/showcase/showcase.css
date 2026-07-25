@@ -255,10 +255,9 @@
 }
 
 .project-modal {
-  z-index: 1400;
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 1400;
   display: grid;
   place-items: stretch;
   padding: clamp(0.75rem, 2vw, 1.5rem);

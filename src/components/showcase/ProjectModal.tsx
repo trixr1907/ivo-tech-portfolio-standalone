@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type React from 'react'
 import type { Project } from '../../data/projects'
 
@@ -171,6 +171,86 @@ const modalReviewFixStyles = `
     text-transform: uppercase;
   }
 
+  .project-modal__toc {
+    position: sticky;
+    /* site header occupies the top ~90px of the viewport — keep the TOC below it */
+    top: 92px;
+    z-index: 8;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0.65rem clamp(1.5rem, 3vw, 2.5rem);
+    border-block: 1px solid rgba(220, 230, 242, 0.09);
+    background: rgba(5, 7, 11, 0.86);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .project-modal__toc button {
+    border: 1px solid rgba(220, 230, 242, 0.14);
+    border-radius: 999px;
+    padding: 0.34rem 0.72rem;
+    color: rgba(220, 230, 242, 0.68);
+    background: transparent;
+    font: 700 0.66rem/1 var(--font-display);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+  }
+
+  .project-modal__toc button:hover,
+  .project-modal__toc button:focus-visible {
+    color: var(--cyan);
+    border-color: rgba(123, 231, 255, 0.55);
+    outline: none;
+  }
+
+  .project-modal__toc button.is-active {
+    color: #05070b;
+    border-color: rgba(123, 231, 255, 0.9);
+    background: rgba(123, 231, 255, 0.9);
+  }
+
+  .project-modal__shots figure {
+    cursor: zoom-in;
+  }
+
+  .project-modal__shots figure:focus-visible {
+    outline: 2px solid rgba(123, 231, 255, 0.8);
+    outline-offset: 3px;
+  }
+
+  .project-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+    padding: clamp(1rem, 4vw, 3rem);
+    background: rgba(1, 3, 7, 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    cursor: zoom-out;
+  }
+
+  .project-lightbox img {
+    max-width: 100%;
+    max-height: calc(100svh - 6rem);
+    border: 1px solid rgba(220, 230, 242, 0.14);
+    border-radius: 14px;
+    object-fit: contain;
+    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.7);
+  }
+
+  .project-lightbox figcaption {
+    margin-top: 0.9rem;
+    color: rgba(220, 230, 242, 0.74);
+    font: 600 0.8rem/1.5 var(--font-display);
+    letter-spacing: 0.05em;
+    text-align: center;
+  }
+
   @media (max-width: 680px) {
     .project-modal {
       padding: 0;
@@ -179,13 +259,27 @@ const modalReviewFixStyles = `
     .project-modal__dialog {
       max-height: 100svh;
     }
+
+    .project-modal__toc {
+      top: 0;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      scrollbar-width: none;
+    }
+
+    .project-modal__toc::-webkit-scrollbar {
+      display: none;
+    }
   }
 `
 
 export function ProjectModal({ project, onClose }: ProjectModalProps) {
   const modalRef = useRef<HTMLDivElement>(null)
   const dialogRef = useRef<HTMLDivElement>(null)
+  const bodyRef = useRef<HTMLDivElement>(null)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const [lightbox, setLightbox] = useState<{ src: string; caption: string } | null>(null)
+  const [activeToc, setActiveToc] = useState<string>('overview')
 
   useEffect(() => {
     const previousActiveElement = document.activeElement instanceof HTMLElement ? document.activeElement : null
@@ -212,7 +306,11 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault()
-        onClose()
+        setLightbox((current) => {
+          if (current) return null
+          onClose()
+          return current
+        })
         return
       }
 
@@ -251,6 +349,45 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     }
   }, [onClose])
 
+  const tocSections = [
+    { id: 'overview', label: 'Überblick' },
+    project.signals ? { id: 'signals', label: 'Signale' } : null,
+    project.architecture ? { id: 'architecture', label: 'Architektur' } : null,
+    project.fileStates ? { id: 'flächen', label: 'Flächen' } : null,
+    { id: 'highlights', label: 'Highlights' },
+    project.trustChecks || project.impact ? { id: 'trust', label: 'Betrieb' } : null,
+    { id: 'gallery', label: 'Screens' },
+  ].filter((section): section is { id: string; label: string } => section !== null)
+
+  useEffect(() => {
+    const body = bodyRef.current
+    if (!body) return undefined
+    const targets = tocSections
+      .map((section) => body.querySelector<HTMLElement>(`[data-toc-section="${section.id}"]`))
+      .filter((el): el is HTMLElement => el !== null)
+    if (targets.length === 0) return undefined
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('data-toc-section')
+            if (id) setActiveToc(id)
+          }
+        }
+      },
+      { root: body, rootMargin: '-18% 0px -70% 0px' },
+    )
+    targets.forEach((target) => observer.observe(target))
+    return () => observer.disconnect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const scrollToSection = useCallback((id: string) => {
+    bodyRef.current
+      ?.querySelector<HTMLElement>(`[data-toc-section="${id}"]`)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [])
+
   const hasLinks = Boolean(project.links.demo || project.links.repo)
 
   return (
@@ -268,7 +405,19 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           ×
         </button>
 
-        <div className="project-modal__body">
+        <div ref={bodyRef} className="project-modal__body">
+          <nav className="project-modal__toc" aria-label="Case-Study-Inhalt">
+            {tocSections.map((section) => (
+              <button
+                key={section.id}
+                type="button"
+                className={activeToc === section.id ? 'is-active' : undefined}
+                onClick={() => scrollToSection(section.id)}
+              >
+                {section.label}
+              </button>
+            ))}
+          </nav>
           <header className="project-modal__hero">
             <div
               className="project-modal__hero-media"
@@ -289,7 +438,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
           </header>
 
-          <div className="project-modal__overview" aria-label="Projektübersicht">
+          <div className="project-modal__overview" data-toc-section="overview" aria-label="Projektübersicht">
             <section>
               <span>01</span>
               <h3>Was gebaut</h3>
@@ -308,7 +457,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
 
           {project.signals ? (
-            <section className="project-modal__signals" aria-label="Projekt-Signale">
+            <section className="project-modal__signals" data-toc-section="signals" aria-label="Projekt-Signale">
               {project.signals.map((signal) => (
                 <article key={signal.label}>
                   <span>{signal.label}</span>
@@ -320,7 +469,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           ) : null}
 
           {project.architecture ? (
-            <section className="project-modal__architecture" aria-labelledby={`${project.id}-architecture`}>
+            <section className="project-modal__architecture" data-toc-section="architecture" aria-labelledby={`${project.id}-architecture`}>
               <div>
                 <span className="project-modal__eyebrow">System Schema</span>
                 <h3 id={`${project.id}-architecture`}>Vom Browser bis zur Fertigungslogik</h3>
@@ -334,7 +483,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           ) : null}
 
           {project.fileStates ? (
-            <section className="project-modal__file-states" aria-labelledby={`${project.id}-file-states`}>
+            <section className="project-modal__file-states" data-toc-section="flächen" aria-labelledby={`${project.id}-file-states`}>
               <div className="project-modal__section-head">
                 <span className="project-modal__eyebrow">Frontend · Admin · Support</span>
                 <h3 id={`${project.id}-file-states`}>Drei Oberflächen für ein Produkt</h3>
@@ -351,7 +500,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </section>
           ) : null}
 
-          <section className="project-modal__highlights" aria-labelledby={`${project.id}-highlights`}>
+          <section className="project-modal__highlights" data-toc-section="highlights" aria-labelledby={`${project.id}-highlights`}>
             <div>
               <span className="project-modal__eyebrow">System Highlights</span>
               <h3 id={`${project.id}-highlights`}>Warum es mehr als CRUD ist</h3>
@@ -364,7 +513,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </section>
 
           {project.trustChecks || project.impact ? (
-            <section className="project-modal__trust" aria-labelledby={`${project.id}-trust`}>
+            <section className="project-modal__trust" data-toc-section="trust" aria-labelledby={`${project.id}-trust`}>
               <div>
                 <span className="project-modal__eyebrow">Betrieb & Wirkung</span>
                 <h3 id={`${project.id}-trust`}>Kontrolle vor der Bestellung</h3>
@@ -389,14 +538,26 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </section>
           ) : null}
 
-          <section className="project-modal__gallery" aria-labelledby={`${project.id}-gallery`}>
+          <section className="project-modal__gallery" data-toc-section="gallery" aria-labelledby={`${project.id}-gallery`}>
             <div className="project-modal__section-head">
               <span className="project-modal__eyebrow">Screenshots</span>
               <h3 id={`${project.id}-gallery`}>Projekt-Screens</h3>
             </div>
             <div className="project-modal__shots">
               {project.screenshots.map((screenshot) => (
-                <figure key={screenshot.src}>
+                <figure
+                  key={screenshot.src}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Screenshot vergrößern: ${screenshot.caption}`}
+                  onClick={() => setLightbox(screenshot)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault()
+                      setLightbox(screenshot)
+                    }
+                  }}
+                >
                   <img src={screenshot.src} alt={screenshot.caption} loading="lazy" decoding="async" />
                   <figcaption>
                     <span className="project-modal__shot-label">{project.status === 'lab-prototype' ? 'Lab Prototype Screenshot' : 'Live Demo Screenshot'}</span>
@@ -432,6 +593,23 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </footer>
         </div>
       </div>
+      {lightbox ? (
+        <div
+          className="project-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Screenshot: ${lightbox.caption}`}
+          onClick={() => setLightbox(null)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') setLightbox(null)
+          }}
+        >
+          <figure>
+            <img src={lightbox.src} alt={lightbox.caption} />
+            <figcaption>{lightbox.caption} — Klicken zum Schließen</figcaption>
+          </figure>
+        </div>
+      ) : null}
     </div>
   )
 }
