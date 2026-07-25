@@ -93,22 +93,6 @@
   color: var(--muted); font: 800 .66rem/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase;
 }
 
-.relaunch-signal-band {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  padding: 1rem clamp(1rem, 4vw, 3rem);
-  border-block: 1px solid rgba(243,240,232,.09);
-  background: rgba(18,23,29,.5);
-  font: 800 .68rem/1 var(--font-mono);
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.relaunch-signal-band span::before { content: '◆'; margin-right: .75rem; color: var(--cyan); font-size: .48rem; }
-
 .relaunch-section, .relaunch-showcase {
   position: relative;
   padding: clamp(6rem, 11vw, 10rem) 0;
@@ -174,6 +158,8 @@
 .principle-card p { color: var(--muted); line-height: 1.7; }
 .principle-proof { display: inline-flex; min-height: 44px; align-items: center; gap: .45rem; margin-top: 1.35rem; color: var(--cyan); font: 750 .72rem/1.5 var(--font-mono); letter-spacing: .04em; }
 .principle-proof:hover { color: var(--white); }
+.craft-stack-line { margin: 0; color: rgba(191,201,210,.6); font: 700 .7rem/1.6 var(--font-mono); letter-spacing: .1em; }
+.craft-section .principles-grid { margin-bottom: 1.6rem; }
 
 
 .lab-relaunch-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; border: 1px solid rgba(243,240,232,.09); border-radius: 28px; overflow: hidden; background: rgba(243,240,232,.08); }
@@ -230,7 +216,6 @@
   .hero-visual { min-height: 360px; border-radius: 26px; }
   .hv-webgl-stage { min-height: 310px; height: 88vw; }
   .hero-object-caption { left: 1.4rem; right: 1.4rem; bottom: 1.3rem; }
-  .relaunch-signal-band { justify-content: flex-start; overflow-x: auto; scrollbar-width: none; }
   .relaunch-section, .relaunch-showcase { padding-block: 5.4rem; }
   .relaunch-section-head > h2, .showcase-head > h2 { font-size: clamp(2.8rem,14vw,4.8rem); }
   .relaunch-project-card .project-card__media { min-height: 260px; }
@@ -314,21 +299,6 @@
   vertical-align: middle;
 }
 
-.signal-band-track {
-  display: flex;
-  justify-content: center;
-  gap: clamp(1.2rem, 4vw, 4.5rem);
-  min-width: 0;
-  overflow: hidden;
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-}
-.signal-band-track span {
-  flex: 0 0 auto;
-  position: relative;
-  color: rgba(191,201,210,.76);
-}
-.signal-band-track span::before { margin-right: .55rem; color: var(--cyan); }
-
 .principles-grid {
   border-color: rgba(123,231,255,.14);
   background: rgba(123,231,255,.12);
@@ -371,13 +341,8 @@
 .lab-relaunch-top { margin-bottom: 1.25rem; }
 .lab-relaunch-card p { max-width: 22rem; }
 
-@media (max-width: 960px) {
-  .signal-band-track { justify-content: flex-start; }
-    }
 @media (max-width: 680px) {
   .hero-visual-readout--top { top: 1.5rem; left: 1.4rem; }
-  .signal-band-track { gap: 1.8rem; justify-content: flex-start; overflow: auto; scrollbar-width: none; }
-  .signal-band-track::-webkit-scrollbar { display: none; }
       .principle-card { min-height: 0; }
   .lab-relaunch-card { min-height: 0; }
 }

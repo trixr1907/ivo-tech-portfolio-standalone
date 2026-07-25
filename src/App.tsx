@@ -7,15 +7,13 @@ import './relaunch.css'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { Loader } from './components/ui/Loader'
 import { MagButton } from './components/ui/MagButton'
-import { MeshBackground, HERO_3D_FALLBACK_SRC } from './components/ui/MeshBackground'
-import { CustomCursor } from './components/ui/CustomCursor'
-import { ScrollBar } from './components/ui/ScrollBar'
 import { SplitTitle } from './components/ui/SplitTitle'
 import { Showcase } from './components/showcase/Showcase'
 import { AboutSection, CraftSection, LabSection, ContactSection, RelaunchFooter } from './components/relaunch/RelaunchSections'
 
 const Hero3DLogo = lazy(() => import('./components/Hero3DLogo'))
 const COMPACT_HERO_QUERY = '(max-width: 960px), (hover: none), (pointer: coarse)'
+const HERO_3D_FALLBACK_SRC = '/brand/logos/ivo-tech-logo-icon.svg'
 
 const navItems = [
   { label: 'Über mich', href: '#about' },
@@ -153,9 +151,6 @@ function App() {
       <AnimatePresence mode="wait">{!loaded && <Loader key="loader" onDone={() => setLoaded(true)} />}</AnimatePresence>
       {loaded && (
         <>
-          <CustomCursor />
-          <ScrollBar />
-          <MeshBackground />
           <a className="skip-link" href="#content">Direkt zum Inhalt</a>
 
           <motion.header
@@ -257,12 +252,6 @@ function App() {
                 </motion.div>
               </div>
             </section>
-
-            <div className="relaunch-signal-band" aria-label="Kern-Technologien">
-              <div className="signal-band-track">
-                <span>React</span><span>TypeScript</span><span>Next.js</span><span>Supabase</span><span>Three.js</span><span>Vitest &amp; Playwright</span>
-              </div>
-            </div>
 
             <AboutSection />
 
