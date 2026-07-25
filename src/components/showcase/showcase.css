@@ -2,7 +2,7 @@
   overflow: hidden;
 }
 
-.showcase-section::before {
+.showcase-section::after {
   content: '';
   position: absolute;
   inset: 6% auto auto -10%;
@@ -677,7 +677,7 @@
 }
 
 /* Full-width case work surfaces */
-.showcase-section::before {
+.showcase-section::after {
   display: none;
 }
 .showcase-grid {
