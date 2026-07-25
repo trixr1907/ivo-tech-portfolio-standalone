@@ -34,6 +34,8 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [canvasReady, setCanvasReady] = useState(false)
   const heroStageRef = useRef<HTMLDivElement>(null)
+  const heroVisualRef = useRef<HTMLDivElement>(null)
+  const heroSectionRef = useRef<HTMLElement>(null)
   const burgerRef = useRef<HTMLButtonElement>(null)
   const mobileMenuRef = useRef<HTMLDivElement>(null)
   const enableHero3D = !compactHero && !reduceMotion
@@ -47,7 +49,15 @@ function App() {
 
   useEffect(() => {
     if (!loaded) return
-    const onScroll = () => setScrolled(window.scrollY > 48)
+    const onScroll = () => {
+      setScrolled(window.scrollY > 48)
+      // Drive the 9-facet disassembly: full explode after ~1.2 viewports of scroll.
+      const hero = heroSectionRef.current
+      if (hero) {
+        const progress = Math.min(Math.max(window.scrollY / (window.innerHeight * 1.2), 0), 1)
+        hero.dispatchEvent(new CustomEvent('hero-sequence-progress', { detail: progress }))
+      }
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     const initialHash = window.location.hash
@@ -204,7 +214,7 @@ function App() {
           </AnimatePresence>
 
           <main id="content">
-            <section className="hero relaunch-hero" id="top" aria-labelledby="hero-h">
+            <section ref={heroSectionRef} className="hero relaunch-hero" id="top" aria-labelledby="hero-h">
               <div className="relaunch-shell hero-grid">
                 <motion.div className="hero-copy" initial={compactHero ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.15 }}>
                   <div className="hero-eyebrow">
@@ -224,7 +234,7 @@ function App() {
                   <div className="hero-meta"><span>Offen für passende Remote- und Hybrid-Rollen</span><span><ArrowDown size={14} aria-hidden="true" /> Scrollen</span></div>
                 </motion.div>
 
-                <motion.div className="hero-visual" initial={compactHero ? false : { opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} aria-label="ivo-tech 9-Facet-Emblem">
+                <motion.div ref={heroVisualRef} className="hero-visual" initial={compactHero ? false : { opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} aria-label="ivo-tech 9-Facet-Emblem">
                   <div className="hero-visual-grid" aria-hidden="true" />
                   <div className="hero-visual-beam" aria-hidden="true" />
                   <div className="hero-visual-readout hero-visual-readout--top" aria-hidden="true">
