@@ -70,7 +70,7 @@ export function AboutSection() {
             <div><dt>Verifiziert</dt><dd>371 Tests im GOALS Optimizer</dd></div>
             <div><dt>Standort</dt><dd>Mannheim · Remote &amp; Hybrid</dd></div>
           </dl>
-          <p className="about-stack-line">React · TypeScript · Next.js · Supabase · Three.js · Vitest · Playwright</p>
+          <p className="about-stack-line">React · TypeScript · Vite · Three.js · Motion · Vitest · Playwright</p>
           <div className="about-relaunch-actions">
             <MagButton className="btn-ghost" href="/yves-simon-schenker-cv.pdf" download>
               Lebenslauf <ArrowUpRight size={14} aria-hidden="true" />
@@ -124,6 +124,7 @@ export function CraftSection() {
           ))}
         </div>
 
+        <p className="craft-stack-line">React · TypeScript · Vite · Three.js · Motion · Playwright</p>
       </div>
     </section>
   )
