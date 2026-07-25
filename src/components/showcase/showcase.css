@@ -255,6 +255,7 @@
 }
 
 .project-modal {
+  z-index: 1400;
   position: fixed;
   inset: 0;
   z-index: 1000;
@@ -716,6 +717,16 @@
   position: absolute;
   inset: 0;
 }
+.project-card__media img.project-card__media--portrait {
+  inset: clamp(1.25rem, 2.5vw, 2.25rem);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: auto;
+  border: 1px solid rgba(243, 240, 232, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+}
 .project-card__media::after {
   background: linear-gradient(to top, rgba(11, 14, 18, 0.48), transparent 45%);
   opacity: 1;
@@ -793,4 +804,157 @@
   .project-card__title {
     font-size: clamp(1.7rem, 10vw, 2.5rem);
   }
+}
+
+/* Product-surface treatment for work previews and case studies */
+.project-card__media {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 72% 18%, rgba(0,183,255,.16), transparent 34%),
+    #05070b;
+}
+.project-card__media::before {
+  content: '●  ●  ●';
+  position: absolute;
+  z-index: 2;
+  top: .9rem;
+  left: 1rem;
+  padding: .42rem .58rem;
+  border: 1px solid rgba(220,230,242,.16);
+  border-radius: 7px;
+  color: rgba(191,201,210,.52);
+  background: rgba(5,7,11,.68);
+  font: 700 .52rem/1 var(--font-mono);
+  letter-spacing: .18em;
+  backdrop-filter: blur(10px);
+}
+.project-card__media img {
+  filter: saturate(.86) contrast(1.06) brightness(.9);
+  transform: scale(1.015);
+}
+.project-card__button:hover .project-card__media img {
+  filter: saturate(1) contrast(1.08) brightness(1);
+  transform: scale(1.05);
+}
+.project-card__media::after {
+  background:
+    linear-gradient(180deg, rgba(5,7,11,.12), transparent 34%, rgba(5,7,11,.72)),
+    linear-gradient(90deg, rgba(0,183,255,.08), transparent 25%, transparent 75%, rgba(123,231,255,.08));
+  opacity: 1;
+}
+.project-card__body {
+  position: relative;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(123,231,255,.08), transparent 28%),
+    rgba(11,14,18,.38);
+}
+.project-card__body::before {
+  content: 'OPEN CASE / ↗';
+  position: absolute;
+  top: clamp(1.5rem, 4vw, 3.5rem);
+  right: clamp(1.5rem, 4vw, 3.5rem);
+  color: rgba(191,201,210,.34);
+  font: 700 .56rem/1 var(--font-mono);
+  letter-spacing: .12em;
+}
+.project-card__title { max-width: 18ch; }
+.project-card__cta {
+  position: relative;
+  transition: color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.project-card__cta::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 1px;
+  transform: scaleX(.35);
+  transform-origin: left;
+  background: var(--ice);
+  transition: transform .3s var(--ease-expo);
+}
+.project-card__button:hover .project-card__cta::after { transform: scaleX(1); }
+
+.project-modal__dialog {
+  background:
+    radial-gradient(ellipse 75% 38% at 12% 0%, rgba(0,183,255,.18), transparent 62%),
+    linear-gradient(145deg, rgba(14,22,31,.98), rgba(5,7,11,.99));
+}
+.project-modal__hero-media {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 62% 38%, rgba(0,183,255,.16), transparent 42%),
+    #030507;
+}
+.project-modal__hero-media img {
+  filter: saturate(.9) contrast(1.08);
+  transform: scale(1.025);
+}
+.project-modal__hero-media::before {
+  content: 'CASE / SYSTEM VIEW';
+  position: absolute;
+  z-index: 2;
+  top: 1rem;
+  left: 1rem;
+  padding: .4rem .58rem;
+  border: 1px solid rgba(123,231,255,.22);
+  border-radius: 999px;
+  color: rgba(123,231,255,.72);
+  background: rgba(5,7,11,.58);
+  font: 800 .58rem/1 var(--font-mono);
+  letter-spacing: .14em;
+  backdrop-filter: blur(10px);
+}
+.project-modal__hero-copy {
+  background:
+    linear-gradient(135deg, rgba(123,231,255,.05), transparent 36%),
+    rgba(5,7,11,.9);
+}
+.project-modal__overview,
+.project-modal__signals {
+  background: rgba(123,231,255,.1);
+}
+.project-modal__overview section,
+.project-modal__signals article {
+  position: relative;
+}
+.project-modal__overview section::before,
+.project-modal__signals article::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1.3rem;
+  width: 28px;
+  height: 1px;
+  background: var(--cyan);
+  opacity: .55;
+}
+.project-modal__architecture {
+  background: linear-gradient(90deg, rgba(0,183,255,.09), transparent 48%), rgba(5,7,11,.58);
+}
+.project-modal__shots figure {
+  transition: transform .25s ease, background .25s ease;
+}
+.project-modal__shots figure:hover {
+  background: rgba(18,23,29,.96);
+}
+.project-modal__shots img {
+  filter: saturate(.88) contrast(1.05);
+  transition: filter .25s ease, transform .35s var(--ease-expo);
+}
+.project-modal__shots figure:hover img {
+  filter: saturate(1) contrast(1.08);
+  transform: scale(1.015);
+}
+.project-modal__footer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 1.5rem;
+  border-top: 1px solid rgba(123,231,255,.1);
+}
+@media (max-width: 680px) {
+  .project-card__body::before { display: none; }
+  .project-modal__footer { grid-template-columns: 1fr; }
 }

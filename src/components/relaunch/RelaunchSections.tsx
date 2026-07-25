@@ -1,5 +1,4 @@
 import { ArrowUpRight, Bot, Cpu, Home, ShieldCheck, Sparkles, Terminal, Zap } from 'lucide-react'
-import { useReducedMotion } from 'motion/react'
 import { labItems } from '../../data/homeData'
 import { Reveal } from '../ui/Reveal'
 import { SectionTitle } from '../ui/SectionTitle'
@@ -66,6 +65,12 @@ export function AboutSection() {
             Full-Stack-Tiefe, damit Datenmodell, Rechte, Fehlerfälle und Betrieb nicht an der Oberfläche enden.
             Aus Mannheim/Rhein-Neckar und offen für passende Remote- und Hybrid-Rollen.
           </p>
+          <dl className="about-proof-strip" aria-label="Nachweise in Kürze">
+            <div><dt>Systeme live</dt><dd>3 Produkte im produktiven Betrieb</dd></div>
+            <div><dt>Verifiziert</dt><dd>371 Tests im GOALS Optimizer</dd></div>
+            <div><dt>Standort</dt><dd>Mannheim · Remote &amp; Hybrid</dd></div>
+          </dl>
+          <p className="about-stack-line">React · TypeScript · Next.js · Supabase · Three.js · Vitest · Playwright</p>
           <div className="about-relaunch-actions">
             <MagButton className="btn-ghost" href="/yves-simon-schenker-cv.pdf" download>
               Lebenslauf <ArrowUpRight size={14} aria-hidden="true" />
@@ -81,8 +86,6 @@ export function AboutSection() {
 }
 
 export function CraftSection() {
-  const reduceMotion = useReducedMotion()
-
   return (
     <section id="craft" className="relaunch-section craft-section" aria-labelledby="craft-heading">
       <div className="relaunch-shell">
@@ -108,8 +111,10 @@ export function CraftSection() {
         <div className="principles-grid">
           {principles.map(({ icon: Icon, label, title, text, proof, href }, index) => (
             <Reveal key={label} delay={index * 0.05} className="principle-card">
-              <div className="principle-icon"><Icon size={20} aria-hidden="true" /></div>
-              <span className="principle-label">{label}</span>
+              <div className="principle-card__top">
+                <div className="principle-icon"><Icon size={20} aria-hidden="true" /></div>
+                <span className="principle-label">{label}</span>
+              </div>
               <h3>{title}</h3>
               <p>{text}</p>
               <a className="principle-proof" href={href}>
@@ -119,43 +124,6 @@ export function CraftSection() {
           ))}
         </div>
 
-        <Reveal className="craft-video-card" delay={0.08}>
-          <div className="craft-video-copy">
-            <span className="relaunch-kicker">Craft in motion</span>
-            <h3>Nicht nur Interfaces bauen. Systeme verstehen, prüfen und in Betrieb bringen.</h3>
-            <p>
-              Ein ruhiger Blick auf den Prozess hinter dem Produkt: Code lesen, Entscheidungen prüfen,
-              Details schärfen. Genau diese Mischung aus Handwerk und Systemdenken prägt meine Arbeit.
-            </p>
-            <span className="craft-video-meta">Arbeitsprozess · 00:10 · ohne Audio</span>
-          </div>
-          <div className="craft-video-frame">
-            {reduceMotion ? (
-              <img
-                src="/media/erasio-code-poster.jpg"
-                alt="Code-Editor in dunkler Arbeitsumgebung"
-                width={854}
-                height={480}
-                loading="lazy"
-                decoding="async"
-              />
-            ) : (
-              <video
-                poster="/media/erasio-code-poster.jpg"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="none"
-                aria-label="Ruhige Aufnahme eines Code-Reviews"
-              >
-                <source src="/media/erasio-code-loop.webm" type="video/webm" />
-                <source src="/media/erasio-code-loop.mp4" type="video/mp4" />
-              </video>
-            )}
-            <span className="craft-video-scanline" aria-hidden="true" />
-          </div>
-        </Reveal>
       </div>
     </section>
   )
@@ -184,8 +152,8 @@ export function LabSection() {
               <Reveal key={item.title} delay={index * 0.04} className="lab-relaunch-card">
                 <div className="lab-relaunch-top">
                   <span className="lab-relaunch-num">{item.num}</span>
-                  <Icon size={18} aria-hidden="true" />
                 </div>
+                <div className="lab-relaunch-icon" aria-hidden="true"><Icon size={18} /></div>
                 <span className="lab-relaunch-tag">{item.tag}</span>
                 <h3>{item.title}</h3>
                 <span className="lab-relaunch-kicker">{item.kicker}</span>
@@ -210,11 +178,11 @@ export function ContactSection() {
           </div>
           <SectionTitle
             id="contact-heading"
-            lines={[{ text: 'Lass uns etwas bauen,' }, { text: 'das sich echt anfühlt.', em: true }]}
+            lines={[{ text: 'Ein Projekt, eine Rolle,' }, { text: 'eine konkrete Frage?', em: true }]}
           />
           <p>
-            Offen für passende Remote- und Hybrid-Rollen als Full-Stack Developer mit Frontend-Fokus.
-            Schreib mir mit Rolle, Projekt oder Frage — ich antworte.
+            Ich bin offen für Remote- und Hybrid-Rollen als Full-Stack Developer mit Frontend-Fokus.
+            Schreib mir, worum es geht — du bekommst eine ehrliche Antwort, kein Formular-Blabla.
           </p>
           <div className="contact-relaunch-actions">
             <MagButton className="btn-primary" href="mailto:contact@ivo-tech.com">

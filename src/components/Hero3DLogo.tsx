@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from 'motion/react'
 import {
+  AdditiveBlending,
   ACESFilmicToneMapping,
   AmbientLight,
+  BufferGeometry,
   Box3,
   Color,
   DirectionalLight,
@@ -17,12 +19,15 @@ import {
   PerspectiveCamera,
   PMREMGenerator,
   PointLight,
+  Points,
+  PointsMaterial,
   RectAreaLight,
   Scene,
   SRGBColorSpace,
   Vector2,
   Vector3,
   WebGLRenderer,
+  Float32BufferAttribute,
 } from 'three'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js'
@@ -315,6 +320,33 @@ export default function Hero3DLogo({ fallbackSrc, alt = 'ivo-tech 3D Logo' }: He
     cyanCoreLight.position.set(1.2, -0.1, 2.2)
     scene.add(cyanCoreLight)
 
+    // Lightweight data-flow particles add depth without a post-processing pass.
+    const flowCount = isCompact ? 72 : 132
+    const flowPositions = new Float32Array(flowCount * 3)
+    const flowSeeds = new Float32Array(flowCount)
+    for (let index = 0; index < flowCount; index += 1) {
+      const offset = index * 3
+      const seed = (index * 0.61803398875) % 1
+      flowSeeds[index] = seed
+      flowPositions[offset] = (seed - 0.5) * 8.2
+      flowPositions[offset + 1] = ((index * 0.754877666) % 1 - 0.5) * 6.1
+      flowPositions[offset + 2] = -1.3 + ((index * 0.414213562) % 1) * 2.4
+    }
+    const flowGeometry = new BufferGeometry()
+    flowGeometry.setAttribute('position', new Float32BufferAttribute(flowPositions, 3))
+    const flowMaterial = new PointsMaterial({
+      color: 0x7be7ff,
+      size: isCompact ? 0.045 : 0.06,
+      transparent: true,
+      opacity: 0.38,
+      depthWrite: false,
+      blending: AdditiveBlending,
+      sizeAttenuation: true,
+    })
+    const flowPoints = new Points(flowGeometry, flowMaterial)
+    flowPoints.position.z = -0.35
+    scene.add(flowPoints)
+
     RectAreaLightUniformsLib.init()
     const lightSweep = new RectAreaLight(0xf0f9ff, 0, 0.72, 6.2)
     lightSweep.position.set(-7, 1.1, 5.4)
@@ -430,6 +462,19 @@ export default function Hero3DLogo({ fallbackSrc, alt = 'ivo-tech 3D Logo' }: He
       const reassemble = MathUtils.smoothstep(scrollProgress, 0.58, 0.9)
       const explodedProgress = disassemble * (1 - reassemble)
       pointerCurrent.lerp(pointerTarget, 0.04)
+
+      const flowAttribute = flowGeometry.getAttribute('position')
+      for (let index = 0; index < flowCount; index += 1) {
+        const seed = flowSeeds[index]
+        const baseX = (seed - 0.5) * 8.2
+        const drift = ((time * (0.22 + seed * 0.16) + seed * 8.2) % 8.2) - 4.1
+        flowAttribute.setX(index, drift + Math.sin(time * 0.55 + seed * 12) * 0.18)
+        flowAttribute.setY(index, ((index * 0.754877666) % 1 - 0.5) * 6.1 + Math.sin(time * 0.7 + seed * 9) * 0.14)
+        flowAttribute.setZ(index, -1.3 + ((index * 0.414213562) % 1) * 2.4 + Math.sin(time * 0.4 + baseX) * 0.08)
+      }
+      flowAttribute.needsUpdate = true
+      flowPoints.rotation.z = Math.sin(time * 0.16) * 0.018
+      flowMaterial.opacity = 0.26 + Math.sin(time * 0.65) * 0.06
 
       for (const facet of facets) {
         const linearProgress = MathUtils.clamp((assemblyTime - facet.delay) / 0.82, 0, 1)

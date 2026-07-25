@@ -34,7 +34,5 @@ test('reduced motion uses static media without WebGL or autoplay video', async (
   await expect(fallback).toBeVisible()
   await expect(fallback.locator('.hero-3d-fallback-image')).toBeVisible()
   await expect(page.locator('.hero canvas')).toHaveCount(0)
-  await expect(page.locator('.craft-video-frame video')).toHaveCount(0)
-  await expect(page.locator('.craft-video-frame img')).toBeVisible()
   await expect(page.locator('.pin-spacer')).toHaveCount(0)
 })
