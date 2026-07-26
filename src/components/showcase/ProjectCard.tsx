@@ -8,7 +8,6 @@ type ProjectCardProps = {
 }
 
 export function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
-  const visibleTags = project.tags.slice(0, 4)
   const isPrimary = project.id === 'goals-optimizer'
   // Editorial metric bar: prefer impact, fall back to signals — both carry { value, label }
   const metrics = project.impact ?? project.signals ?? []
@@ -42,9 +41,6 @@ export function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
             {project.facts.slice(0, 2).map((fact) => (
               <span key={fact.label}><strong>{fact.label}</strong>{fact.value}</span>
             ))}
-          </span>
-          <span className="project-card__tags" aria-label="Technologien">
-            {visibleTags.map((tag) => <span key={tag}>{tag}</span>)}
           </span>
         </span>
       </button>
