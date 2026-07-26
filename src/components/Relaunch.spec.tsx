@@ -21,9 +21,9 @@ test.describe('focused portfolio structure', () => {
     await expect(page.getByRole('link', { name: 'Über mich' }).first()).toHaveAttribute('href', '#about')
   })
 
-  test('renders three evidence-based cases and opens a case study', async ({ page }) => {
+  test('renders four evidence-based cases and opens a case study', async ({ page }) => {
     const cards = page.locator('.relaunch-project-card')
-    await expect(cards).toHaveCount(3)
+    await expect(cards).toHaveCount(4)
     // Editorial stretches push cards below the fold — sweep the page so lazy images load
     await page.evaluate(async () => {
       const step = window.innerHeight
@@ -39,6 +39,7 @@ test.describe('focused portfolio structure', () => {
     await expect(cards.nth(0).locator('.project-card__status')).toHaveText('Primärer Case')
     await expect(cards.nth(1)).toContainText('Event Management Hub')
     await expect(cards.nth(2)).toContainText('DLD 3D-Konfigurator')
+    await expect(cards.nth(3)).toContainText('Comfee Klima-Umbau')
 
     await cards.first().locator('button').first().click()
     const dialog = page.getByRole('dialog', { name: /GOALS Optimizer/ })
