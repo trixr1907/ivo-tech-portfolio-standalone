@@ -875,6 +875,89 @@
 }
 .project-card__button:hover .project-card__cta::after { transform: scaleX(1); }
 
+/* Editorial stretch below the card: metrics, architecture, highlights, deep-link CTA */
+.project-card__editorial {
+  display: grid;
+  gap: clamp(1.8rem, 3vw, 2.6rem);
+  justify-items: start;
+  padding: clamp(1.8rem, 4vw, 3rem) clamp(2rem, 4vw, 4rem) clamp(2.2rem, 4vw, 3.5rem);
+  border-top: 1px solid rgba(243, 240, 232, 0.09);
+}
+.project-card__metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  width: 100%;
+  border: 1px solid rgba(243, 240, 232, 0.09);
+  background: rgba(243, 240, 232, 0.06);
+}
+.project-card__metric {
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+  padding: 1.1rem 1.25rem;
+  background: rgba(11, 14, 18, 0.9);
+}
+.project-card__metric-value {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.project-card__metric-label {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.project-card__arch { max-width: 720px; padding: 2rem 0; }
+.project-card__arch-title {
+  margin: 0 0 1rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.project-card__arch-list {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding-left: 1.4rem;
+  color: var(--silver);
+  line-height: 1.65;
+}
+.project-card__arch-list li::marker { color: var(--accent); }
+.project-card__highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  width: 100%;
+  border: 1px solid rgba(123, 231, 255, 0.14);
+  background: rgba(123, 231, 255, 0.12);
+}
+.project-card__highlight {
+  margin: 0;
+  padding: 1.25rem 1.35rem;
+  background: rgba(11, 14, 18, 0.96);
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+.project-card__cta--more { cursor: pointer; color: var(--accent); }
+
+@media (max-width: 760px) {
+  .project-card__metrics,
+  .project-card__highlights { grid-template-columns: 1fr; }
+  .project-card__editorial { padding-inline: 1.5rem; }
+  .project-card__arch { max-width: none; }
+}
+
 .project-modal__dialog {
   background:
     radial-gradient(ellipse 75% 38% at 12% 0%, rgba(0,183,255,.18), transparent 62%),

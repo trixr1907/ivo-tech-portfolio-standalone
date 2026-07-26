@@ -133,6 +133,11 @@ export const projects: Project[] = [
       { src: eventHubImages.compliance, caption: 'HCP-Spend-Tracking mit Cap-Überwachung und Transparenzreporting' },
       { src: eventHubImages.registration, caption: 'Öffentliche Registrierung mit sicherer Supabase-RLS-Architektur' },
     ],
+    impact: [
+      { value: 'RLS', label: 'Row Level Security' },
+      { value: 'Audit', label: 'Audit-Trail' },
+      { value: 'HCP', label: 'Compliance' },
+    ],
     links: {
       demo: 'https://eventhub.ivo-tech.com',
       repo: '',

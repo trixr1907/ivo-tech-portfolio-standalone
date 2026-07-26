@@ -10,6 +10,8 @@ type ProjectCardProps = {
 export function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
   const visibleTags = project.tags.slice(0, 4)
   const isPrimary = project.id === 'goals-optimizer'
+  // Editorial metric bar: prefer impact, fall back to signals — both carry { value, label }
+  const metrics = project.impact ?? project.signals ?? []
 
   return (
     <article
@@ -44,9 +46,40 @@ export function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
           <span className="project-card__tags" aria-label="Technologien">
             {visibleTags.map((tag) => <span key={tag}>{tag}</span>)}
           </span>
-          <span className="project-card__cta">Case öffnen <ArrowUpRight size={15} aria-hidden="true" /></span>
         </span>
       </button>
+
+      <div className="project-card__editorial">
+        {metrics.length > 0 && (
+          <div className="project-card__metrics" aria-label="Kennzahlen">
+            {metrics.map((metric) => (
+              <div key={metric.label} className="project-card__metric">
+                <span className="project-card__metric-value">{metric.value}</span>
+                <span className="project-card__metric-label">{metric.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {project.architecture ? (
+          <div className="project-card__arch">
+            <h3 className="project-card__arch-title">System Schema</h3>
+            <ol className="project-card__arch-list">
+              {project.architecture.map((item) => <li key={item}>{item}</li>)}
+            </ol>
+          </div>
+        ) : null}
+
+        <div className="project-card__highlights">
+          {project.highlights.map((highlight) => (
+            <p key={highlight} className="project-card__highlight">{highlight}</p>
+          ))}
+        </div>
+
+        <button type="button" className="project-card__cta project-card__cta--more" onClick={() => onOpen(project)}>
+          Mehr Tiefe im Case <ArrowUpRight size={15} aria-hidden="true" />
+        </button>
+      </div>
     </article>
   )
 }

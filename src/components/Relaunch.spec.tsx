@@ -24,6 +24,15 @@ test.describe('focused portfolio structure', () => {
   test('renders three evidence-based cases and opens a case study', async ({ page }) => {
     const cards = page.locator('.relaunch-project-card')
     await expect(cards).toHaveCount(3)
+    // Editorial stretches push cards below the fold — sweep the page so lazy images load
+    await page.evaluate(async () => {
+      const step = window.innerHeight
+      for (let y = 0; y <= document.body.scrollHeight; y += step) {
+        window.scrollTo({ top: y, behavior: 'instant' })
+        await new Promise((resolve) => setTimeout(resolve, 50))
+      }
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    })
     await expect.poll(async () => cards.locator('img').evaluateAll((images) => images.every((image) => (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0))).toBe(true)
     await expect(cards.nth(0)).toContainText('GOALS Optimizer')
     await expect(cards.nth(0)).toHaveClass(/relaunch-project-card--primary/)
@@ -31,7 +40,7 @@ test.describe('focused portfolio structure', () => {
     await expect(cards.nth(1)).toContainText('Event Management Hub')
     await expect(cards.nth(2)).toContainText('DLD 3D-Konfigurator')
 
-    await cards.first().locator('button').click()
+    await cards.first().locator('button').first().click()
     const dialog = page.getByRole('dialog', { name: /GOALS Optimizer/ })
     await expect(dialog).toBeVisible()
     await expect(dialog).toContainText('371 Tests')
