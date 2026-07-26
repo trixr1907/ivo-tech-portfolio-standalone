@@ -159,7 +159,7 @@
 .principle-label { color: var(--accent); font: 800 .68rem/1 var(--font-mono); letter-spacing: .17em; text-transform: uppercase; }
 .principle-card h3 { margin: 1.1rem 0 .9rem; color: var(--white); font-family: var(--font-display); font-size: clamp(1.5rem,2.1vw,2.3rem); line-height: 1.04; letter-spacing: -.045em; }
 .principle-card p { color: var(--muted); line-height: 1.7; }
-.principle-proof { display: inline-flex; min-height: 44px; align-items: center; gap: .45rem; margin-top: 1.35rem; color: var(--accent); font: 750 .72rem/1.5 var(--font-mono); letter-spacing: .04em; }
+.principle-proof { display: inline-flex; min-height: 44px; align-items: center; gap: .45rem; margin-top: 1.35rem; color: var(--accent); font: 750 .72rem/1.5 var(--font-mono); letter-spacing: .04em; transition: color var(--transition-fast); }
 .principle-proof:hover { color: var(--white); }
 .craft-stack-line { margin: 0; color: rgba(191,201,210,.6); font: 700 .7rem/1.6 var(--font-mono); letter-spacing: .1em; }
 .craft-section .principles-grid { margin-bottom: 1.6rem; }
@@ -340,9 +340,14 @@
   position: absolute;
   inset: auto 0 0;
   height: 1px;
-  background: linear-gradient(90deg, var(--cyan), transparent 76%);
-  opacity: .45;
+  background: var(--accent);
+  opacity: 0;
+  transform: scaleX(.3);
+  transform-origin: left;
+  transition: transform var(--transition-base), opacity var(--transition-base);
 }
+.lab-relaunch-card:hover::after,
+.lab-relaunch-card:focus-within::after { opacity: 1; transform: scaleX(1); }
 .lab-relaunch-top { margin-bottom: 1.25rem; }
 .lab-relaunch-card p { max-width: 22rem; }
 

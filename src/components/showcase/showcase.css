@@ -81,9 +81,9 @@
     linear-gradient(145deg, rgba(220, 230, 242, 0.045), rgba(220, 230, 242, 0.012)), rgba(5, 7, 11, 0.94);
   cursor: pointer;
   transition:
-    transform 0.34s var(--ease-expo),
-    background 0.28s ease,
-    box-shadow 0.28s ease;
+    transform var(--transition-base),
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .project-card__button:hover {
@@ -118,8 +118,8 @@
   object-fit: cover;
   opacity: 0.88;
   transition:
-    transform 0.7s var(--ease-expo),
-    opacity 0.3s ease;
+    transform var(--transition-slow),
+    opacity var(--transition-fast);
 }
 
 .project-card__button:hover .project-card__media img {
@@ -699,7 +699,7 @@
   grid-template-columns: minmax(300px, 0.95fr) minmax(0, 1.05fr);
   min-height: 380px;
   background: rgba(11, 14, 18, 0.36);
-  transition: background 0.25s ease;
+  transition: background var(--transition-fast);
 }
 .project-card__button:hover {
   transform: none;
@@ -859,7 +859,7 @@
 .project-card__title { max-width: 18ch; }
 .project-card__cta {
   position: relative;
-  transition: color .2s ease, border-color .2s ease, transform .2s ease;
+  transition: color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
 }
 .project-card__cta::after {
   content: '';
@@ -871,9 +871,28 @@
   transform: scaleX(.35);
   transform-origin: left;
   background: var(--accent);
-  transition: transform .3s var(--ease-expo);
+  transition: transform var(--transition-base);
 }
 .project-card__button:hover .project-card__cta::after { transform: scaleX(1); }
+
+/* Card body accent seam on hover / keyboard focus */
+.project-card__body { position: relative; }
+.project-card__body::before {
+  content: '';
+  position: absolute;
+  top: clamp(1.5rem, 4vw, 3.5rem);
+  bottom: clamp(1.5rem, 4vw, 3.5rem);
+  left: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--transition-base);
+}
+.project-card:hover .project-card__body::before,
+.project-card:focus-within .project-card__body::before { transform: scaleY(1); }
+.project-card__cta--more svg { transition: transform var(--transition-fast); }
+.project-card__cta--more:hover svg { transform: translateX(4px); }
 
 /* Editorial stretch below the card: metrics, architecture, highlights, deep-link CTA */
 .project-card__editorial {
@@ -1016,14 +1035,14 @@
   background: linear-gradient(90deg, rgba(0,183,255,.09), transparent 48%), rgba(5,7,11,.58);
 }
 .project-modal__shots figure {
-  transition: transform .25s ease, background .25s ease;
+  transition: transform var(--transition-fast), background var(--transition-fast);
 }
 .project-modal__shots figure:hover {
   background: rgba(18,23,29,.96);
 }
 .project-modal__shots img {
   filter: saturate(.88) contrast(1.05);
-  transition: filter .25s ease, transform .35s var(--ease-expo);
+  transition: filter var(--transition-fast), transform var(--transition-base);
 }
 .project-modal__shots figure:hover img {
   filter: saturate(1) contrast(1.08);
