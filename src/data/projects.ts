@@ -138,9 +138,9 @@ export const projects: Project[] = [
       { src: eventHubImages.registration, caption: 'Öffentliche Registrierung mit sicherer Supabase-RLS-Architektur' },
     ],
     impact: [
-      { value: 'RLS', label: 'Row Level Security' },
-      { value: 'Audit', label: 'Audit-Trail' },
-      { value: 'HCP', label: 'Compliance' },
+      { value: '5', label: 'Rollen-Ebenen mit RLS' },
+      { value: '100%', label: 'Audit-Abdeckung' },
+      { value: 'HCP', label: 'HCP-Compliance-Tracking' },
     ],
     links: {
       demo: 'https://eventhub.ivo-tech.com',

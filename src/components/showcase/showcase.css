@@ -57,7 +57,6 @@
 .project-card,
 .project-card__button,
 .project-card__body,
-.project-card__tags,
 .project-card__cta {
   display: block;
 }
@@ -212,23 +211,13 @@
   text-transform: uppercase;
 }
 
-.project-card__tags,
 .project-modal__tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-}
-
-.project-card__tags {
-  margin-top: auto;
-  padding-top: 1.25rem;
-}
-
-.project-modal__tags {
   margin-top: 1.2rem;
 }
 
-.project-card__tags span,
 .project-modal__tags span {
   padding: 0.38rem 0.62rem;
   border: 1px solid rgba(220, 230, 242, 0.1);
@@ -764,17 +753,6 @@
   background: transparent;
 }
 .project-card__facts strong {
-  font-family: var(--font-mono);
-}
-.project-card__tags {
-  margin-top: 0;
-  padding-top: 1rem;
-}
-.project-card__tags span {
-  padding: 0.2rem 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
   font-family: var(--font-mono);
 }
 .project-card__cta {

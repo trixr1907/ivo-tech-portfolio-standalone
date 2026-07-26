@@ -231,8 +231,8 @@ function App() {
                       <span className="hero-proof-label">Component Tests</span>
                     </div>
                     <div className="hero-proof-item">
-                      <span className="hero-proof-value">100</span>
-                      <span className="hero-proof-label">Lighthouse A11y</span>
+                      <span className="hero-proof-value">371</span>
+                      <span className="hero-proof-label">GOALS Tests</span>
                     </div>
                   </div>
                   <div className="hero-ctas">
