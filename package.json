@@ -14,8 +14,8 @@
     "test:ui": "playwright test -c playwright-ct.config.ts --ui",
     "test:debug": "playwright test -c playwright-ct.config.ts --debug",
     "qa:a11y": "node scripts/assert-port-free.mjs && start-server-and-test preview:qa http://127.0.0.1:4174 \"pa11y --config pa11y.config.cjs http://127.0.0.1:4174/\"",
-    "qa:lighthouse:mobile": "node scripts/assert-port-free.mjs && start-server-and-test preview:qa http://127.0.0.1:4174 \"lhci autorun --config=lighthouserc.mobile.json\"",
-    "qa:lighthouse:desktop": "node scripts/assert-port-free.mjs && start-server-and-test preview:qa http://127.0.0.1:4174 \"lhci autorun --config=lighthouserc.desktop.json\"",
+    "qa:lighthouse:mobile": "CHROME_PATH=/home/ivo/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome node scripts/assert-port-free.mjs && CHROME_PATH=/home/ivo/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome start-server-and-test preview:qa http://127.0.0.1:4174 \"lhci autorun --config=lighthouserc.mobile.json\"",
+    "qa:lighthouse:desktop": "CHROME_PATH=/home/ivo/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome node scripts/assert-port-free.mjs && CHROME_PATH=/home/ivo/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome start-server-and-test preview:qa http://127.0.0.1:4174 \"lhci autorun --config=lighthouserc.desktop.json\"",
     "qa:quality": "npm run build && npm run qa:a11y && npm run qa:lighthouse:mobile && npm run qa:lighthouse:desktop"
   },
   "dependencies": {
