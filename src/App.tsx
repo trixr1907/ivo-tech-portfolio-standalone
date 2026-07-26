@@ -155,7 +155,7 @@ function App() {
 
           <motion.header
             className={`site-header ${scrolled ? 'scrolled' : ''}`}
-            initial={{ y: -80, opacity: 0 }}
+            initial={reduceMotion ? false : { y: -80, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             aria-label="Navigation"
@@ -211,7 +211,7 @@ function App() {
           <main id="content">
             <section ref={heroSectionRef} className="hero relaunch-hero" id="top" aria-labelledby="hero-h">
               <div className="relaunch-shell hero-grid">
-                <motion.div className="hero-copy" initial={compactHero ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.15 }}>
+                <motion.div className="hero-copy" initial={compactHero || reduceMotion ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.15 }}>
                   <div className="hero-eyebrow">
                     <span>
                       Yves Simon Schenker (Ivo) · Full-Stack Developer mit Frontend-Fokus
@@ -243,7 +243,7 @@ function App() {
                   <div className="hero-meta"><span>Offen für passende Remote- und Hybrid-Rollen</span><span><ArrowDown size={14} aria-hidden="true" /> Scrollen</span></div>
                 </motion.div>
 
-                <motion.div ref={heroVisualRef} className="hero-visual" initial={compactHero ? false : { opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} aria-label="ivo-tech 9-Facet-Emblem">
+                <motion.div ref={heroVisualRef} className="hero-visual" initial={compactHero || reduceMotion ? false : { opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} aria-label="ivo-tech 9-Facet-Emblem">
                   <div className="hero-visual-grid" aria-hidden="true" />
                   <div className="hero-visual-beam" aria-hidden="true" />
                   <div className="hero-visual-readout hero-visual-readout--top" aria-hidden="true">
