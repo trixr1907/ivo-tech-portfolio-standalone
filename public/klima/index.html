@@ -138,6 +138,19 @@
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
   .reveal.in{opacity:1;transform:none}
 
+  /* STL downloads */
+  .download-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:26px}
+  .download-card{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--surf);
+    border:1px solid var(--line);border-radius:14px;padding:16px 17px;transition:border-color .2s,transform .2s}
+  .download-card:hover{border-color:var(--cool);transform:translateY(-2px)}
+  .download-card strong{display:block;color:var(--cool2);font:600 13px var(--mono);overflow-wrap:normal;word-break:normal}
+  .download-card span{display:block;color:var(--mut);font-size:12.5px;margin-top:4px}
+  .download-link{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(63,169,255,.45);
+    border-radius:9px;background:rgba(63,169,255,.1);color:var(--cool2);padding:9px 11px;text-decoration:none;
+    font:600 12px var(--mono);white-space:nowrap}
+  .download-link:hover{background:var(--cool);color:#04121f}
+  @media(max-width:620px){.download-card{align-items:flex-start;flex-direction:column}.download-link{width:100%;justify-content:center}}
+
   /* project status */
   .status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:26px}
   .status-item{background:rgba(22,29,41,.78);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
@@ -247,6 +260,7 @@
       <a href="#umbau">Umbau</a>
       <a href="#tutorial">Tutorial</a>
       <a href="#teile">3D-Teile</a>
+      <a href="#downloads">STL-Downloads</a>
       <a href="#material">Material</a>
     </div>
   </div>
@@ -329,8 +343,8 @@
 
     <div style="margin-top:26px">
       <div class="toggle" role="tablist">
-        <button id="btn1" class="active" onclick="setMode('single')">① Einschlauch (Serie)</button>
-        <button id="btn2" onclick="setMode('dual')">② Zweischlauch (Umbau)</button>
+        <button id="btn1" class="active" data-mode="single">① Einschlauch (Serie)</button>
+        <button id="btn2" data-mode="dual">② Zweischlauch (Umbau)</button>
       </div>
 
       <div class="diagram">
@@ -512,7 +526,7 @@
           <div class="tut-head">
             <div><div class="tut-kicker">SCHRITT 1 VON 6</div><h3>Gerät und Luftzonen eindeutig prüfen</h3>
               <p>Die Konstruktion gehört ausschließlich zum Comfee Breezy Cool Pro 2.6 mit Modellkennung CPPA-09CRN7-QB6.</p></div>
-            <button class="print-tutorial" type="button" onclick="window.print()">Tutorial drucken</button>
+            <button class="print-tutorial" type="button" data-print>Tutorial drucken</button>
           </div>
           <div class="tut-layout">
             <div class="tut-visual">
@@ -530,13 +544,13 @@
               <div class="tut-note">Noch nicht drucken, wenn Modell oder Gehäuseform von der Darstellung abweichen.</div>
             </div>
           </div>
-          <div class="tut-actions"><span></span><button class="tut-next primary" type="button" onclick="setTutorialStep(2)">Weiter: Maße →</button></div>
+          <div class="tut-actions"><span></span><button class="tut-next primary" type="button" data-go-to="2">Weiter: Maße →</button></div>
         </article>
 
         <article class="tut-panel" id="tut-panel-2" role="tabpanel" data-panel-step="2">
           <div class="tut-head"><div><div class="tut-kicker">SCHRITT 2 VON 6</div><h3>Die drei kritischen Plenum-Maße bestätigen</h3>
             <p>Die Werte 295 × 293 × 220 mm sind Online-Referenzen. Erst bestätigte Werte dürfen als final gelten.</p></div>
-            <button class="print-tutorial" type="button" onclick="window.print()">Tutorial drucken</button>
+            <button class="print-tutorial" type="button" data-print>Tutorial drucken</button>
           </div>
           <div class="tut-layout">
             <div class="tut-visual"><div class="measure-box"><div class="measure-zone">Ansaughöhe: 220 mm*</div></div></div>
@@ -550,13 +564,13 @@
               <div class="tut-note">Sternchen = Online-Prototypwert. In <span class="path">src/build_parts.py</span> bleibt <b>measurements_confirmed = False</b>, bis alle Maße bestätigt sind.</div>
             </div>
           </div>
-          <div class="tut-actions"><button class="tut-next" type="button" onclick="setTutorialStep(1)">← Zurück</button><button class="tut-next primary" type="button" onclick="setTutorialStep(3)">Weiter: Druck →</button></div>
+          <div class="tut-actions"><button class="tut-next" type="button" data-go-to="1">← Zurück</button><button class="tut-next primary" type="button" data-go-to="3">Weiter: Druck →</button></div>
         </article>
 
         <article class="tut-panel" id="tut-panel-3" role="tabpanel" data-panel-step="3">
           <div class="tut-head"><div><div class="tut-kicker">SCHRITT 3 VON 6</div><h3>Druckvariante und Material wählen</h3>
             <p>Die volle Haube ist groß. Auch die aktuellen Hälften überschreiten mit 355/360 mm ein übliches 256-mm-Druckbett.</p></div>
-            <button class="print-tutorial" type="button" onclick="window.print()">Tutorial drucken</button>
+            <button class="print-tutorial" type="button" data-print>Tutorial drucken</button>
           </div>
           <div class="tut-layout">
             <div class="tut-visual"><div class="part-pair"><div class="part-half"></div><div class="part-half"></div></div></div>
@@ -570,13 +584,13 @@
               <div class="tut-note">Der Build-Bericht bestätigt Wasserdichtheit und Komponentenanzahl — nicht die physische Passform.</div>
             </div>
           </div>
-          <div class="tut-actions"><button class="tut-next" type="button" onclick="setTutorialStep(2)">← Zurück</button><button class="tut-next primary" type="button" onclick="setTutorialStep(4)">Weiter: Montage →</button></div>
+          <div class="tut-actions"><button class="tut-next" type="button" data-go-to="2">← Zurück</button><button class="tut-next primary" type="button" data-go-to="4">Weiter: Montage →</button></div>
         </article>
 
         <article class="tut-panel" id="tut-panel-4" role="tabpanel" data-panel-step="4">
           <div class="tut-head"><div><div class="tut-kicker">SCHRITT 4 VON 6</div><h3>Geteiltes Plenum dicht montieren</h3>
             <p>Die beiden Hälften bilden zusammen die U-Hülle über Rückseite und Seiten. Der Ø150-Stutzen sitzt versetzt neben der Trennfuge.</p></div>
-            <button class="print-tutorial" type="button" onclick="window.print()">Tutorial drucken</button>
+            <button class="print-tutorial" type="button" data-print>Tutorial drucken</button>
           </div>
           <div class="tut-layout">
             <div class="tut-visual"><div class="part-pair"><div class="part-half"></div><div class="part-half"></div></div></div>
@@ -590,13 +604,13 @@
               <div class="tut-note">Nach Montage mit einem Papierstreifen prüfen, ob obere Ansaugung, Filter und Abläufe weiterhin frei sind.</div>
             </div>
           </div>
-          <div class="tut-actions"><button class="tut-next" type="button" onclick="setTutorialStep(3)">← Zurück</button><button class="tut-next primary" type="button" onclick="setTutorialStep(5)">Weiter: Fenster →</button></div>
+          <div class="tut-actions"><button class="tut-next" type="button" data-go-to="3">← Zurück</button><button class="tut-next primary" type="button" data-go-to="5">Weiter: Fenster →</button></div>
         </article>
 
         <article class="tut-panel" id="tut-panel-5" role="tabpanel" data-panel-step="5">
           <div class="tut-head"><div><div class="tut-kicker">SCHRITT 5 VON 6</div><h3>Fensterplatte mit zwei getrennten Luftwegen</h3>
             <p>Die Platte führt heiße Abluft nach außen und Außenluft zum Kondensator. Beide Wege dürfen sich außen nicht direkt kurzschließen.</p></div>
-            <button class="print-tutorial" type="button" onclick="window.print()">Tutorial drucken</button>
+            <button class="print-tutorial" type="button" data-print>Tutorial drucken</button>
           </div>
           <div class="tut-layout">
             <div class="tut-visual">
@@ -615,13 +629,13 @@
               <div class="tut-note">Warme Abluft darf nicht unmittelbar wieder in die Zuluftöffnung eingesaugt werden.</div>
             </div>
           </div>
-          <div class="tut-actions"><button class="tut-next" type="button" onclick="setTutorialStep(4)">← Zurück</button><button class="tut-next primary" type="button" onclick="setTutorialStep(6)">Weiter: Testlauf →</button></div>
+          <div class="tut-actions"><button class="tut-next" type="button" data-go-to="4">← Zurück</button><button class="tut-next primary" type="button" data-go-to="6">Weiter: Testlauf →</button></div>
         </article>
 
         <article class="tut-panel" id="tut-panel-6" role="tabpanel" data-panel-step="6">
           <div class="tut-head"><div><div class="tut-kicker">SCHRITT 6 VON 6</div><h3>Kontrollierter Testlauf statt Dauerbetrieb</h3>
             <p>Der Umbau ist erst nach einem unauffälligen Testlauf brauchbar. Bei ungewöhnlichem Verhalten sofort ausschalten und zurückbauen.</p></div>
-            <button class="print-tutorial" type="button" onclick="window.print()">Tutorial drucken</button>
+            <button class="print-tutorial" type="button" data-print>Tutorial drucken</button>
           </div>
           <div class="tut-layout">
             <div class="tut-visual"><div class="gauge-grid">
@@ -640,7 +654,7 @@
               <div class="tut-note">Ein erfolgreicher Mesh-Build ersetzt keine Betriebsprüfung am realen Klimagerät.</div>
             </div>
           </div>
-          <div class="tut-actions"><button class="tut-next" type="button" onclick="setTutorialStep(5)">← Zurück</button><button class="tut-next primary" type="button" onclick="setTutorialStep(1)">Tutorial neu starten ↻</button></div>
+          <div class="tut-actions"><button class="tut-next" type="button" data-go-to="5">← Zurück</button><button class="tut-next primary" type="button" data-go-to="1">Tutorial neu starten ↻</button></div>
         </article>
       </div>
     </div>
@@ -699,6 +713,48 @@
   </div>
 </section>
 
+<!-- STL DOWNLOADS -->
+<section id="downloads">
+  <div class="wrap reveal">
+    <div class="eyebrow">Fertigung · Direkte Dateien</div>
+    <h2>Alle STL-Dateien herunterladen</h2>
+    <p class="lead">Die Dateien stammen unverändert aus dem geprüften Projektbestand. Jede Datei wird direkt aus dem Unterseitenpfad geladen und als Download angeboten.</p>
+    <div class="download-grid">
+      <article class="download-card">
+        <div><strong>fensterflansch_<wbr>150.stl</strong><span>STL · 133.1 KiB</span></div>
+        <a class="download-link" href="/klima/stl/fensterflansch_150.stl" download="fensterflansch_150.stl" aria-label="fensterflansch_150.stl herunterladen">↓ Download</a>
+      </article>
+      <article class="download-card">
+        <div><strong>kondensator_<wbr>haube.stl</strong><span>STL · 118.2 KiB</span></div>
+        <a class="download-link" href="/klima/stl/kondensator_haube.stl" download="kondensator_haube.stl" aria-label="kondensator_haube.stl herunterladen">↓ Download</a>
+      </article>
+      <article class="download-card">
+        <div><strong>kondensator_<wbr>haube_<wbr>haelfte_<wbr>links.stl</strong><span>STL · 82.2 KiB</span></div>
+        <a class="download-link" href="/klima/stl/kondensator_haube_haelfte_links.stl" download="kondensator_haube_haelfte_links.stl" aria-label="kondensator_haube_haelfte_links.stl herunterladen">↓ Download</a>
+      </article>
+      <article class="download-card">
+        <div><strong>kondensator_<wbr>haube_<wbr>haelfte_<wbr>rechts.stl</strong><span>STL · 145.6 KiB</span></div>
+        <a class="download-link" href="/klima/stl/kondensator_haube_haelfte_rechts.stl" download="kondensator_haube_haelfte_rechts.stl" aria-label="kondensator_haube_haelfte_rechts.stl herunterladen">↓ Download</a>
+      </article>
+      <article class="download-card">
+        <div><strong>plattenklemme.stl</strong><span>STL · 1.8 KiB</span></div>
+        <a class="download-link" href="/klima/stl/plattenklemme.stl" download="plattenklemme.stl" aria-label="plattenklemme.stl herunterladen">↓ Download</a>
+      </article>
+      <article class="download-card">
+        <div><strong>schlauch_<wbr>kupplung_<wbr>150.stl</strong><span>STL · 100.1 KiB</span></div>
+        <a class="download-link" href="/klima/stl/schlauch_kupplung_150.stl" download="schlauch_kupplung_150.stl" aria-label="schlauch_kupplung_150.stl herunterladen">↓ Download</a>
+      </article>
+      <article class="download-card">
+        <div><strong>winter_<wbr>verschlussdeckel_<wbr>150.stl</strong><span>STL · 84.5 KiB</span></div>
+        <a class="download-link" href="/klima/stl/winter_verschlussdeckel_150.stl" download="winter_verschlussdeckel_150.stl" aria-label="winter_verschlussdeckel_150.stl herunterladen">↓ Download</a>
+      </article>
+    </div>
+    <div class="callout c-info">
+      <b>Hinweis zum Maßstatus:</b> Die vier übrigen Einzelteile sind als Mesh geprüft. Die drei Plenum-Dateien bleiben Online-Prototypen — Gerätebreite, Gerätetiefe und Ansaughöhe vor dem finalen Druck am konkreten CPPA-09CRN7-QB6 nachmessen.
+    </div>
+  </div>
+</section>
+
 <!-- MATERIAL -->
 <section id="material">
   <div class="wrap reveal">
@@ -734,52 +790,11 @@
 <footer>
   <div class="wrap">
     <div class="brand" style="margin-bottom:14px"><span class="dot"></span> klima / Comfee Breezy Cool Pro 2.6</div>
-    <p>Projektdateien: <span class="path">/home/ivo/projects/projectsold/klima</span> · STL-Teile: <span class="path">klima/stl</span> · Anleitung: <span class="path">docs/ANLEITUNG.md</span></p>
+    <p>Projektdateien: <span class="path">klima</span> · STL-Teile: <span class="path">/klima/stl</span> · Anleitung und Druckhinweise sind oben dokumentiert.</p>
     <p class="mut" style="margin-top:10px;font-size:13px">DIY-Demonstration. Umbau auf eigenes Risiko — reversibel arbeiten, Garantiehinweise in der Anleitung beachten. Kondensator-Haubenmaße vor dem Druck am Gerät nachmessen.</p>
   </div>
 </footer>
 
-<script>
-function setMode(m){
-  const single = m==='single';
-  document.getElementById('g-single').style.display = single?'block':'none';
-  document.getElementById('g-dual').style.display   = single?'none':'block';
-  document.getElementById('verdict-single').style.display = single?'flex':'none';
-  document.getElementById('verdict-dual').style.display   = single?'none':'flex';
-  document.getElementById('btn1').classList.toggle('active',single);
-  document.getElementById('btn2').classList.toggle('active',!single);
-}
-
-function setTutorialStep(step){
-  const target=Math.max(1,Math.min(6,Number(step)||1));
-  document.querySelectorAll('[data-tutorial-step]').forEach(btn=>{
-    const active=Number(btn.dataset.tutorialStep)===target;
-    btn.classList.toggle('active',active);
-    btn.setAttribute('aria-selected',String(active));
-    btn.tabIndex=active?0:-1;
-  });
-  document.querySelectorAll('[data-panel-step]').forEach(panel=>{
-    panel.classList.toggle('active',Number(panel.dataset.panelStep)===target);
-  });
-  const progress=document.getElementById('tutorial-progress');
-  if(progress) progress.style.width=`${target/6*100}%`;
-}
-
-document.querySelectorAll('[data-tutorial-step]').forEach(btn=>{
-  btn.addEventListener('click',()=>setTutorialStep(btn.dataset.tutorialStep));
-  btn.addEventListener('keydown',event=>{
-    if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key)) return;
-    event.preventDefault();
-    const delta=['ArrowRight','ArrowDown'].includes(event.key)?1:-1;
-    const next=(Number(btn.dataset.tutorialStep)-1+delta+6)%6+1;
-    setTutorialStep(next);
-    document.querySelector(`[data-tutorial-step="${next}"]`)?.focus();
-  });
-});
-setTutorialStep(1);
-// scroll reveal
-const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-</script>
+<script src="/klima/script.js" defer></script>
 </body>
 </html>
