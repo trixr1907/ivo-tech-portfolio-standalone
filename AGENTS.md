@@ -47,12 +47,11 @@ Nicht "gut" — sondern **überlegen**.
 - ✅ `prefers-reduced-motion` IMMER respektieren
 - ✅ Syne als Display-Font (behalten)
 
-### Farb-System (schrittweise migrieren)
-**Aktuell** → **Neu (Precision Engineering)**
-- `--cyan: #5ab7e8` → `--accent: #C8FF00` (Electric Lime)
-- `--ice: #a8d8ef` → beibehalten als Dim-Variante
-- `--black: #0b0e12` → `--primary: #0A0C10` (minimal wärmer)
-- Alle anderen bestehenden Variablen beibehalten bis zur vollständigen Migration
+### Farb-System (finalisiert)
+- **Aktion = Electric Lime** (--accent: #C8FF00): Buttons, Links, Fokus, Auswahl, Eyebrows, Kicker, Labels
+- **Atmosphäre = Cyan** (--cyan: #5ab7e8, #00B7FF): Glows, Gradienten, dekorative Tiefe, Modal-Hintergründe, Loader
+- Diese Arbeitsteilung ist bewusst und final. Keine weitere Migration der Cyan-Glows.
+- --cyan Variable bleibt dauerhaft bestehen.
 
 ### Vorgehen: Audit → Strategie → Umsetzung
 1. **Audit**: Schonungslos ehrlich — was ist schwach, generisch, austauschbar?
@@ -81,9 +80,6 @@ src/
       ProjectCard.tsx  → Einzelne Projekt-Card
       ProjectModal.tsx → Case Study Modal (vollständige Tiefe)
     ui/
-      CustomCursor.tsx → ⚠️ ENTFERNEN (generisch)
-      MeshBackground.tsx → ⚠️ ERSETZEN (generisch)
-      ScrollBar.tsx    → ⚠️ PRÜFEN (generisch?)
       Loader.tsx       → Loading Screen
       MagButton.tsx    → Magnetic Button (behalten)
       Reveal.tsx       → Reveal-Animation (behalten, Kern-Pattern)

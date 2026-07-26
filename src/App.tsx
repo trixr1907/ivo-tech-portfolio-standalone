@@ -221,6 +221,20 @@ function App() {
                   </div>
                   <SplitTitle lines={['Ich baue,', 'was bleibt.']} immediate={compactHero} />
                   <p className="hero-sub">Ich entwickle produktionsreife Webapplikationen — vom belastbaren System bis zum präzisen Interface und stabilen Live-Betrieb.</p>
+                  <div className="hero-proof" aria-label="Kennzahlen">
+                    <div className="hero-proof-item">
+                      <span className="hero-proof-value">3</span>
+                      <span className="hero-proof-label">Live-Systeme</span>
+                    </div>
+                    <div className="hero-proof-item">
+                      <span className="hero-proof-value">12</span>
+                      <span className="hero-proof-label">Component Tests</span>
+                    </div>
+                    <div className="hero-proof-item">
+                      <span className="hero-proof-value">100</span>
+                      <span className="hero-proof-label">Lighthouse A11y</span>
+                    </div>
+                  </div>
                   <div className="hero-ctas">
                     <MagButton className="btn-primary" href="#selected-work" onClick={(event) => handleNavClick(event, '#selected-work')}>Projekte ansehen <ArrowUpRight size={16} /></MagButton>
                     <MagButton className="btn-ghost" href="/yves-simon-schenker-cv.pdf" download>Lebenslauf</MagButton>
