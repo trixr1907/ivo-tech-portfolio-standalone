@@ -62,6 +62,10 @@ const dldImages = {
   mobile: '/brand/projects/dld-mobile.avif',
 }
 
+const klimaImages = {
+  cover: '/brand/projects/klima-stl-preview.png',
+}
+
 export const projects: Project[] = [
   {
     id: 'goals-optimizer', title: 'GOALS Optimizer',
@@ -219,5 +223,57 @@ export const projects: Project[] = [
     result:
       'Der Konfigurator macht 3D-Druck bestellbar, ohne den Betrieb zu verstecken: Kunden bekommen eine klare Upload- und Kaufstrecke, Betreiber behalten Preise, Profile, Farben und Engine-Status im WordPress-Admin unter Kontrolle.',
     links: { demo: 'https://deinlieblingsdruck.de/3d-konfigurator/' },
+  },
+  {
+    id: 'comfee-klima-umbau',
+    title: 'Comfee Klima-Umbau',
+    tagline:
+      'Online-Prototyp für die Comfee Breezy Cool Pro 2.6: Fensterabdichtung, Zweischlauch-Zuluft und parametrische 3D-Druckteile mit visueller Druckanleitung.',
+    problem:
+      'Ein mobiles Klimagerät braucht eine nachvollziehbare Luftführung und druckbare Teile, ohne sich auf unbestätigte Geräteannahmen zu verlassen.',
+    facts: [
+      { label: 'Gerät', value: 'Comfee Breezy Cool Pro 2.6 · CPPA-09CRN7-QB6' },
+      { label: 'Lösung', value: 'Parametrisches Plenum, Fensterflansch und Kupplung als STL' },
+      { label: 'Status', value: 'Online-Prototyp · Maße am Gerät noch bestätigen' },
+    ],
+    cover: klimaImages.cover,
+    status: 'lab-prototype',
+    tags: ['OpenSCAD/Trimesh', 'STL', 'Parametrisch', '3D-Druck', 'Luftführung', 'HTML-Tutorial', 'Prototyp'],
+    overview: {
+      built:
+        'Eine eigenständige, visuelle Projektseite für einen möglichen Zweischlauch-Umbau: STL-Teile, Fensterflansch, Winterdeckel, Plenum-Hälften und eine Schritt-für-Schritt-Anleitung.',
+      challenge:
+        'Die öffentlichen Referenzmaße reichen für einen belastbaren Online-Prototyp, aber nicht für eine 100%-Passformgarantie. Deshalb trennt die Seite bestätigte CAD-Prüfungen klar von Maßen, die vor dem finalen Druck am konkreten Gerät nachgemessen werden müssen.',
+      role:
+        'Konzept, parametrische Geometrie, Mesh-/Komponentenprüfung, Druckdokumentation und Umsetzung der interaktiven HTML-Anleitung.',
+    },
+    highlights: [
+      'CAD-Checks: sieben STL-Dateien sind wasserdicht und als jeweils eine Komponente verifiziert.',
+      'Luftführung: untere/hintere Seitenansaugung als Plenum mit einem zusätzlichen Ø150-mm-Zuluftanschluss.',
+      'Sicherer Projektstatus: Die Seite kennzeichnet den Stand ausdrücklich als Online-Prototyp und fordert eine Maßbestätigung vor dem Enddruck.',
+    ],
+    screenshots: [
+      { src: klimaImages.cover, caption: 'STL-Übersicht des Online-Prototyps mit Plenum, Fensterflansch und Kupplung' },
+    ],
+    architecture: [
+      'CAD: parametrisches Plenum mit Teilungsfuge, Passstiften und einem zusätzlichen Ø150-mm-Stutzen',
+      'Druckteile: Fensterflansch, Schlauchkupplung, Winterverschluss, Plattenklemme und geteilte Haube',
+      'Web: interaktive Tutorial-Schritte, Maß-Checkliste, Materialhinweise und Sicherheitsstatus',
+      'QA: watertight-Meshes, Komponentenprüfung und reproduzierbarer Verifikationsbericht',
+    ],
+    trustChecks: [
+      'Alle sieben STL-Dateien sind wasserdicht',
+      'Jedes Bauteil besteht aus genau einer Mesh-Komponente',
+      'Maße am konkreten CPPA-09CRN7-QB6 vor dem Enddruck bestätigen',
+      'Erst mit Testlauf und Temperaturvergleich weiter optimieren',
+    ],
+    impact: [
+      { value: '7', label: 'verifizierte STL-Teile' },
+      { value: 'Ø150', label: 'Zuluft-Anschluss' },
+      { value: 'Online', label: 'Tutorial und Druckstatus' },
+    ],
+    result:
+      'Aus einer offenen Hardware-Frage wird ein prüfbarer Fertigungsprototyp: CAD, Druckteile und Montagewissen sind online sichtbar — mit klarer Grenze zwischen verifiziertem Mesh und noch offener Passform.',
+    links: { demo: '/klima/' },
   },
 ]
