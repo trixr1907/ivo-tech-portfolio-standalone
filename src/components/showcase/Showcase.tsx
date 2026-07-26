@@ -16,7 +16,7 @@ export function Showcase() {
             <span className="relaunch-kicker">Selected Work</span>
             <span className="relaunch-index">— 02</span>
           </div>
-          <SectionTitle id="showcase-heading" lines={[{ text: 'Drei Systeme.' }, { text: 'Echte Produkt-Tiefe.', em: true }]} />
+          <SectionTitle id="showcase-heading" lines={[{ text: 'Vier Systeme.' }, { text: 'Echte Produkt-Tiefe.', em: true }]} />
           <p className="relaunch-lead">
             Keine Konzept-Screens, sondern Anwendungen mit echter Logik, belastbaren Entscheidungen und produktionsnaher Qualität — von Next.js bis WordPress, von RLS bis Three.js.
           </p>
