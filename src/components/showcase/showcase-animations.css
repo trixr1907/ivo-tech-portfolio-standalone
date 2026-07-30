@@ -1,0 +1,357 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   showcase-animations.css — SOTA Card + Modal Micro-Animations
+   Lädt NACH showcase.css und überschreibt Animations-relevante Styles.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Card entrance ───────────────────────────────────────────────── */
+.project-card {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity var(--dur-reveal) var(--ease-out-expo),
+    transform var(--dur-reveal) var(--ease-out-expo);
+}
+.project-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Button: premium hover ───────────────────────────────────────── */
+.project-card__button {
+  border: 1px solid rgba(255, 255, 255, 0.055) !important;
+  transition:
+    transform var(--dur-base) var(--ease-out-expo),
+    border-color var(--dur-base) var(--ease-out-expo),
+    box-shadow var(--dur-base) var(--ease-out-expo),
+    background var(--dur-fast) var(--ease-fade) !important;
+}
+
+.project-card__button:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(0, 183, 255, 0.25) !important;
+  background:
+    radial-gradient(circle at 82% 0%, rgba(0, 183, 255, 0.18), transparent 44%),
+    linear-gradient(145deg, rgba(220, 230, 242, 0.065), rgba(220, 230, 242, 0.018)),
+    rgba(11, 17, 28, 0.96) !important;
+  box-shadow:
+    0 32px 100px rgba(0, 0, 0, 0.4),
+    0 0 70px rgba(0, 183, 255, 0.07) !important;
+}
+
+.project-card__button:focus-visible {
+  outline: none !important;
+  transform: translateY(-2px) !important;
+  border-color: rgba(0, 183, 255, 0.55) !important;
+  box-shadow:
+    0 0 0 3px rgba(5, 7, 11, 0.9),
+    0 0 0 5px rgba(0, 183, 255, 0.5),
+    0 16px 60px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ── Media: 3-Layer Overlay ──────────────────────────────────────── */
+
+/* Layer 0 — image */
+.project-card__media img {
+  filter: saturate(0.84) contrast(1.06) brightness(0.88) !important;
+  transform: scale(1.015) !important;
+  transition:
+    transform var(--dur-slow) var(--ease-out-expo),
+    filter var(--dur-slow) var(--ease-out-expo) !important;
+}
+
+.project-card__button:hover .project-card__media img,
+.project-card__button:focus-visible .project-card__media img {
+  filter: saturate(1) contrast(1.08) brightness(1.02) !important;
+  transform: scale(1.055) !important;
+}
+
+/* Layer 1 — Scrim (Lesbarkeitsanker) */
+.project-card__media::after {
+  background:
+    linear-gradient(180deg,
+      rgba(5, 7, 11, 0.05) 0%,
+      transparent 28%,
+      rgba(5, 7, 11, 0.72) 78%,
+      rgba(5, 7, 11, 0.88) 100%
+    ),
+    linear-gradient(90deg,
+      rgba(0, 183, 255, 0.06) 0%,
+      transparent 25%,
+      transparent 75%,
+      rgba(123, 231, 255, 0.06) 100%
+    ) !important;
+  transition: opacity var(--dur-base) var(--ease-fade) !important;
+}
+
+.project-card__button:hover .project-card__media::after {
+  background:
+    linear-gradient(180deg,
+      rgba(5, 7, 11, 0.02) 0%,
+      transparent 30%,
+      rgba(5, 7, 11, 0.58) 78%,
+      rgba(5, 7, 11, 0.75) 100%
+    ),
+    linear-gradient(90deg,
+      rgba(0, 183, 255, 0.1) 0%,
+      transparent 25%,
+      transparent 75%,
+      rgba(123, 231, 255, 0.1) 100%
+    ) !important;
+}
+
+/* Layer 2 — Shimmer sweep */
+.project-card__button:hover .project-card__media::before {
+  content: '' !important;
+  position: absolute !important;
+  z-index: 3 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(
+    90deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.03) 42%,
+    rgba(255, 255, 255, 0.07) 50%,
+    rgba(255, 255, 255, 0.03) 58%,
+    transparent 70%
+  ) !important;
+  pointer-events: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  color: transparent !important;
+  font: 0/0 a !important;
+  letter-spacing: 0 !important;
+  backdrop-filter: none !important;
+  animation: shimmer 0.85s var(--ease-in-out-smooth) forwards !important;
+}
+
+/* ── Status Badge ────────────────────────────────────────────────── */
+.project-card__status {
+  z-index: 4 !important;
+  transition:
+    transform var(--dur-base) var(--ease-out-expo),
+    border-color var(--dur-base) var(--ease-out-expo),
+    background var(--dur-base) var(--ease-fade),
+    box-shadow var(--dur-base) var(--ease-fade) !important;
+}
+
+.project-card__button:hover .project-card__status {
+  transform: translateY(-3px) !important;
+  border-color: rgba(0, 183, 255, 0.5) !important;
+  background: rgba(5, 7, 11, 0.82) !important;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(0, 183, 255, 0.12) !important;
+}
+
+/* ── Index number ────────────────────────────────────────────────── */
+.project-card__index {
+  transition:
+    color var(--dur-base) var(--ease-fade),
+    transform var(--dur-base) var(--ease-out-expo) !important;
+}
+.project-card:hover .project-card__index {
+  color: rgba(243, 240, 232, 0.2) !important;
+  transform: translateX(8px) !important;
+}
+
+/* ── Body ────────────────────────────────────────────────────────── */
+.project-card__body {
+  transition: background var(--dur-base) var(--ease-fade) !important;
+}
+.project-card__button:hover .project-card__body {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(123, 231, 255, 0.12), transparent 28%),
+    rgba(14, 18, 24, 0.42) !important;
+}
+
+/* Staggered children */
+.project-card__eyebrow,
+.project-card__title,
+.project-card__problem,
+.project-card__facts {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--dur-fast) var(--ease-fade),
+    transform var(--dur-fast) var(--ease-out-expo);
+}
+.project-card.is-visible .project-card__eyebrow { opacity: 1; transform: translateY(0); transition-delay: 80ms; }
+.project-card.is-visible .project-card__title   { opacity: 1; transform: translateY(0); transition-delay: 130ms; }
+.project-card.is-visible .project-card__problem { opacity: 1; transform: translateY(0); transition-delay: 190ms; }
+.project-card.is-visible .project-card__facts   { opacity: 1; transform: translateY(0); transition-delay: 240ms; }
+
+.project-card__button:hover .project-card__facts {
+  border-color: rgba(123, 231, 255, 0.22) !important;
+  background: rgba(0, 183, 255, 0.055) !important;
+}
+
+/* ── Accent seam ─────────────────────────────────────────────────── */
+.project-card__body::before {
+  content: '';
+  position: absolute;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--accent) 40%, var(--accent) 60%, transparent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--dur-base) var(--ease-out-expo);
+}
+.project-card:hover .project-card__body::before,
+.project-card:focus-within .project-card__body::before {
+  transform: scaleY(1);
+}
+
+/* ── CTA ─────────────────────────────────────────────────────────── */
+.project-card__cta {
+  position: relative !important;
+  overflow: hidden !important;
+  transition:
+    color var(--dur-fast) var(--ease-fade),
+    border-color var(--dur-fast) var(--ease-fade),
+    background var(--dur-fast) var(--ease-fade),
+    transform var(--dur-fast) var(--ease-spring) !important;
+}
+.project-card__cta::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  background: linear-gradient(120deg, rgba(0, 183, 255, 0.18), rgba(123, 231, 255, 0.08)) !important;
+  opacity: 0 !important;
+  transition: opacity var(--dur-fast) var(--ease-fade) !important;
+}
+.project-card__button:hover .project-card__cta::before { opacity: 1 !important; }
+.project-card__button:hover .project-card__cta {
+  transform: translateY(-1px) !important;
+  border-color: rgba(123, 231, 255, 0.45) !important;
+}
+.project-card__cta svg,
+.project-card__cta--more svg {
+  transition: transform var(--dur-base) var(--ease-out-expo) !important;
+}
+.project-card__button:hover .project-card__cta svg {
+  transform: translateX(4px) translateY(-1px) !important;
+}
+.project-card__cta--more:hover svg { transform: translateX(6px) !important; }
+.project-card__cta--more {
+  transition:
+    color var(--dur-fast) var(--ease-fade),
+    transform var(--dur-fast) var(--ease-spring) !important;
+}
+.project-card__cta--more:hover {
+  color: var(--white) !important;
+  transform: translateX(4px) !important;
+}
+
+/* ── Metric cards ────────────────────────────────────────────────── */
+.project-card__metric { transition: background var(--dur-fast) var(--ease-fade) !important; }
+.project-card__metric:hover { background: rgba(16, 21, 28, 0.95) !important; }
+.project-card__highlight { transition: background var(--dur-fast) var(--ease-fade) !important; }
+.project-card__highlight:hover { background: rgba(18, 23, 29, 0.98) !important; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   MODAL
+   ══════════════════════════════════════════════════════════════════════ */
+
+.project-modal__dialog::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    transparent 15%,
+    rgba(0, 183, 255, 0.22) 35%,
+    rgba(123, 231, 255, 0.14) 55%,
+    transparent 85%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  animation: borderGlow 8s linear infinite;
+  transition: opacity var(--dur-slow) var(--ease-fade);
+  pointer-events: none;
+}
+.project-modal.is-open .project-modal__dialog::before { opacity: 1; }
+
+.project-modal__close:hover,
+.project-modal__close:focus-visible {
+  transform: translateY(-2px) rotate(90deg) !important;
+}
+
+.project-modal__toc button {
+  position: relative !important;
+  overflow: hidden !important;
+  transition:
+    color 160ms ease, border-color 160ms ease,
+    background 160ms ease, transform 160ms var(--ease-spring) !important;
+}
+.project-modal__toc button::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(123, 231, 255, 0.18) !important;
+  opacity: 0 !important;
+  transition: opacity 160ms ease !important;
+}
+.project-modal__toc button:hover,
+.project-modal__toc button:focus-visible {
+  transform: translateY(-1px) !important;
+  outline: none !important;
+}
+.project-modal__toc button:hover::before,
+.project-modal__toc button:focus-visible::before { opacity: 1 !important; }
+
+.project-modal__shots figure {
+  transition:
+    transform var(--dur-fast) var(--ease-out-expo),
+    background var(--dur-fast) var(--ease-fade),
+    box-shadow var(--dur-fast) var(--ease-fade) !important;
+}
+.project-modal__shots figure:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.4) !important;
+}
+.project-modal__shots figure:focus-visible {
+  outline: 2px solid rgba(123, 231, 255, 0.8) !important;
+  outline-offset: 3px !important;
+  transform: translateY(-4px) !important;
+}
+
+.project-modal__links a {
+  position: relative !important;
+  overflow: hidden !important;
+  transition:
+    transform var(--dur-fast) var(--ease-spring),
+    box-shadow var(--dur-fast) var(--ease-fade) !important;
+}
+.project-modal__links a::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.3), transparent) !important;
+  opacity: 0 !important;
+  transition: opacity var(--dur-fast) var(--ease-fade) !important;
+}
+.project-modal__links a:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 30px rgba(0, 183, 255, 0.25) !important;
+}
+.project-modal__links a:hover::after { opacity: 1 !important; }
+
+.relaunch-project-card .project-card__button:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 760px) {
+  .project-card__body::before { display: none !important; }
+}

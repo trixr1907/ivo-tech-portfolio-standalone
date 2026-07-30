@@ -3,7 +3,6 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import './App.css'
 import './relaunch.css'
-import './styles/animation-system.css'
 
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { Loader } from './components/ui/Loader'

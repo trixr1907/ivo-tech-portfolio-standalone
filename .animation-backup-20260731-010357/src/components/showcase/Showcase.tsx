@@ -4,7 +4,6 @@ import { ProjectCard } from './ProjectCard'
 import { ProjectModal } from './ProjectModal'
 import { SectionTitle } from '../ui/SectionTitle'
 import './showcase.css'
-import './showcase-animations.css'
 
 export function Showcase() {
   const [activeProject, setActiveProject] = useState<Project | null>(null)
