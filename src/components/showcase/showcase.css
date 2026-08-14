@@ -230,6 +230,9 @@
 }
 
 .project-card__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   margin-top: 1.5rem;
   width: fit-content;
   padding: 0.54rem 0.78rem;
@@ -253,11 +256,14 @@
   background: rgba(2, 4, 7, 0.78);
   backdrop-filter: blur(22px) saturate(1.35);
   -webkit-backdrop-filter: blur(22px) saturate(1.35);
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .project-modal__dialog {
   position: relative;
+  display: flex;
+  max-height: calc(100dvh - clamp(1.5rem, 4vw, 3rem));
+  flex-direction: column;
   width: min(100%, 1240px);
   margin: auto;
   border: 1px solid rgba(123, 231, 255, 0.16);
@@ -273,15 +279,15 @@
 }
 
 .project-modal__close {
-  position: sticky;
+  position: absolute;
   top: 1rem;
-  left: calc(100% - 4.6rem);
+  right: 1rem;
   z-index: 5;
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
-  margin: 1rem 1rem -3.75rem auto;
+  margin: 0;
   border: 1px solid var(--accent-dim);
   border-radius: 999px;
   color: var(--white);
@@ -290,6 +296,49 @@
   line-height: 1;
   cursor: pointer;
   backdrop-filter: blur(10px);
+}
+
+.project-modal__body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.project-modal__toc {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0.75rem 4.75rem 0.75rem 1rem;
+  border-bottom: 1px solid rgba(123, 231, 255, 0.12);
+  background: rgba(5, 7, 11, 0.92);
+  backdrop-filter: blur(16px);
+}
+
+.project-modal__toc button {
+  display: inline-flex;
+  min-height: 44px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: rgba(220, 230, 242, 0.64);
+  background: transparent;
+  font: 750 0.68rem/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.project-modal__toc button.is-active {
+  border-color: rgba(123, 231, 255, 0.28);
+  color: var(--white);
+  background: rgba(123, 231, 255, 0.1);
 }
 
 .project-modal__hero {
@@ -587,16 +636,21 @@
 
 .project-modal__shots figure {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto;
   gap: 0;
   margin: 0;
   background: rgba(5, 7, 11, 0.94);
 }
 
+.project-modal__shots:not(:has(> figure:nth-child(4))) > figure:last-child {
+  grid-column: 1 / -1;
+}
+
 .project-modal__shots img {
   width: calc(100% - 1.5rem);
+  height: auto;
   margin: 0.75rem auto 0;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: auto;
   border: 1px solid rgba(220, 230, 242, 0.08);
   border-radius: 16px;
   background: #030507;
@@ -609,6 +663,11 @@
   color: rgba(220, 230, 242, 0.62);
   font-size: 0.82rem;
   line-height: 1.5;
+}
+
+.project-modal__shot-label {
+  display: block;
+  margin-bottom: 0.35rem;
 }
 
 .project-modal__links {
@@ -656,9 +715,24 @@
   .project-modal {
     padding: 0;
   }
+  .project-modal__toc {
+    width: calc(100% - 3.75rem);
+    overflow-x: auto;
+    padding-right: 0.75rem;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+  }
+  .project-modal__toc::-webkit-scrollbar {
+    display: none;
+  }
   .project-modal__dialog {
+    width: 100%;
+    max-height: 100dvh;
     min-height: 100svh;
     border-radius: 0;
+  }
+  .project-modal__shots:not(:has(> figure:nth-child(4))) > figure:last-child {
+    grid-column: auto;
   }
   .project-modal__hero-media {
     min-height: 240px;

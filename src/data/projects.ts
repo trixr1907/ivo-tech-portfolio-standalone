@@ -9,7 +9,7 @@ export type Project = {
   }>
   cover: string
   tags: string[]
-  status?: 'live' | 'lab-prototype'
+  status?: 'live' | 'client-project' | 'lab-prototype'
   overview: {
     built: string
     challenge: string
@@ -39,27 +39,29 @@ export type Project = {
   result?: string
   links: {
     demo?: string
+    client?: string
     repo?: string
   }
 }
 
 const eventHubImages = {
-  cover: '/brand/projects/event-hub-cover.webp',
-  agenda: '/brand/projects/event-hub-1.webp',
-  compliance: '/brand/projects/event-hub-2.webp',
-  registration: '/brand/projects/event-hub-3.webp',
+  cover: '/brand/projects/event-hub-cockpit.webp',
+  agenda: '/brand/projects/event-hub-agenda.webp',
+  analytics: '/brand/projects/event-hub-analytics.webp',
+  audit: '/brand/projects/event-hub-audit.webp',
 }
 
 const goalsImages = {
-  cover: '/brand/projects/goals-optimizer-cover.webp',
-  squad: '/brand/projects/goals-optimizer-1.webp',
-  lineup: '/brand/projects/goals-optimizer-2.webp',
+  cover: '/brand/projects/goals-squad-analysis.webp',
+  squad: '/brand/projects/goals-squad-analysis.webp',
+  lineup: '/brand/projects/goals-formation-optimizer.webp',
+  meta: '/brand/projects/goals-meta-center.webp',
 }
 
 const dldImages = {
   cover: '/brand/projects/dld-cover.webp',
-  calculated: '/brand/projects/dld-dev-portfolio.webp',
-  mobile: '/brand/projects/dld-mobile.avif',
+  leads: '/brand/projects/dld-admin-leads.webp',
+  profiles: '/brand/projects/dld-admin-printer-profiles.webp',
 }
 
 const klimaImages = {
@@ -69,15 +71,19 @@ const klimaImages = {
 export const projects: Project[] = [
   {
     id: 'goals-optimizer', title: 'GOALS Optimizer',
-    tagline: 'Live unter goals.ivo-tech.com: Squad-Import, Fit-Scores, Formation-Optimizer, Matchup und Development-Tracker — Next.js 14, TypeScript, Zustand, 371 Tests.',
+    tagline: 'Live unter goals.ivo-tech.com: Squad-Import, Fit-Scores, Formation-Optimizer, Matchup und Development-Tracker — Next.js 14, TypeScript, Zustand, 408 Tests.',
     problem: 'GOALS-Spieler müssen Kader, Position-Fit und Lineups aus mehreren Community-Datenquellen zusammensetzen.',
-    facts: [{ label: 'Problem', value: 'Kader, Position-Fit und Lineups aus mehreren Quellen bündeln' }, { label: 'Lösung', value: 'Live-Optimizer mit Squad-Import, Matchup und Development-Tracker' }, { label: 'Status', value: 'Live auf goals.ivo-tech.com · 371 Tests' }],
+    facts: [{ label: 'Problem', value: 'Kader, Position-Fit und Lineups aus mehreren Quellen bündeln' }, { label: 'Lösung', value: 'Live-Optimizer mit Squad-Import, Matchup und Development-Tracker' }, { label: 'Status', value: 'Live auf goals.ivo-tech.com · 408 Tests' }],
     cover: goalsImages.cover, status: 'live',
     tags: ['Next.js 14', 'TypeScript', 'Zustand', 'Tailwind', 'Vitest', 'Playwright', 'Squad Optimizer', 'Matchup', 'Mobile-first'],
     overview: { built: 'Ein live nutzbarer GOALS-Optimizer für Squad-Import, Position-Fit, Formation, Matchup und Spielerentwicklung.', challenge: 'Community-Datenquellen und viele Kaderentscheidungen mussten in eine schnelle, mobile-first Oberfläche mit nachvollziehbaren Scores überführt werden.', role: 'Konzeption, Produktarchitektur, Next.js-/TypeScript-Umsetzung, State-Management, responsive UI und Testabdeckung.' },
-    highlights: ['Formation + Pitch: Lineups visuell prüfen und optimieren.', 'Matchup und Development: relevante Entscheidungen in einem Flow.', '371 Tests + Live: Vitest/Playwright und produktiver Betrieb.'],
-    screenshots: [{ src: goalsImages.cover, caption: 'GOALS Optimizer mit Squad-Import und zentralem Kader-Überblick' }, { src: goalsImages.squad, caption: 'Squad-Ansicht mit Position-Fit und Spielerinformationen' }, { src: goalsImages.lineup, caption: 'Formation und Pitch für die Lineup-Optimierung' }],
-    impact: [{ value: '371', label: 'Tests' }, { value: 'Live', label: 'goals.ivo-tech.com' }, { value: 'Mobile', label: 'Mobile-first' }],
+    highlights: ['Formation + Pitch: Lineups visuell prüfen und optimieren.', 'Matchup und Development: relevante Entscheidungen in einem Flow.', '408 Tests + Live: Vitest/Playwright und produktiver Betrieb.'],
+    screenshots: [
+      { src: goalsImages.squad, caption: 'Kaderanalyse mit KPIs, Stärken, Baustellen und Position-Fit' },
+      { src: goalsImages.lineup, caption: 'Formation Optimizer mit Empfehlungen und vollständiger Startelf' },
+      { src: goalsImages.meta, caption: 'Meta Center mit Quick Pick und Formation-Ranking' },
+    ],
+    impact: [{ value: '408', label: 'Tests' }, { value: 'Live', label: 'goals.ivo-tech.com' }, { value: 'Mobile', label: 'Mobile-first' }],
     result: 'Aus verteilten Community-Daten wird ein nutzbares Entscheidungs-Tool: Import, Fit, Formation, Matchup und Development in einer App.',
     links: { demo: 'https://goals.ivo-tech.com', repo: 'https://github.com/trixr1907/goals-optimizer' },
   },
@@ -134,8 +140,8 @@ export const projects: Project[] = [
     screenshots: [
       { src: eventHubImages.cover, caption: 'Zentrales Dashboard mit KPIs, Aufgabenstatus und Event-Aktivität' },
       { src: eventHubImages.agenda, caption: 'Agenda- und Timeline-Planung für komplexe Veranstaltungsabläufe' },
-      { src: eventHubImages.compliance, caption: 'HCP-Spend-Tracking mit Cap-Überwachung und Transparenzreporting' },
-      { src: eventHubImages.registration, caption: 'Öffentliche Registrierung mit sicherer Supabase-RLS-Architektur' },
+      { src: eventHubImages.analytics, caption: 'Analytics mit Teilnahmequoten, Statusverteilung und Eventvergleich' },
+      { src: eventHubImages.audit, caption: 'Audit-Trail mit Aktion, Ressource, Benutzer und Zeitstempel' },
     ],
     impact: [
       { value: '5', label: 'Rollen-Ebenen mit RLS' },
@@ -151,19 +157,20 @@ export const projects: Project[] = [
     id: 'dld-3d-configurator',
     title: 'DLD 3D-Konfigurator',
     tagline:
-      'Live bei deinlieblingsdruck.de: ein WooCommerce-Konfigurator für 3D-Druck mit Datei-Upload, 3D-Vorschau, Material- und Farbauswahl, Preisberechnung, Warenkorb-Anbindung und eigenem WordPress-Adminbereich.',
+      'Kundenprojekt für deinlieblingsdruck.de: ein WordPress-Konfigurator für 3D-Druck mit Datei-Upload, Three.js-Vorschau, Slicer-gestützter Kalkulation, Angebotsanfrage und eigenem Adminbereich.',
     problem:
-      '3D-Druck online verkaufen heißt: Dateien prüfen, Preise nachvollziehbar berechnen, rechtlich absichern — und den Betrieb im Admin steuerbar halten.',
+      '3D-Druck online anzufragen heißt: Dateien prüfen, Preise nachvollziehbar kalkulieren, rechtlich absichern — und den Betrieb im Admin steuerbar halten.',
     facts: [
-      { label: 'Problem', value: '3D-Dateien, Preise und Checkout müssen verständlich zusammenlaufen' },
-      { label: 'Lösung', value: 'WooCommerce-Plugin mit Upload, Three.js-Vorschau, Admin und Preislogik' },
-      { label: 'Status', value: 'Live im produktiven Shop deinlieblingsdruck.de' },
+      { label: 'Problem', value: '3D-Dateien, Kalkulation und Angebotsanfrage zusammenführen' },
+      { label: 'Lösung', value: 'WordPress-Plugin mit Upload, Three.js, Slicer-API und DB-first Übergabe' },
+      { label: 'Status', value: 'Kundenprojekt · öffentliche Case Study' },
     ],
     cover: dldImages.cover,
-    status: 'live' as const,
+    status: 'client-project' as const,
     tags: [
-      'Live WooCommerce',
       'WordPress Plugin',
+      'PHP',
+      'JavaScript',
       'Admin Panel',
       'Three.js',
       'STL/3MF Preview',
@@ -176,21 +183,21 @@ export const projects: Project[] = [
     ],
     overview: {
       built:
-        'Ein WordPress-/WooCommerce-Plugin mit öffentlichem Konfigurator und separatem Adminbereich. Kunden laden STL- oder 3MF-Dateien hoch, prüfen das Modell im Three.js-Canvas, wählen Material, Qualität, Farbe und Stückzahl und übernehmen das Ergebnis in den Warenkorb. Im Backend verwaltet der Betreiber Preise, Farbsortimente, Upload-Grenzen, Engine-Modus, API-Zugang und Druckerprofile.',
+        'Ein WordPress-Plugin mit Konfigurator und separatem Adminbereich. Kunden laden STL- oder 3MF-Dateien hoch, prüfen das Modell im Three.js-Canvas, wählen Material, Qualität, Farbe und Stückzahl und senden eine abgesicherte Angebotsanfrage. Im Backend verwaltet der Betreiber Preise, Farbsortimente, Upload-Grenzen, Engine-Modus, API-Zugang und Druckerprofile.',
       challenge:
         'Frontend und Betriebsebene mussten zusammenpassen. Die Kundenseite braucht wenige, klare Entscheidungen. Das Admin-Panel muss dagegen viele Stellschrauben abbilden: Materialfaktoren, Maschinenstundensatz, Startgebühr, Farbgruppen, Steueranzeige, Bauraumgrenzen, Profil-Badges und Engine-Diagnose. Beides darf sich nicht widersprechen.',
       role:
-        'Konzeption und Umsetzung des Plugins: Konfigurator-UI, Three.js-Viewer, Preislogik, WooCommerce-Übergabe, WordPress-Adminseiten für Einstellungen, Druckerprofile und Debugging sowie Tests gegen die laufende WordPress-Instanz.',
+        'Konzeption und Umsetzung des Plugins: Konfigurator-UI, Three.js-Viewer, Preislogik, DB-first Angebotsübergabe, WordPress-Adminseiten für Einstellungen, Druckerprofile und Debugging sowie Tests gegen eine laufende WordPress-Instanz.',
     },
     highlights: [
-      'Kundenseite: Upload, Vorschau, Auswahl und Checkout bleiben kompakt genug, um ohne CAD-Wissen bedienbar zu sein.',
+      'Kundenseite: Upload, Vorschau, Auswahl und Angebotsanfrage bleiben kompakt genug, um ohne CAD-Wissen bedienbar zu sein.',
       'Adminbereich: Preise, Farben, Upload-Regeln, Engine-API und Druckerprofile lassen sich in WordPress pflegen, statt hart im Code zu stehen.',
-      'Betriebssicherheit: Debug-Seite, API-Test, Profil-Badges und deaktivierter Warenkorb-Button machen technische Zustände sichtbar, bevor eine Bestellung entsteht.',
+      'Betriebssicherheit: DB-first Speicherung, abgesicherte Download-Tokens, Debug-Seite und API-Test halten Anfragen auch bei Mailfehlern nachvollziehbar.',
     ],
     screenshots: [
-      { src: dldImages.cover, caption: 'Live-Konfigurator: Upload, Materialauswahl, Farbwähler und Preisbereich' },
-      { src: dldImages.calculated, caption: 'Berechneter Zustand mit 3D-Vorschau, Modellwerten und Warenkorb-Übergabe' },
-      { src: dldImages.mobile, caption: 'Mobile Ansicht mit reduziertem Layout für den Bestellprozess' },
+      { src: dldImages.cover, caption: 'Konfigurator: Upload, Materialauswahl, Farbwähler und Preisbereich' },
+      { src: dldImages.leads, caption: 'Admin: DB-first Leads mit getrennten Mailstatus, Download und Retry' },
+      { src: dldImages.profiles, caption: 'Admin: Druckerprofile mit Bauraum, Materialien, Adapter und Badge-Steuerung' },
     ],
     signals: [
       { label: 'Frontend', value: 'STL · 3MF', text: 'Die öffentliche Seite konzentriert sich auf Upload, Vorschau und wenige verständliche Kaufentscheidungen.' },
@@ -201,28 +208,28 @@ export const projects: Project[] = [
       'Frontend: Upload-Zone, Three.js-Canvas, Modell-Toolbar, Material-/Farbwahl, Menge und Preisbereich',
       'WordPress Admin: Einstellungsseite für Preise, Steueranzeige, Upload-Limits, Farben, Engine-Modus und API-Zugang',
       'Druckerprofile: aktive Profile, Standarddrucker, Bauraum, Materialfreigaben, Badges und Anzeigenamen',
-      'WooCommerce: Warenkorb-Metadaten, rechtliche Bestätigung und Bestellübergabe',
-      'QA: Playwright-Prüfung für Upload, Preiszustand, Legal-Checkboxen, mobile Ansicht und Checkout-Verhalten',
+      'Anfrage-Pipeline: DB-first Speicherung, rechtliche Bestätigung, zeitlich begrenzte Download-Tokens und Mailstatus',
+      'QA: Playwright-Prüfung für Upload, Preiszustand, Legal-Checkboxen, mobile Ansicht und Angebotsübergabe',
     ],
     fileStates: [
-      { format: 'Kunde', mode: 'Konfigurator', text: 'Datei hochladen, Modell prüfen, Material und Farbe wählen, Preis sehen und Bestellung starten.' },
+      { format: 'Kunde', mode: 'Konfigurator', text: 'Datei hochladen, Modell prüfen, Material und Farbe wählen, Preisbandbreite sehen und Angebot anfragen.' },
       { format: 'Betreiber', mode: 'Admin Panel', text: 'Preise, Farben, Druckerprofile und Engine-Zugang zentral in WordPress pflegen.' },
       { format: 'Support', mode: 'Debug', text: 'API-Verbindung, Antwortzeit, Engine-Modus und HTTP-Status direkt im Plugin prüfen.' },
     ],
     trustChecks: [
       'Datei ist hochgeladen und auswertbar',
       'Preisbereich zeigt einen gültigen Zustand',
-      'Rechtliche Bestätigungen sind gesetzt',
+      'Rechtliche Bestätigungen sind gesetzt und die Anfrage ist gespeichert',
       'Druckerprofil und Engine-Konfiguration sind im Admin nachvollziehbar',
     ],
     impact: [
       { value: '3 Adminseiten', label: 'Einstellungen, Druckerprofile, Debug' },
       { value: 'Ohne Code', label: 'Preise, Farben und Profile in WordPress steuerbar' },
-      { value: 'Live', label: 'Produktiv erreichbar auf deinlieblingsdruck.de' },
+      { value: 'DB-first', label: 'Anfrage bleibt bei Mailfehlern erhalten' },
     ],
     result:
-      'Der Konfigurator macht 3D-Druck bestellbar, ohne den Betrieb zu verstecken: Kunden bekommen eine klare Upload- und Kaufstrecke, Betreiber behalten Preise, Profile, Farben und Engine-Status im WordPress-Admin unter Kontrolle.',
-    links: { demo: 'https://deinlieblingsdruck.de/3d-konfigurator/' },
+      'Der Konfigurator macht 3D-Druck kalkulierbar, ohne den Betrieb zu verstecken: Kunden bekommen eine klare Upload- und Anfragestrecke, Betreiber behalten Preise, Profile, Farben und Engine-Status im WordPress-Admin unter Kontrolle.',
+    links: { client: 'https://deinlieblingsdruck.de/' },
   },
   {
     id: 'comfee-klima-umbau',
