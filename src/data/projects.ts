@@ -81,7 +81,7 @@ export const projects: Project[] = [
     screenshots: [
       { src: goalsImages.squad, caption: 'Kaderanalyse mit KPIs, Stärken, Baustellen und Position-Fit' },
       { src: goalsImages.lineup, caption: 'Formation Optimizer mit Empfehlungen und vollständiger Startelf' },
-      { src: goalsImages.meta, caption: 'Meta Center mit Quick Pick und Formation-Ranking' },
+      { src: goalsImages.meta, caption: 'Meta Quick Pick mit drei berechneten Startelfen, Rollen, OVR und Fit' },
     ],
     impact: [{ value: '408', label: 'Tests' }, { value: 'Live', label: 'goals.ivo-tech.com' }, { value: 'Mobile', label: 'Mobile-first' }],
     result: 'Aus verteilten Community-Daten wird ein nutzbares Entscheidungs-Tool: Import, Fit, Formation, Matchup und Development in einer App.',
