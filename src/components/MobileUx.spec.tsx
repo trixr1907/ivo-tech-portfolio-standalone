@@ -74,6 +74,47 @@ test.describe('mobile UX', () => {
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
   })
 
+  for (const width of [320, 390]) {
+    test(`project cards and case gallery remain usable at ${width}px`, async ({ mount, page }) => {
+      await page.setViewportSize({ width, height: 844 })
+      await mount(<App />)
+      const cards = page.locator('.relaunch-project-card')
+      await expect(cards).toHaveCount(3)
+      await expect.poll(async () => cards.evaluateAll((elements) => elements.every((element) => {
+        const card = element.getBoundingClientRect()
+        const parent = element.parentElement?.getBoundingClientRect()
+        return Boolean(parent) && card.left >= parent!.left - 0.5 && card.right <= parent!.right + 0.5
+      }))).toBe(true)
+
+      await cards.first().locator('.project-card__button').click()
+      const dialog = page.getByRole('dialog', { name: /GOALS Optimizer/ })
+      await expect(dialog).toBeVisible()
+      const toc = dialog.locator('.project-modal__toc')
+      const tocButtons = toc.locator('button')
+      const closeButton = dialog.getByRole('button', { name: 'Schliessen' })
+      await expect.poll(async () => tocButtons.evaluateAll((buttons) => buttons.every((button) => button.getBoundingClientRect().height >= 44))).toBe(true)
+      await expect.poll(async () => closeButton.evaluate((button) => button.getBoundingClientRect().height >= 44)).toBe(true)
+      await expect.poll(async () => {
+        const [tocBox, closeBox] = await Promise.all([toc.boundingBox(), closeButton.boundingBox()])
+        return Boolean(tocBox && closeBox && tocBox.x + tocBox.width <= closeBox.x)
+      }).toBe(true)
+
+      const gallery = dialog.locator('[data-toc-section="gallery"]')
+      await gallery.scrollIntoViewIfNeeded()
+      await expect(toc).toBeInViewport()
+      await expect(closeButton).toBeInViewport()
+      await expect(toc.getByRole('button', { name: 'Screens' })).toBeInViewport()
+      const screenshots = gallery.locator('img')
+      await expect(screenshots).toHaveCount(3)
+      await expect.poll(async () => screenshots.evaluateAll((images) => images.every((image) => {
+        const element = image as HTMLImageElement
+        const box = element.getBoundingClientRect()
+        return element.complete && element.naturalWidth > 0 && Math.abs(box.width / box.height - element.naturalWidth / element.naturalHeight) < 0.03
+      }))).toBe(true)
+      await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
+    })
+  }
+
   test('768px uses only mobile navigation without overflow', async ({ mount, page }) => {
     await page.setViewportSize({ width: 768, height: 900 })
     await mount(<App />)

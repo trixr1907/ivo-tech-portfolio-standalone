@@ -232,7 +232,7 @@ function App() {
                       <span className="hero-proof-label">Component Tests</span>
                     </div>
                     <div className="hero-proof-item">
-                      <span className="hero-proof-value">371</span>
+                      <span className="hero-proof-value">408</span>
                       <span className="hero-proof-label">GOALS Tests</span>
                     </div>
                   </div>

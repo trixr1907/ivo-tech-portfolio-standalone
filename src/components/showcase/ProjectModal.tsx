@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type React from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import type { Project } from '../../data/projects'
@@ -90,7 +90,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     }
   }, [onClose])
 
-  const tocSections = [
+  const tocSections = useMemo(() => [
     { id: 'overview', label: 'Überblick' },
     project.signals ? { id: 'signals', label: 'Signale' } : null,
     project.architecture ? { id: 'architecture', label: 'Architektur' } : null,
@@ -98,7 +98,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     { id: 'highlights', label: 'Highlights' },
     project.trustChecks || project.impact ? { id: 'trust', label: 'Betrieb' } : null,
     { id: 'gallery', label: 'Screens' },
-  ].filter((s): s is { id: string; label: string } => s !== null)
+  ].filter((s): s is { id: string; label: string } => s !== null), [project])
 
   useEffect(() => {
     const body = bodyRef.current; if (!body) return
@@ -113,13 +113,29 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     }, { root: body, rootMargin: '-18% 0px -70% 0px' })
     targets.forEach((t) => obs.observe(t))
     return () => obs.disconnect()
-  }, [])
+  }, [tocSections])
+
+  useEffect(() => {
+    bodyRef.current
+      ?.querySelector<HTMLElement>(`.project-modal__toc [data-toc-target="${activeToc}"]`)
+      ?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+  }, [activeToc])
 
   const scrollToSection = useCallback((id: string) => {
     bodyRef.current?.querySelector<HTMLElement>(`[data-toc-section="${id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [])
 
-  const hasLinks = Boolean(project.links.demo || project.links.repo)
+  const hasLinks = Boolean(project.links.demo || project.links.client || project.links.repo)
+  const panelLabel = project.status === 'lab-prototype'
+    ? 'Lab Prototype'
+    : project.status === 'client-project'
+      ? 'Kundenprojekt'
+      : 'Live Demo'
+  const screenshotLabel = project.status === 'lab-prototype'
+    ? 'Lab Prototype Screenshot'
+    : project.status === 'client-project'
+      ? 'Projekt-Screenshot'
+      : 'Live Demo Screenshot'
 
   return (
     <AnimatePresence>
@@ -134,13 +150,13 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           <div className="project-modal__body" ref={bodyRef}>
             <nav className="project-modal__toc" aria-label="Case-Study-Inhalt">
               {tocSections.map((s) => (
-                <button key={s.id} type="button" className={activeToc === s.id ? 'is-active' : undefined}
+                <button key={s.id} type="button" data-toc-target={s.id} className={activeToc === s.id ? 'is-active' : undefined}
                   onClick={() => scrollToSection(s.id)}>{s.label}</button>
               ))}
             </nav>
             <header className="project-modal__hero">
               <div className="project-modal__hero-media"
-                style={{ '--modal-panel-label': `'${project.status === 'lab-prototype' ? 'Lab Prototype' : 'Live Demo'}'` } as React.CSSProperties}>
+                style={{ '--modal-panel-label': `'${panelLabel}'` } as React.CSSProperties}>
                 <img src={project.cover} alt={`${project.title} — Projekt Cover`} loading="lazy" decoding="async" />
               </div>
               <div className="project-modal__hero-copy">
@@ -192,7 +208,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     onClick={() => setLightbox(sc)}
                     onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightbox(sc) } }}>
                     <img src={sc.src} alt={sc.caption} loading="lazy" decoding="async" />
-                    <figcaption><span className="project-modal__shot-label">{project.status === 'lab-prototype' ? 'Lab Prototype Screenshot' : 'Live Demo Screenshot'}</span>{sc.caption}</figcaption>
+                    <figcaption><span className="project-modal__shot-label">{screenshotLabel}</span>{sc.caption}</figcaption>
                   </figure>))}
               </div>
             </section>
@@ -201,6 +217,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               {hasLinks ? (
                 <div className="project-modal__links">
                   {project.links.demo ? (<a href={project.links.demo} target="_blank" rel="noopener noreferrer">Live Demo öffnen ↗</a>) : null}
+                  {project.links.client ? (<a href={project.links.client} target="_blank" rel="noopener noreferrer">Kundenseite öffnen ↗</a>) : null}
                   {project.links.repo ? (<a href={project.links.repo} target="_blank" rel="noopener noreferrer">Repository öffnen ↗</a>) : null}
                 </div>) : (<p>{project.status === 'lab-prototype' ? 'Lab Prototype — kein öffentliches Deployment.' : 'Live-Demo und Repository folgen.'}</p>)}
             </footer>

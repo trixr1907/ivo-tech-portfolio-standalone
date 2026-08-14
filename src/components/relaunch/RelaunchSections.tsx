@@ -10,7 +10,7 @@ const principles = [
     label: '01 · Problem schneiden',
     title: 'Tests vor Features.',
     text: 'Bevor eine Zeile UI entsteht, steht die Test-Suite. Wer zuerst definiert was "kaputt" bedeutet, baut Systeme die nicht nur beim ersten Deploy funktionieren.',
-    proof: 'GOALS Optimizer · 371 Tests vor dem ersten Release',
+    proof: 'GOALS Optimizer · 408 Tests',
     href: '#project-goals-optimizer',
   },
   {
@@ -67,7 +67,7 @@ export function AboutSection() {
           </p>
           <dl className="about-proof-strip" aria-label="Nachweise in Kürze">
             <div><dt>Systeme live</dt><dd>3 Produkte im produktiven Betrieb</dd></div>
-            <div><dt>Verifiziert</dt><dd>371 Tests im GOALS Optimizer</dd></div>
+            <div><dt>Verifiziert</dt><dd>408 Tests im GOALS Optimizer</dd></div>
             <div><dt>Standort</dt><dd>Mannheim · Remote &amp; Hybrid</dd></div>
           </dl>
           <p className="about-stack-line">React · TypeScript · Vite · Three.js · Motion · Vitest · Playwright</p>
@@ -195,6 +195,9 @@ export function ContactSection() {
             <MagButton className="btn-ghost" href="https://github.com/trixr1907" target="_blank" rel="noreferrer">
               GitHub
             </MagButton>
+            <MagButton className="btn-ghost" href="https://www.linkedin.com/in/ivo-tech" target="_blank" rel="noreferrer">
+              LinkedIn
+            </MagButton>
           </div>
         </Reveal>
       </div>
@@ -219,6 +222,7 @@ export function RelaunchFooter() {
           <a href="#top">Top</a>
           <a href="#selected-work">Projekte</a>
           <a href="#kontakt">Kontakt</a>
+          <a href="https://www.linkedin.com/in/ivo-tech" target="_blank" rel="noreferrer">LinkedIn</a>
           <a href="/impressum">Impressum</a>
           <a href="/datenschutz">Datenschutz</a>
         </nav>
