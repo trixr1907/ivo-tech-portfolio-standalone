@@ -78,3 +78,8 @@ public/llms.txt
 
 # Lighthouse CI generated reports
 .lighthouseci/
+AGENTS.md
+*Zone.Identifier
+agent_instructions.md
+*_Hermes*.md
+openhands_task_brief*.md
