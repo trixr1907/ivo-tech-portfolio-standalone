@@ -69,9 +69,33 @@ test.describe('mobile UX', () => {
     const controls = page.locator('.h-burger, .hero-ctas a, .contact-relaunch-actions a, .relaunch-footer nav a')
     await expect.poll(async () => {
       const sizes = await controls.evaluateAll((elements) => elements.filter((element) => getComputedStyle(element).display !== 'none').map((element) => element.getBoundingClientRect()))
-      return sizes.length > 0 && sizes.every((size) => size.height >= 44)
+      return sizes.length > 0 && sizes.every((size) => size.width >= 44 && size.height >= 44)
+    }).toBe(true)
+    const skipLink = page.getByRole('link', { name: 'Direkt zum Inhalt' })
+    await skipLink.focus()
+    await expect.poll(async () => {
+      const skipBox = await skipLink.boundingBox()
+      return Boolean(skipBox && skipBox.width >= 44 && skipBox.height >= 44 && skipBox.y >= 0)
     }).toBe(true)
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
+  })
+
+  test('DLD editorial details remain inside the card at 320px', async ({ mount, page }) => {
+    await page.setViewportSize({ width: 320, height: 844 })
+    await mount(<App />)
+    const card = page.locator('#project-dld-3d-configurator')
+    await card.scrollIntoViewIfNeeded()
+    const details = card.locator('.project-card__metrics, .project-card__metric, .project-card__arch, .project-card__arch-title, .project-card__arch-list, .project-card__arch-list li, .project-card__highlights, .project-card__highlight')
+    await expect.poll(async () => {
+      const cardBox = await card.boundingBox()
+      if (!cardBox) return ['card-missing']
+      return details.evaluateAll((elements, bounds) => elements.flatMap((element) => {
+        const box = element.getBoundingClientRect()
+        return box.left >= bounds.left - 0.5 && box.right <= bounds.right + 0.5
+          ? []
+          : [`${element.className || element.tagName}: ${box.left.toFixed(1)}..${box.right.toFixed(1)} outside ${bounds.left.toFixed(1)}..${bounds.right.toFixed(1)}`]
+      }), { left: cardBox.x, right: cardBox.x + cardBox.width })
+    }).toEqual([])
   })
 
   for (const width of [320, 390]) {
