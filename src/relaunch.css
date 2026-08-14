@@ -187,7 +187,7 @@
 .relaunch-footer-inner img { width: 118px; }
 .relaunch-footer-inner p { color: var(--muted); font-size: .78rem; }
 .relaunch-footer-inner nav { display: flex; flex-wrap: wrap; gap: .2rem 1.2rem; }
-.relaunch-footer-inner nav a { min-height: 44px; display: inline-flex; align-items: center; color: var(--muted); font-size: .78rem; }
+.relaunch-footer-inner nav a { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; color: var(--muted); font-size: .78rem; }
 .relaunch-footer-inner nav a:hover { color: var(--white); }
 .section-loading { min-height: 40vh; display: grid; place-items: center; color: var(--muted); }
 
