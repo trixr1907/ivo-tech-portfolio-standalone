@@ -80,11 +80,13 @@ npm run qa:lighthouse:mobile
 npm run qa:lighthouse:desktop
 ```
 
-Die Component-/UX-Suite umfasst aktuell 12 Tests. Lighthouse verwendet das installierte Playwright-Chromium über `CHROME_PATH`. Pa11y kann in restriktiven Umgebungen durch den lokalen Ausführungsschutz blockiert werden; in diesem Fall den Blocker dokumentieren und keine erfundenen Ergebnisse melden.
+Die Component-/UX-Suite umfasst aktuell 15 Tests. Lighthouse verwendet das installierte Playwright-Chromium über `CHROME_PATH`. Pa11y kann in restriktiven Umgebungen durch den lokalen Ausführungsschutz blockiert werden; in diesem Fall den Blocker dokumentieren und keine erfundenen Ergebnisse melden.
+
+> QA-Hinweis: `npm run qa:*` nur aus WSL ausführen. Läufe von Windows erzeugen kaputt benannte Artefakt-Verzeichnisse und keinen verwertbaren Report.
 
 ## Codex CLI
 
-Codex ist ein lokales Werkzeug und arbeitet ausschließlich in diesem Repository. Das Repo ist absichtlich ohne Git-Remote.
+Codex ist ein lokales Werkzeug und arbeitet ausschließlich in diesem Repository.
 
 Direktstart (empfohlen):
 
