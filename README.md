@@ -5,7 +5,7 @@ Eigenständiges persönliches Portfolio von **Yves Simon Schenker (Ivo)** — Fu
 ## Live preview
 
 - Standalone-Vercel-URL: https://ivo-tech-portfolio-standalone.vercel.app
-- Die bestehende Domain https://ivo-tech.com bleibt unverändert und ist nicht mit diesem Projekt verbunden.
+- Dieses Projekt ist die Live-Quelle von https://ivo-tech.com (Vercel-Deployment dieses Repos, Stand 10/2026).
 
 ## Inhalt
 
@@ -158,7 +158,7 @@ Production nur nach ausdrücklicher Freigabe:
 vercel deploy --prod
 ```
 
-Die Domain `ivo-tech.com` darf dabei nicht automatisch umgestellt werden.
+Ein `vercel deploy --prod` aktualisiert die Live-Seite unter https://ivo-tech.com direkt — deshalb nur nach ausdrücklicher Freigabe.
 
 ## Struktur
 
