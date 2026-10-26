@@ -76,6 +76,10 @@ PORTFOLIO_*.md
 docs/
 public/llms.txt
 
+# Agent-local state (not project source)
+.agents/
+.claude/
+
 # Lighthouse CI generated reports
 .lighthouseci/
 AGENTS.md
