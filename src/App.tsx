@@ -228,7 +228,7 @@ function App() {
                       <span className="hero-proof-label">Live-Systeme</span>
                     </div>
                     <div className="hero-proof-item">
-                      <span className="hero-proof-value">12</span>
+                      <span className="hero-proof-value">15</span>
                       <span className="hero-proof-label">Component Tests</span>
                     </div>
                     <div className="hero-proof-item">
