@@ -42,7 +42,7 @@ GSAP, Lenis und Supabase gehören nicht zur Runtime dieses Portfolios. Die Seite
 ## Lokale Entwicklung
 
 ```bash
-cd /home/ivo/projects/ivo-tech-portfolio-standalone
+cd ivo-tech-portfolio-standalone
 npm ci
 npm run dev -- --host 127.0.0.1
 ```
@@ -83,44 +83,6 @@ npm run qa:lighthouse:desktop
 Die Component-/UX-Suite umfasst aktuell 15 Tests. Lighthouse verwendet das installierte Playwright-Chromium über `CHROME_PATH`. Pa11y kann in restriktiven Umgebungen durch den lokalen Ausführungsschutz blockiert werden; in diesem Fall den Blocker dokumentieren und keine erfundenen Ergebnisse melden.
 
 > QA-Hinweis: `npm run qa:*` nur aus WSL ausführen. Läufe von Windows erzeugen kaputt benannte Artefakt-Verzeichnisse und keinen verwertbaren Report.
-
-## Codex CLI
-
-Codex ist ein lokales Werkzeug und arbeitet ausschließlich in diesem Repository.
-
-Direktstart (empfohlen):
-
-```bash
-codex-portfolio
-```
-
-Der Starter wechselt automatisch nach `/home/ivo/projects/ivo-tech-portfolio-standalone` und verwendet `workspace-write` mit Freigaben `on-request`.
-
-Alternativ manuell:
-
-```bash
-cd /home/ivo/projects/ivo-tech-portfolio-standalone
-codex --sandbox workspace-write --ask-for-approval on-request
-```
-
-Einmalig prüfen:
-
-```bash
-codex --cd /home/ivo/projects/ivo-tech-portfolio-standalone \
-  --sandbox workspace-write \
-  --ask-for-approval on-request \
-  "Lies AGENTS.md und fasse die aktiven Projektregeln zusammen. Ändere nichts."
-```
-
-Vor jeder Aufgabe:
-
-```bash
-pwd
-git status --short --branch
-git remote -v
-```
-
-Codex soll vor Änderungen die relevanten Dateien lesen, keine neuen Production-Dependencies ohne Rückfrage hinzufügen und nicht committen oder deployen, solange dies nicht ausdrücklich beauftragt wurde.
 
 ## Git
 
