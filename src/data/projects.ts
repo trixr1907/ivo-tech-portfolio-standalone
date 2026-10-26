@@ -67,7 +67,7 @@ const dldImages = {
 const hsImages = {
   cover: '/brand/projects/hs-transporte-cover.webp',
   preise: '/brand/projects/hs-transporte-preise.webp',
-  region: '/brand/projects/hs-transporte-umzug-mannheim.webp',
+  anfrage: '/brand/projects/hs-transporte-anfrage.webp',
 }
 
 const klimaImages = {
@@ -268,7 +268,7 @@ export const projects: Project[] = [
     screenshots: [
       { src: hsImages.cover, caption: 'Startseite: Hero mit Leistungsversprechen, Kontaktwegen und Transporter-Motiv' },
       { src: hsImages.preise, caption: 'Preisseite: transparente Leistungsübersicht als eigener Anfrage-Anker' },
-      { src: hsImages.region, caption: 'Lokale Landingpage Umzug Mannheim: regionale Auffindbarkeit mit eigener SEO-Struktur' },
+      { src: hsImages.anfrage, caption: 'Anfrage-Strecke: Name, Strecke und Wunschtermin werden strukturiert an den WhatsApp-Chat übergeben' },
     ],
     signals: [
       {
