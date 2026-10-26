@@ -31,7 +31,19 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { overflow-x: clip; scroll-behavior: smooth; scroll-padding-top: 6.5rem; background: var(--black); }
-body { min-width: 320px; min-height: 100vh; margin: 0; overflow-x: hidden; background: radial-gradient(ellipse at 82% 8%, rgba(191,201,210,.035), transparent 34rem), linear-gradient(135deg,#0b0e12,#10151a 52%,#0b0e12); }
+body { min-width: 320px; min-height: 100vh; margin: 0; overflow-x: hidden; background: radial-gradient(ellipse at 82% 8%, rgba(191,201,210,.035), transparent 34rem), radial-gradient(ellipse at 8% 88%, rgba(90,183,232,.05), transparent 38rem), linear-gradient(135deg,#0b0e12,#10151a 52%,#0b0e12); }
+/* film grain + vignette: adds depth on flat dark surfaces without GPU cost */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background:
+    radial-gradient(130% 100% at 50% 40%, transparent 62%, rgba(4,6,10,.32) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  background-size: cover, 220px 220px;
+}
 #root { min-height: 100vh; overflow-x: clip; }
 main, header, footer { position: relative; z-index: 1; }
 button, a { font: inherit; }
@@ -71,8 +83,18 @@ em { color: var(--accent); font-style: normal; }
 .h-btn, .btn-primary, .btn-ghost { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; gap: .5rem; padding: .75rem 1.15rem; border: 1px solid rgba(243,240,232,.15); border-radius: 8px; font-size: .82rem; font-weight: 800; cursor: pointer; transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast); }
 .h-btn, .btn-primary { border-color: var(--accent); color: var(--primary); background: var(--accent); box-shadow: 0 12px 30px rgba(200,255,0,.14); }
 .h-btn:hover, .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(200,255,0,.24); }
-.btn-ghost { color: var(--silver); background: rgba(243,240,232,.035); }
-.btn-ghost:hover { border-color: rgba(200,255,0,.45); color: var(--white); }
+.btn-ghost { position: relative; overflow: hidden; isolation: isolate; color: var(--silver); background: rgba(243,240,232,.035); }
+.btn-ghost::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(200,255,0,.18), rgba(200,255,0,.05));
+  transform: translateY(102%);
+  transition: transform var(--transition-base);
+}
+.btn-ghost:hover { border-color: rgba(200,255,0,.5); color: var(--white); box-shadow: 0 14px 34px rgba(200,255,0,.12); }
+.btn-ghost:hover::before { transform: translateY(0); }
 .h-burger { display: none; width: 46px; height: 46px; padding: 0; border: 1px solid rgba(243,240,232,.14); border-radius: 10px; background: rgba(243,240,232,.035); }
 .h-burger-bar { display: block; width: 18px; height: 1px; margin: 4px auto; background: var(--silver); }
 .mobile-menu { position: fixed; z-index: 990; inset: .75rem; display: grid; place-items: center; border: 1px solid rgba(90,183,232,.18); border-radius: 24px; background: #0b0e12; }

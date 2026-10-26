@@ -46,6 +46,21 @@ function App() {
     return () => query.removeEventListener('change', update)
   }, [])
 
+  // Delegated card spotlight: one passive listener sets --mx/--my on the hovered card
+  useEffect(() => {
+    const onMove = (event: PointerEvent) => {
+      const card = (event.target as HTMLElement | null)?.closest<HTMLElement>(
+        '.principle-card, .lab-relaunch-card, .relaunch-project-card',
+      )
+      if (!card) return
+      const rect = card.getBoundingClientRect()
+      card.style.setProperty('--mx', `${event.clientX - rect.left}px`)
+      card.style.setProperty('--my', `${event.clientY - rect.top}px`)
+    }
+    document.addEventListener('pointermove', onMove, { passive: true })
+    return () => document.removeEventListener('pointermove', onMove)
+  }, [])
+
   useEffect(() => {
     if (!loaded) return
     const onScroll = () => {

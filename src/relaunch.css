@@ -125,7 +125,14 @@
 .about-relaunch-section { padding-top: clamp(4rem, 8vw, 7rem); padding-bottom: clamp(4rem, 8vw, 7rem); }
 .about-relaunch-grid { display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
 .about-relaunch-portrait { position: relative; }
-.about-relaunch-portrait img { display: block; width: 100%; height: auto; aspect-ratio: 1; border-radius: 28px; object-fit: cover; border: 1px solid rgba(90,183,232,.24); box-shadow: 0 30px 90px rgba(0,0,0,.35); }
+.about-relaunch-portrait img { display: block; width: 100%; height: auto; aspect-ratio: 1; border-radius: 28px; object-fit: cover; border: 1px solid rgba(90,183,232,.24); box-shadow: 0 30px 90px rgba(0,0,0,.35); filter: saturate(.94) contrast(1.03); transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base); }
+.about-relaunch-portrait:hover img { transform: translateY(-4px); border-color: rgba(90,183,232,.5); box-shadow: 0 38px 110px rgba(0,0,0,.42), 0 0 60px rgba(90,183,232,.14); }
+/* accent corner brackets frame the portrait (inside the frame: the Reveal
+   clip-path on this wrapper clips anything painted outside the border box) */
+.about-relaunch-portrait::before,
+.about-relaunch-portrait::after { content: ''; position: absolute; z-index: 1; width: 46px; height: 46px; border: 3px solid rgba(90,183,232,.95); filter: drop-shadow(0 1px 6px rgba(0,0,0,.7)); pointer-events: none; }
+.about-relaunch-portrait::before { top: 12px; left: 12px; border-right: 0; border-bottom: 0; border-top-left-radius: 14px; }
+.about-relaunch-portrait::after { right: 12px; bottom: 12px; border-left: 0; border-top: 0; border-bottom-right-radius: 14px; }
 .about-relaunch-copy .relaunch-lead { max-width: 640px; }
 .about-proof-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin: 2.2rem 0 0; padding: 0; border: 1px solid rgba(243,240,232,.1); border-radius: 18px; overflow: hidden; background: rgba(243,240,232,.08); }
 .about-proof-strip > div { padding: 1.1rem 1.25rem; background: rgba(11,14,18,.9); }
@@ -361,3 +368,26 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-visual-beam { animation: none; }
 }
+
+/* --- Card spotlight system ---------------------------------------------- */
+/* mouse-following radial highlight over card surfaces; driven by --mx/--my
+   set from a single delegated pointermove listener in App.tsx */
+.relaunch-project-card { position: relative; }
+.principle-card::before,
+.lab-relaunch-card::before,
+.relaunch-project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(90, 183, 232, 0.26), transparent 70%);
+  transition: opacity 0.35s var(--ease-expo);
+}
+.principle-card:hover::before,
+.principle-card:focus-within::before,
+.lab-relaunch-card:hover::before,
+.lab-relaunch-card:focus-within::before,
+.relaunch-project-card:hover::before,
+.relaunch-project-card:focus-within::before { opacity: 1; }
