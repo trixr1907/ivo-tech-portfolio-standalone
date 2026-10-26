@@ -64,6 +64,12 @@ const dldImages = {
   profiles: '/brand/projects/dld-admin-printer-profiles.webp',
 }
 
+const hsImages = {
+  cover: '/brand/projects/hs-transporte-cover.webp',
+  preise: '/brand/projects/hs-transporte-preise.webp',
+  region: '/brand/projects/hs-transporte-umzug-mannheim.webp',
+}
+
 const klimaImages = {
   cover: '/brand/projects/klima-stl-preview.png',
 }
@@ -230,6 +236,95 @@ export const projects: Project[] = [
     result:
       'Der Konfigurator macht 3D-Druck kalkulierbar, ohne den Betrieb zu verstecken: Kunden bekommen eine klare Upload- und Anfragestrecke, Betreiber behalten Preise, Profile, Farben und Engine-Status im WordPress-Admin unter Kontrolle.',
     links: { client: 'https://deinlieblingsdruck.de/' },
+  },
+  {
+    id: 'hs-transporte',
+    title: 'HS Transporte & Umzüge',
+    tagline:
+      'Kundenwebsite für ein Mannheimer Transport- und Umzugsunternehmen: Next.js 16 mit Service-Seiten, lokalen SEO-Landingpages, WhatsApp-Angebotsstrecke und eigenem Schwarz-Gold-Brand.',
+    problem:
+      'Ein regionales Transport- und Umzugsunternehmen braucht eine seriöse Webpräsenz, die Leistungen klar zeigt und Anfragen ohne eigenes Backend verlässlich in den bestehenden WhatsApp-Kanal führt.',
+    facts: [
+      { label: 'Kunde', value: 'HS Transporte & Umzüge · Mannheim/Rhein-Neckar' },
+      { label: 'Lösung', value: 'Next.js 16 Multi-Page-Site mit Service-, Stadt- und Rechtseiten' },
+      { label: 'Status', value: 'Kundenprojekt · Live im Einsatz' },
+    ],
+    cover: hsImages.cover,
+    status: 'client-project',
+    tags: ['Next.js 16', 'React 19', 'Framer Motion', 'Lenis', 'Tailwind CSS', 'Playwright', 'Axe', 'JSON-LD'],
+    overview: {
+      built:
+        'Eine Multi-Page-Unternehmenswebsite: Startseite, fünf Service-Seiten (Transporte, Entrümpelung, Haushaltsauflösung, Möbelmontage, Preise), fünf lokale Umzug-Landingpages (Mannheim, Heidelberg, Ludwigshafen, Speyer, Frankenthal) sowie Impressum und Datenschutz — dazu Sitemap, robots und JSON-LD Structured Data.',
+      challenge:
+        'Die Seite muss zur Marke passen: deutsche Sie-Form, Schwarz-Gold-Design und seriöse Optik — bewusst ohne erfundene Bewertungen, Zertifikate oder Garantien. Gleichzeitig sollen Anfragen ohne eigenes Backend zuverlässig ankommen und in den Alltag des Betreibers passen.',
+      role:
+        'Konzeption, Design und Umsetzung: Brand-Anwendung, Next.js-Architektur, animierte UI mit Framer Motion und Lenis, SEO-Struktur, Angebotsformular mit WhatsApp-Übergabe sowie Playwright- und Axe-QA.',
+    },
+    highlights: [
+      'Anfrage ohne Backend: Das Angebotsformular baut eine WhatsApp-Nachricht mit den Nutzerangaben — Anfragen laufen in den bestehenden Kanal, ohne Datenbank oder Mailserver.',
+      'Lokal gefunden: Eigene Umzug-Landingpages für fünf Städte der Region mit Sitemap, robots und JSON-LD für das Unternehmen.',
+      'Barrierearm geprüft: Der Playwright-Smoke-Test schließt kritische und ernste Axe-Verstöße (WCAG AA) aus und prüft WhatsApp-, Anruf- und Formularstrecke.',
+    ],
+    screenshots: [
+      { src: hsImages.cover, caption: 'Startseite: Hero mit Leistungsversprechen, Kontaktwegen und Transporter-Motiv' },
+      { src: hsImages.preise, caption: 'Preisseite: transparente Leistungsübersicht als eigener Anfrage-Anker' },
+      { src: hsImages.region, caption: 'Lokale Landingpage Umzug Mannheim: regionale Auffindbarkeit mit eigener SEO-Struktur' },
+    ],
+    signals: [
+      {
+        label: 'Marke',
+        value: 'Schwarz · Gold',
+        text: 'Durchgängige Sie-Form und ein eigenes Farbsystem (#0C0C0E, Gold-Verlauf #F2C14E→#C77E1A) für eine seriöse, hochwertige Anmutung.',
+      },
+      {
+        label: 'Anfrage',
+        value: 'WhatsApp',
+        text: 'Telefon- und WhatsApp-CTAs sowie ein Formular, das die Angaben strukturiert in den WhatsApp-Chat übergibt — ohne Datenhaltung auf der Website.',
+      },
+      {
+        label: 'Qualität',
+        value: 'Axe · Smoke',
+        text: 'Playwright-Smoke-Tests sichern CTAs, Formularfluss und WCAG-AA-Konformität ab; Lighthouse und CI sind im QA-Setup hinterlegt.',
+      },
+    ],
+    architecture: [
+      'Frontend: Next.js 16 App-Router mit React 19, Tailwind-Utilities und Lucide-Icons',
+      'Motion: Framer-Motion-Sektionsanimationen und Lenis-Smooth-Scrolling über eigene Client-Integrationen',
+      'SEO: app/sitemap.ts, app/robots.ts und StructuredData-Komponente mit JSON-LD für das Unternehmen',
+      'Anfrage-Pipeline: Angebotsformular baut einen WhatsApp-Deep-Link mit Name, Telefon und Angaben — kein Backend, keine Datenhaltung',
+      'QA: Playwright-Smoke-Tests für WhatsApp-/Anruf-CTA, Formular-Übergabe und Axe-Prüfung (WCAG 2A/AA)',
+    ],
+    fileStates: [
+      {
+        format: 'Kunde',
+        mode: 'Anfrage',
+        text: 'Leistungen und Preise ansehen, Telefon oder WhatsApp antippen oder das Formular ausfüllen — die Angaben landen im WhatsApp-Chat.',
+      },
+      {
+        format: 'Betreiber',
+        mode: 'WhatsApp',
+        text: 'Anfragen kommen strukturiert im bestehenden WhatsApp-Kanal an — ohne Backendsystem, das gepflegt werden müsste.',
+      },
+      {
+        format: 'Suche',
+        mode: 'Lokal',
+        text: 'Service- und Stadtseiten mit eigener Sitemap und JSON-LD machen das Angebot in der Region auffindbar.',
+      },
+    ],
+    trustChecks: [
+      'WhatsApp- und Anruf-CTA zeigen die korrekte Nummer',
+      'Das Formular übergibt Name und Angaben an den WhatsApp-Chat',
+      'Keine kritischen oder ernsten Axe-Verstöße (WCAG AA)',
+      'Impressum und Datenschutz sind eigene Seiten',
+    ],
+    impact: [
+      { value: '13', label: 'Seiten mit eigener SEO-Struktur' },
+      { value: '5', label: 'lokale Umzug-Landingpages' },
+      { value: '0', label: 'Backend für Anfragen nötig' },
+    ],
+    result:
+      'Die Website gibt dem Unternehmen eine seriöse, markenkonforme Präsenz: klare Leistungsseiten, regionale Auffindbarkeit und ein Anfrageweg, der ohne eigenes Backend in den Alltag des Betreibers passt.',
+    links: { client: 'https://hs-transporte-website.vercel.app' },
   },
   {
     id: 'comfee-klima-umbau',

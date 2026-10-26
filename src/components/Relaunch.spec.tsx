@@ -21,9 +21,9 @@ test.describe('focused portfolio structure', () => {
     await expect(page.getByRole('link', { name: 'Über mich' }).first()).toHaveAttribute('href', '#about')
   })
 
-  test('renders three evidence-based cases and opens a case study', async ({ page }) => {
+  test('renders four evidence-based cases and opens a case study', async ({ page }) => {
     const cards = page.locator('.relaunch-project-card')
-    await expect(cards).toHaveCount(3)
+    await expect(cards).toHaveCount(4)
     // Editorial stretches push cards below the fold — sweep the page so lazy images load
     await page.evaluate(async () => {
       const step = window.innerHeight
@@ -79,6 +79,16 @@ test.describe('focused portfolio structure', () => {
     await expect(dldCaseDialog.locator('img[src*="dld-admin-leads.webp"]')).toHaveCount(1)
     await expect(dldCaseDialog.locator('img[src*="dld-admin-printer-profiles.webp"]')).toHaveCount(1)
     await dldCaseDialog.getByRole('button', { name: 'Schliessen' }).click()
+
+    await expect(cards.nth(3)).toContainText('HS Transporte')
+    await expect(cards.nth(3)).toContainText('Kundenprojekt')
+    await cards.nth(3).locator('.project-card__button').click()
+    const hsDialog = page.getByRole('dialog', { name: /HS Transporte/ })
+    await expect(hsDialog).toBeVisible()
+    await expect(hsDialog).toContainText('WhatsApp')
+    await expect(hsDialog.getByRole('link', { name: 'Kundenseite öffnen ↗' })).toHaveAttribute('href', 'https://hs-transporte-website.vercel.app')
+    await expect(hsDialog.locator('img[src*="hs-transporte-preise.webp"]')).toHaveCount(1)
+    await hsDialog.getByRole('button', { name: 'Schliessen' }).click()
   })
 
   test('keeps the public story focused', async ({ page }) => {

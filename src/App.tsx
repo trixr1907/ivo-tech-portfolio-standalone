@@ -224,7 +224,7 @@ function App() {
                   <p className="hero-sub">Ich entwickle produktionsreife Webapplikationen — vom belastbaren System bis zum präzisen Interface und stabilen Live-Betrieb.</p>
                   <div className="hero-proof" aria-label="Kennzahlen">
                     <div className="hero-proof-item">
-                      <span className="hero-proof-value">3</span>
+                      <span className="hero-proof-value">4</span>
                       <span className="hero-proof-label">Live-Systeme</span>
                     </div>
                     <div className="hero-proof-item">

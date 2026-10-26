@@ -66,7 +66,7 @@ export function AboutSection() {
             Aus Mannheim/Rhein-Neckar und offen für passende Remote- und Hybrid-Rollen.
           </p>
           <dl className="about-proof-strip" aria-label="Nachweise in Kürze">
-            <div><dt>Systeme live</dt><dd>3 Produkte im produktiven Betrieb</dd></div>
+            <div><dt>Systeme live</dt><dd>4 Produkte im produktiven Betrieb</dd></div>
             <div><dt>Verifiziert</dt><dd>408 Tests im GOALS Optimizer</dd></div>
             <div><dt>Standort</dt><dd>Mannheim · Remote &amp; Hybrid</dd></div>
           </dl>

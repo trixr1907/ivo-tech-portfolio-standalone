@@ -103,7 +103,7 @@ test.describe('mobile UX', () => {
       await page.setViewportSize({ width, height: 844 })
       await mount(<App />)
       const cards = page.locator('.relaunch-project-card')
-      await expect(cards).toHaveCount(3)
+      await expect(cards).toHaveCount(4)
       await expect.poll(async () => cards.evaluateAll((elements) => elements.every((element) => {
         const card = element.getBoundingClientRect()
         const parent = element.parentElement?.getBoundingClientRect()
