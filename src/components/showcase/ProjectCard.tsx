@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { motion, useMotionValue, useSpring, useTransform } from 'motion/react'
+import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react'
 import { ArrowUpRight } from 'lucide-react'
 import type { Project } from '../../data/projects'
 
@@ -11,9 +11,15 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
   const cardRef = useRef<HTMLElement>(null)
+  const mediaParallaxRef = useRef<HTMLSpanElement>(null)
   const [isVisible, setIsVisible] = useState(false)
+  const reduceMotion = useReducedMotion()
   const isPrimary = project.id === 'goals-optimizer'
   const metrics = project.impact ?? project.signals ?? []
+
+  // scroll-scrubbed parallax drift of the case image inside its frame
+  const { scrollYProgress: mediaScroll } = useScroll({ target: mediaParallaxRef, offset: ['start end', 'end start'] })
+  const parallaxY = useSpring(useTransform(mediaScroll, [0, 1], ['-5%', '5%']), { stiffness: 90, damping: 24 })
 
   const mouseX = useMotionValue(0.5)
   const mouseY = useMotionValue(0.5)
@@ -81,17 +87,23 @@ export function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
         transition={{ type: 'spring', stiffness: 500, damping: 30 }}
       >
         <span className="project-card__media">
-          <img
-            className={project.id === 'dld-3d-configurator' ? 'project-card__media--portrait' : undefined}
-            src={project.cover}
-            alt={`${project.title} — Produktansicht`}
-            width={1440}
-            height={project.id === 'dld-3d-configurator' ? 2337 : project.id === 'event-hub' ? 577 : 900}
-            sizes="(max-width: 760px) 100vw, 50vw"
-            loading={index === 1 ? 'eager' : 'lazy'}
-            fetchPriority={index === 1 ? 'high' : 'auto'}
-            decoding="async"
-          />
+          <motion.span
+            ref={mediaParallaxRef}
+            className="project-card__media-parallax"
+            style={{ y: reduceMotion ? 0 : parallaxY }}
+          >
+            <img
+              className={project.id === 'dld-3d-configurator' ? 'project-card__media--portrait' : undefined}
+              src={project.cover}
+              alt={`${project.title} — Produktansicht`}
+              width={1440}
+              height={project.id === 'dld-3d-configurator' ? 2337 : project.id === 'event-hub' ? 577 : 900}
+              sizes="(max-width: 760px) 100vw, 50vw"
+              loading={index === 1 ? 'eager' : 'lazy'}
+              fetchPriority={index === 1 ? 'high' : 'auto'}
+              decoding="async"
+            />
+          </motion.span>
           <motion.span
             aria-hidden="true"
             style={{

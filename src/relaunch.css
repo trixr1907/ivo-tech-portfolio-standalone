@@ -622,11 +622,13 @@
 .relaunch-project-card { position: relative; }
 .principle-card::before,
 .lab-relaunch-card::before,
-.relaunch-project-card::before {
+.relaunch-project-card::before,
+.contact-relaunch-card::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
+  border-radius: inherit;
   pointer-events: none;
   opacity: 0;
   background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(90, 183, 232, 0.26), transparent 70%);
@@ -637,4 +639,6 @@
 .lab-relaunch-card:hover::before,
 .lab-relaunch-card:focus-within::before,
 .relaunch-project-card:hover::before,
-.relaunch-project-card:focus-within::before { opacity: 1; }
+.relaunch-project-card:focus-within::before,
+.contact-relaunch-card:hover::before,
+.contact-relaunch-card:focus-within::before { opacity: 1; }

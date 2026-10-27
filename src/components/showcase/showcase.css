@@ -121,6 +121,14 @@
     opacity var(--transition-fast);
 }
 
+/* parallax wrapper: slightly taller than the frame so the scroll drift
+   (-5%..5%) never exposes an edge inside the overflow-hidden media */
+.project-card__media-parallax {
+  position: absolute;
+  inset: -6% 0;
+  display: block;
+}
+
 .project-card__button:hover .project-card__media img {
   transform: scale(1.045);
   opacity: 1;

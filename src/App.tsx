@@ -85,7 +85,7 @@ function App() {
   useEffect(() => {
     const onMove = (event: PointerEvent) => {
       const card = (event.target as HTMLElement | null)?.closest<HTMLElement>(
-        '.principle-card, .lab-relaunch-card, .relaunch-project-card',
+        '.principle-card, .lab-relaunch-card, .relaunch-project-card, .contact-relaunch-card',
       )
       if (!card) return
       const rect = card.getBoundingClientRect()
