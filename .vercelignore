@@ -1,0 +1,10 @@
+# Keep deployment uploads to the site source + build inputs only.
+# Agent infrastructure, local tooling scratch and backups never ship.
+.agents/
+.claude/
+.animation-backup-*/
+.lighthouseci/
+playwright-report/
+docs/
+undefined:*
+*.local
