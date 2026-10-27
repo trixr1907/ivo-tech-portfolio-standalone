@@ -65,6 +65,21 @@ export function Loader({ onDone }: { onDone: () => void }) {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') finish()
     }
+    // Any real user interaction during the intro = the gesture browsers
+    // require for audio: turn sound on and restart so the arc is heard.
+    // Control pills handle their own clicks, Escape stays "skip".
+    const onGesture = (e: Event) => {
+      if (finishedRef.current) return
+      const vid = videoRef.current
+      if (!vid || !vid.muted) return
+      if (e.type === 'keydown' && (e as KeyboardEvent).key === 'Escape') return
+      const target = e.target as HTMLElement | null
+      if (target?.closest?.('.loader-controls')) return
+      enableSound()
+    }
+    window.addEventListener('keydown', onKey)
+    window.addEventListener('pointerdown', onGesture)
+    window.addEventListener('keydown', onGesture)
     const onTime = () => {
       const vid = videoRef.current
       if (vid && vid.duration) setVideoProgress((vid.currentTime / vid.duration) * 100)
@@ -74,6 +89,8 @@ export function Loader({ onDone }: { onDone: () => void }) {
     return () => {
       window.clearTimeout(watchdog)
       window.removeEventListener('keydown', onKey)
+      window.removeEventListener('pointerdown', onGesture)
+      window.removeEventListener('keydown', onGesture)
       v?.removeEventListener('timeupdate', onTime)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
