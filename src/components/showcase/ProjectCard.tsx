@@ -117,7 +117,7 @@ export function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
             whileHover={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
           />
-          <span className="project-card__index">0{index}</span>
+          <span className="project-card__index" aria-hidden="true">0{index}</span>
           <span className={`project-card__status${project.status === 'lab-prototype' ? ' project-card__status--lab' : ''}`}>
             {isPrimary ? 'Primärer Case' : 'Case Study'}
           </span>

@@ -160,7 +160,7 @@
   border-radius: 999px;
   background: rgba(5, 7, 11, 0.72);
   color: rgba(123, 231, 255, 0.92);
-  font-size: 0.66rem;
+  font-size: .75rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -182,7 +182,7 @@
 .project-card__eyebrow,
 .project-modal__eyebrow {
   color: var(--accent);
-  font-size: 0.68rem;
+  font-size: .75rem;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -230,7 +230,7 @@
 .project-card__facts strong {
   color: rgba(123, 231, 255, 0.9);
   font-family: var(--font-display);
-  font-size: 0.62rem;
+  font-size: .72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -248,7 +248,7 @@
   border-radius: 999px;
   background: rgba(0, 183, 255, 0.04);
   color: rgba(220, 230, 242, 0.62);
-  font-size: 0.68rem;
+  font-size: .75rem;
   font-weight: 720;
   letter-spacing: 0.05em;
 }
@@ -354,7 +354,7 @@
   border-radius: 999px;
   color: rgba(220, 230, 242, 0.64);
   background: transparent;
-  font: 750 0.68rem/1 var(--font-mono);
+  font: 750 .75rem/1 var(--font-mono);
   letter-spacing: 0.08em;
   cursor: pointer;
 }
@@ -475,7 +475,7 @@
 .project-modal__signals span,
 .project-modal__architecture li::marker {
   color: rgba(123, 231, 255, 0.72);
-  font: 800 0.66rem/1 var(--font-display);
+  font: 800 .75rem/1 var(--font-display);
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -553,7 +553,7 @@
 
 .project-modal__file-grid span {
   color: rgba(123, 231, 255, 0.72);
-  font-size: 0.68rem;
+  font-size: .75rem;
   font-weight: 850;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -899,7 +899,7 @@
   border-radius: 7px;
   color: rgba(191,201,210,.52);
   background: rgba(5,7,11,.68);
-  font: 700 .52rem/1 var(--font-mono);
+  font: 700 .7rem/1 var(--font-mono);
   letter-spacing: .18em;
   backdrop-filter: blur(10px);
 }
@@ -929,7 +929,7 @@
   top: clamp(1.5rem, 4vw, 3.5rem);
   right: clamp(1.5rem, 4vw, 3.5rem);
   color: rgba(191,201,210,.34);
-  font: 700 .56rem/1 var(--font-mono);
+  font: 700 .7rem/1 var(--font-mono);
   letter-spacing: .12em;
 }
 .project-card__title { max-width: 18ch; }
@@ -1024,7 +1024,7 @@
   margin: 0 0 1rem;
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: .75rem;
   font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -1089,7 +1089,7 @@
   border-radius: 999px;
   color: rgba(123,231,255,.72);
   background: rgba(5,7,11,.58);
-  font: 800 .58rem/1 var(--font-mono);
+  font: 800 .7rem/1 var(--font-mono);
   letter-spacing: .14em;
   backdrop-filter: blur(10px);
 }
