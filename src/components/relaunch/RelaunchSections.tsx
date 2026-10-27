@@ -222,6 +222,15 @@ export function ContactSection() {
 export function RelaunchFooter() {
   return (
     <footer className="relaunch-footer">
+      <div className="footer-marquee" aria-hidden="true">
+        <div className="footer-marquee-track">
+          {[0, 1].map((group) => (
+            <span className="footer-marquee-group" key={group}>
+              Frontend Craft <i /> Full-Stack Tiefe <i /> Produktionsreif <i /> Stabiler Live-Betrieb <i />
+            </span>
+          ))}
+        </div>
+      </div>
       <div className="relaunch-shell relaunch-footer-inner">
         <img
           src="/brand/logos/ivo-tech-logo-master.svg"
@@ -239,6 +248,10 @@ export function RelaunchFooter() {
           <a href="https://www.linkedin.com/in/ivo-tech" target="_blank" rel="noreferrer">LinkedIn</a>
           <a href="/impressum">Impressum</a>
           <a href="/datenschutz">Datenschutz</a>
+          <a className="footer-top-btn" href="#top">
+            <span>Nach oben</span>
+            <span className="footer-top-btn__icon" aria-hidden="true">↑</span>
+          </a>
         </nav>
       </div>
     </footer>

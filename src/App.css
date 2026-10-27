@@ -66,6 +66,18 @@ body::before {
   opacity: .55;
   pointer-events: none;
 }
+/* scroll progress line growing over the edge */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10001;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--cyan));
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
 /* branded scrollbar (webkit) + standard scrollbar-color fallback */
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--black); }

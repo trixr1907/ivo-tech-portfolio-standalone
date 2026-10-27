@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'motion/react'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import './App.css'
 import './relaunch.css'
@@ -50,6 +50,8 @@ function LiveClock() {
 
 function App() {
   const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll()
+  const scrollProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 })
   const [compactHero, setCompactHero] = useState(() => window.matchMedia(COMPACT_HERO_QUERY).matches)
   const [loaded, setLoaded] = useState(compactHero)
   const [scrolled, setScrolled] = useState(false)
@@ -193,6 +195,7 @@ function App() {
         <>
           <a className="skip-link" href="#content">Direkt zum Inhalt</a>
           <Cursor />
+          <motion.div className="scroll-progress" style={{ scaleX: scrollProgress }} aria-hidden="true" />
 
           <motion.header
             className={`site-header ${scrolled ? 'scrolled' : ''}`}
