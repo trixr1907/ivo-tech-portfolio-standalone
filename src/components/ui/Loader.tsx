@@ -6,16 +6,20 @@ const INTRO_POSTER = '/media/ivo-tech-intro-poster.jpg'
 const INTRO_START_TIMEOUT = 6000
 
 /**
- * Loading screen. First visit of a session plays the brand intro video
- * (muted — autoplay with sound is blocked by browsers). Later visits in
- * the same session skip straight to the app via sessionStorage. Reduced
- * motion skips the video as well; automation (`navigator.webdriver`) uses
- * the classic count-up loader so tests stay fast and codec-independent.
+ * Loading screen. First visit of a session plays the brand intro video.
+ * Sound policy: try playback with audio; if the browser blocks it (autoplay
+ * policy), continue muted and offer a "Ton an" pill that restarts the intro
+ * with sound from the beginning. Later visits in the same session skip
+ * straight to the app via sessionStorage. Reduced motion skips the video;
+ * automation (`navigator.webdriver`) uses the classic count-up loader so
+ * tests stay fast and codec-independent.
  */
 export function Loader({ onDone }: { onDone: () => void }) {
   const [progress, setProgress] = useState(0)
   const [phase, setPhase] = useState<'counting' | 'done'>('counting')
   const [mode, setMode] = useState<'deciding' | 'video' | 'count'>('deciding')
+  const [audioState, setAudioState] = useState<'unknown' | 'muted' | 'on'>('unknown')
+  const [videoProgress, setVideoProgress] = useState(0)
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const finishedRef = useRef(false)
 
@@ -36,21 +40,41 @@ export function Loader({ onDone }: { onDone: () => void }) {
     window.setTimeout(onDone, 80)
   }
 
-  // Video mode: end/skip/error all land on finish(); watchdog in case the
-  // video never starts (bad network, blocked media) — never trap the user.
+  // Video mode: sound attempt, progress line, end/skip/error all finish.
   useEffect(() => {
     if (mode !== 'video') return
+    const v = videoRef.current
+
+    // Try with sound first — most browsers reject this without a prior
+    // user gesture, then we fall back to muted and offer the sound pill.
+    if (v) {
+      v.muted = false
+      v.play()
+        .then(() => setAudioState('on'))
+        .catch(() => {
+          v.muted = true
+          v.play().catch(() => {})
+          setAudioState('muted')
+        })
+    }
+
     const watchdog = window.setTimeout(() => {
-      const v = videoRef.current
-      if (!v || (v.currentTime === 0 && v.readyState < 3)) finish()
+      const vid = videoRef.current
+      if (!vid || (vid.currentTime === 0 && vid.readyState < 3)) finish()
     }, INTRO_START_TIMEOUT)
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') finish()
     }
+    const onTime = () => {
+      const vid = videoRef.current
+      if (vid && vid.duration) setVideoProgress((vid.currentTime / vid.duration) * 100)
+    }
     window.addEventListener('keydown', onKey)
+    v?.addEventListener('timeupdate', onTime)
     return () => {
       window.clearTimeout(watchdog)
       window.removeEventListener('keydown', onKey)
+      v?.removeEventListener('timeupdate', onTime)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode])
@@ -71,10 +95,30 @@ export function Loader({ onDone }: { onDone: () => void }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode])
 
+  // Restart from 0 with sound — a click is the user gesture browsers require.
+  const enableSound = () => {
+    const v = videoRef.current
+    if (!v) return
+    v.muted = false
+    v.volume = 1
+    v.currentTime = 0
+    v.play().catch(() => {
+      // Unmuted playback refused: keep the show running muted instead of freezing.
+      v.muted = true
+      v.play().catch(() => {})
+      setAudioState('muted')
+    })
+    setAudioState('on')
+  }
+
   return (
     <AnimatePresence>
       {phase !== 'done' ? (
-        <motion.div className="loader" exit={{ opacity: 0 }} transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}>
+        <motion.div
+          className="loader"
+          exit={{ opacity: 0, scale: 1.03 }}
+          transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+        >
           {mode === 'video' ? (
             <div className="loader-video-wrap">
               <video
@@ -83,16 +127,25 @@ export function Loader({ onDone }: { onDone: () => void }) {
                 src={INTRO_SRC}
                 poster={INTRO_POSTER}
                 autoPlay
-                muted
                 playsInline
                 preload="auto"
                 aria-label="ivo-tech Intro"
                 onEnded={finish}
                 onError={finish}
               />
-              <button type="button" className="loader-skip" onClick={finish}>
-                Intro überspringen
-              </button>
+              <div className="loader-progress" aria-hidden="true">
+                <div className="loader-progress-fill" style={{ width: `${videoProgress}%` }} />
+              </div>
+              <div className="loader-controls">
+                {audioState === 'muted' ? (
+                  <button type="button" className="loader-pill loader-sound" onClick={enableSound}>
+                    <span className="loader-sound-icon" aria-hidden="true">♪</span> Ton an
+                  </button>
+                ) : null}
+                <button type="button" className="loader-pill loader-skip" onClick={finish}>
+                  Intro überspringen
+                </button>
+              </div>
             </div>
           ) : (
             <div className="loader-inner">
