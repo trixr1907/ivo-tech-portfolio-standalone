@@ -8,6 +8,8 @@ import './styles/animation-system.css'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { Loader } from './components/ui/Loader'
 import { MagButton } from './components/ui/MagButton'
+import { CountUp } from './components/ui/CountUp'
+import { Cursor } from './components/ui/Cursor'
 import { SplitTitle } from './components/ui/SplitTitle'
 import { Showcase } from './components/showcase/Showcase'
 import { AboutSection, CraftSection, LabSection, ContactSection, RelaunchFooter } from './components/relaunch/RelaunchSections'
@@ -23,6 +25,28 @@ const navItems = [
   { label: 'Lab', href: '#lab' },
   { label: 'Kontakt', href: '#kontakt' },
 ]
+
+/* Live clock: ticking Mannheim time as a living header detail (aria-hidden,
+   screen readers get no value from a clock that changes every second) */
+function LiveClock() {
+  const [time, setTime] = useState(() => new Date())
+  useEffect(() => {
+    const id = window.setInterval(() => setTime(new Date()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
+  const formatted = new Intl.DateTimeFormat('de-DE', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZone: 'Europe/Berlin',
+  }).format(time)
+  return (
+    <span className="h-clock" aria-hidden="true">
+      <span className="h-clock-city">Mannheim</span>
+      <b className="h-clock-time">{formatted}</b>
+    </span>
+  )
+}
 
 function App() {
   const reduceMotion = useReducedMotion()
@@ -168,6 +192,7 @@ function App() {
       {loaded && (
         <>
           <a className="skip-link" href="#content">Direkt zum Inhalt</a>
+          <Cursor />
 
           <motion.header
             className={`site-header ${scrolled ? 'scrolled' : ''}`}
@@ -180,11 +205,15 @@ function App() {
               <img src="/brand/logos/ivo-tech-logo-master.svg" alt="ivo-tech" width={140} height={31} fetchPriority="high" />
             </a>
             <nav className="h-nav" aria-label="Hauptnavigation">
-              {navItems.map(({ label, href }) => (
-                <a key={href} href={href} className={`h-link${activeSection === href ? ' is-active' : ''}`} aria-current={activeSection === href ? 'true' : undefined} onClick={(event) => handleNavClick(event, href)}>{label}</a>
+              {navItems.map(({ label, href }, index) => (
+                <a key={href} href={href} className={`h-link${activeSection === href ? ' is-active' : ''}`} aria-current={activeSection === href ? 'true' : undefined} onClick={(event) => handleNavClick(event, href)}>
+                  <span className="h-link-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                  {label}
+                </a>
               ))}
             </nav>
             <div className="h-right">
+              <LiveClock />
               <span className="h-status"><span className="pulse-dot" /> Online</span>
               <MagButton className="h-btn" href="mailto:contact@ivo-tech.com">Kontakt <ArrowUpRight size={14} /></MagButton>
               <button
@@ -226,6 +255,7 @@ function App() {
 
           <main id="content">
             <section ref={heroSectionRef} className="hero relaunch-hero" id="top" aria-labelledby="hero-h">
+              <div className="hero-edge-label" aria-hidden="true">Ivo-Tech · Mannheim</div>
               <div className="relaunch-shell hero-grid">
                 <motion.div className="hero-copy" initial={compactHero || reduceMotion ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.15 }}>
                   <div className="hero-eyebrow">
@@ -239,15 +269,15 @@ function App() {
                   <p className="hero-sub">Ich entwickle produktionsreife Webapplikationen — vom belastbaren System bis zum präzisen Interface und stabilen Live-Betrieb.</p>
                   <div className="hero-proof" aria-label="Kennzahlen">
                     <div className="hero-proof-item">
-                      <span className="hero-proof-value">4</span>
+                      <span className="hero-proof-value"><CountUp value={4} /></span>
                       <span className="hero-proof-label">Live-Systeme</span>
                     </div>
                     <div className="hero-proof-item">
-                      <span className="hero-proof-value">15</span>
+                      <span className="hero-proof-value"><CountUp value={15} /></span>
                       <span className="hero-proof-label">Component Tests</span>
                     </div>
                     <div className="hero-proof-item">
-                      <span className="hero-proof-value">408</span>
+                      <span className="hero-proof-value"><CountUp value={408} /></span>
                       <span className="hero-proof-label">GOALS Tests</span>
                     </div>
                   </div>
@@ -284,6 +314,16 @@ function App() {
             </section>
 
             <AboutSection />
+
+            <section className="principle-marquee" aria-hidden="true">
+              <div className="principle-marquee-track">
+                {[0, 1].map((group) => (
+                  <span className="principle-marquee-group" key={group}>
+                    Präzision <i>✦</i> Stabilität <i>✦</i> Craft <i>✦</i> Systemtiefe <i>✦</i> Tests <i>✦</i> Security <i>✦</i> Performance <i>✦</i> Klarheit <i>✦</i>
+                  </span>
+                ))}
+              </div>
+            </section>
 
             <Suspense fallback={<div className="section-loading">Selected Work wird geladen …</div>}><Showcase /></Suspense>
             <CraftSection />

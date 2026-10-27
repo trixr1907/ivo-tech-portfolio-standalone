@@ -125,6 +125,20 @@ export function CraftSection() {
         </div>
 
         <p className="craft-stack-line">React · TypeScript · Vite · Three.js · Motion · Playwright</p>
+
+        <div className="craft-terminal" aria-hidden="true">
+          <div className="craft-terminal__bar">
+            <span className="craft-terminal__dots"><i /><i /><i /></span>
+            <span className="craft-terminal__title">terminal · ~/ivo-tech</span>
+          </div>
+          <div className="craft-terminal__body">
+            <p><span className="t-prompt">~/ivo-tech $</span> <span className="t-cmd">whoami</span></p>
+            <p className="t-out">Ivo · Full-Stack Developer mit Frontend-Fokus</p>
+            <p><span className="t-prompt">~/ivo-tech $</span> <span className="t-cmd">status</span></p>
+            <p className="t-out">4 Systeme live · offen für Remote &amp; Hybrid</p>
+            <p><span className="t-prompt">~/ivo-tech $</span> <span className="t-caret" /></p>
+          </div>
+        </div>
       </div>
     </section>
   )
