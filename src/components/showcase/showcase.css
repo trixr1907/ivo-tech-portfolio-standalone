@@ -126,6 +126,22 @@
   opacity: 1;
 }
 
+/* scroll-in reveal for case media: masked sweep; keyed to the existing
+   is-visible hook. :not() keeps the hover rule above untouched afterwards. */
+.project-card:not(.is-visible) .project-card__media img {
+  clip-path: inset(0 100% 0 0);
+}
+.project-card.is-visible .project-card__media img {
+  clip-path: inset(0 0 0 0);
+  transition:
+    clip-path 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+    transform var(--transition-slow),
+    opacity var(--transition-fast);
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-card:not(.is-visible) .project-card__media img { clip-path: none; }
+}
+
 .project-card__status {
   position: absolute;
   z-index: 2;

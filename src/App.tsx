@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'motion/react'
-import { ArrowDown, ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import './App.css'
 import './relaunch.css'
 import './styles/animation-system.css'
@@ -10,6 +10,7 @@ import { Loader } from './components/ui/Loader'
 import { MagButton } from './components/ui/MagButton'
 import { CountUp } from './components/ui/CountUp'
 import { Cursor } from './components/ui/Cursor'
+import { Scramble } from './components/ui/Scramble'
 import { SplitTitle } from './components/ui/SplitTitle'
 import { Showcase } from './components/showcase/Showcase'
 import { AboutSection, CraftSection, LabSection, ContactSection, RelaunchFooter } from './components/relaunch/RelaunchSections'
@@ -211,7 +212,7 @@ function App() {
               {navItems.map(({ label, href }, index) => (
                 <a key={href} href={href} className={`h-link${activeSection === href ? ' is-active' : ''}`} aria-current={activeSection === href ? 'true' : undefined} onClick={(event) => handleNavClick(event, href)}>
                   <span className="h-link-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                  {label}
+                  <Scramble text={label} />
                 </a>
               ))}
             </nav>
@@ -289,7 +290,7 @@ function App() {
                     <MagButton className="btn-ghost" href="/yves-simon-schenker-cv.pdf" download>Lebenslauf</MagButton>
                     <MagButton className="btn-ghost" href="mailto:contact@ivo-tech.com">Kontakt</MagButton>
                   </div>
-                  <div className="hero-meta"><span>Offen für passende Remote- und Hybrid-Rollen</span><span><ArrowDown size={14} aria-hidden="true" /> Scrollen</span></div>
+                  <div className="hero-meta"><span>Offen für passende Remote- und Hybrid-Rollen</span><span className="hero-scroll-hint"><span className="hero-scroll-mouse" aria-hidden="true"><span className="hero-scroll-wheel" /></span> Scrollen</span></div>
                 </motion.div>
 
                 <motion.div ref={heroVisualRef} className="hero-visual" initial={compactHero || reduceMotion ? false : { opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} aria-label="ivo-tech 9-Facet-Emblem">

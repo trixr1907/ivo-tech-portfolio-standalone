@@ -93,6 +93,34 @@
   text-transform: uppercase;
 }
 .hero-meta span { display: flex; align-items: center; gap: 0.55rem; }
+/* animated mouse scroll hint (award-site pattern) */
+.hero-scroll-mouse {
+  position: relative;
+  flex: none;
+  width: 17px;
+  height: 26px;
+  border: 1.5px solid rgba(243,240,232,.45);
+  border-radius: 999px;
+}
+.hero-scroll-wheel {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  width: 3px;
+  height: 6px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: var(--accent);
+  animation: mouse-wheel 1.8s ease-in-out infinite;
+}
+@keyframes mouse-wheel {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(9px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-wheel { animation: none; }
+}
 
 .hero-visual {
   position: relative;
