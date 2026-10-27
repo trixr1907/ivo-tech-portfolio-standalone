@@ -43,6 +43,19 @@ body::after {
     radial-gradient(130% 100% at 50% 40%, transparent 62%, rgba(4,6,10,.32) 100%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
   background-size: cover, 220px 220px;
+  /* living film grain: the noise tile jumps between offsets like real grain
+     (steps, no interpolation); the vignette layer stays pinned */
+  animation: grain-flicker 1.4s steps(1) infinite;
+}
+@keyframes grain-flicker {
+  0% { background-position: 0 0, 0 0; }
+  25% { background-position: 0 0, -40px 22px; }
+  50% { background-position: 0 0, 26px -32px; }
+  75% { background-position: 0 0, -18px -26px; }
+  100% { background-position: 0 0, 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
 }
 #root { min-height: 100vh; overflow-x: clip; }
 main, header, footer { position: relative; z-index: 1; }
@@ -78,6 +91,23 @@ body::before {
   transform-origin: 0 50%;
   pointer-events: none;
 }
+/* HUD corner ticks: fixed registration marks framing the viewport */
+.hud-corners {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+}
+.hud-corners span {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  opacity: .3;
+}
+.hud-corners span:nth-child(1) { top: 10px; left: 10px; border-top: 1px solid var(--cyan); border-left: 1px solid var(--cyan); }
+.hud-corners span:nth-child(2) { top: 10px; right: 10px; border-top: 1px solid var(--cyan); border-right: 1px solid var(--cyan); }
+.hud-corners span:nth-child(3) { bottom: 10px; left: 10px; border-bottom: 1px solid var(--accent); border-left: 1px solid var(--accent); }
+.hud-corners span:nth-child(4) { bottom: 10px; right: 10px; border-bottom: 1px solid var(--accent); border-right: 1px solid var(--accent); }
 /* branded scrollbar (webkit) + standard scrollbar-color fallback */
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--black); }

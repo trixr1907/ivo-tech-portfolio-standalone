@@ -27,6 +27,14 @@ const navItems = [
   { label: 'Kontakt', href: '#kontakt' },
 ]
 
+/* Dev signature: styled console easter egg for curious developers */
+console.log(
+  '%civo-tech %c· ich baue, was bleibt.\n%ccontact@ivo-tech.com',
+  'color:#c8ff00;font:700 20px/1.5 ui-monospace,monospace',
+  'color:#5ab7e8;font:400 14px/1.5 ui-monospace,monospace',
+  'color:#8b929c;font:400 12px/1.8 ui-monospace,monospace',
+)
+
 /* Live clock: ticking Mannheim time as a living header detail (aria-hidden,
    screen readers get no value from a clock that changes every second) */
 function LiveClock() {
@@ -196,6 +204,9 @@ function App() {
         <>
           <a className="skip-link" href="#content">Direkt zum Inhalt</a>
           <Cursor />
+          <div className="hud-corners" aria-hidden="true">
+            <span /><span /><span /><span />
+          </div>
           <motion.div className="scroll-progress" style={{ scaleX: scrollProgress }} aria-hidden="true" />
 
           <motion.header

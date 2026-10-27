@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, Bot, Cpu, Home, ShieldCheck, Sparkles, Terminal, Zap } from 'lucide-react'
 import { labItems } from '../../data/homeData'
 import { Reveal } from '../ui/Reveal'
@@ -182,6 +183,42 @@ export function LabSection() {
   )
 }
 
+/** Copy-to-clipboard micro interaction with visual confirmation. */
+function CopyEmailButton() {
+  const [copied, setCopied] = useState(false)
+  const timerRef = useRef<number | null>(null)
+
+  useEffect(() => () => {
+    if (timerRef.current !== null) window.clearTimeout(timerRef.current)
+  }, [])
+
+  const copy = async () => {
+    const email = 'contact@ivo-tech.com'
+    try {
+      await navigator.clipboard.writeText(email)
+    } catch {
+      // clipboard API unavailable (insecure context) — legacy fallback
+      const ta = document.createElement('textarea')
+      ta.value = email
+      ta.style.position = 'fixed'
+      ta.style.opacity = '0'
+      document.body.appendChild(ta)
+      ta.select()
+      document.execCommand('copy')
+      ta.remove()
+    }
+    setCopied(true)
+    if (timerRef.current !== null) window.clearTimeout(timerRef.current)
+    timerRef.current = window.setTimeout(() => setCopied(false), 1800)
+  }
+
+  return (
+    <button type="button" className={`btn-ghost contact-copy-btn${copied ? ' is-copied' : ''}`} onClick={copy}>
+      <span aria-live="polite">{copied ? 'Kopiert ✓' : 'E-Mail kopieren'}</span>
+    </button>
+  )
+}
+
 export function ContactSection() {
   return (
     <section id="kontakt" className="relaunch-section contact-relaunch-section" aria-labelledby="contact-heading">
@@ -212,6 +249,7 @@ export function ContactSection() {
             <MagButton className="btn-ghost" href="https://www.linkedin.com/in/ivo-tech" target="_blank" rel="noreferrer">
               LinkedIn
             </MagButton>
+            <CopyEmailButton />
           </div>
         </Reveal>
       </div>
