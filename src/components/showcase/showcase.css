@@ -988,6 +988,7 @@
 }
 .project-card__metric {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.55rem;
   min-width: 0;
   align-content: start;
@@ -1009,6 +1010,9 @@
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.045em;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  text-wrap: balance;
   text-shadow: 0 0 38px rgba(200, 255, 0, 0.22);
 }
 .project-card__metric-label {
